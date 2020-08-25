@@ -1,0 +1,9 @@
+@import './variables';
+
+#sign-in{
+    width: 35%;
+    border: $border-color solid 1px;
+    border-radius: 10px;
+    margin: 4em auto;
+    padding: 2em 0em;
+}
