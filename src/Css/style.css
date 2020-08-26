@@ -1,9 +1,40 @@
 #sign-in {
-  width: 35%;
+  width: 30%;
   border: #dadce0 solid 1px;
   border-radius: 10px;
   margin: 4em auto;
   padding: 2em 0em;
+  -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+          box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.page-subtitle {
+  padding: 1em;
+  font-size: 1.5em;
+}
+
+.sign-input {
+  width: 80%;
+  margin: 0.5em !important;
+}
+
+.sign-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-decoration: none;
+  color: #446DFF;
+  font-weight: 600;
+}
+
+.sign-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 1em 2.5em;
 }
 
 #fundoo-logo {
@@ -54,6 +85,9 @@ body {
   width: 100%;
   min-height: 100%;
   background: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 #root {
