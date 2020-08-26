@@ -9,13 +9,13 @@
 }
 
 .page-subtitle {
-  padding: 1em;
+  padding: 0.5em;
   font-size: 1.5em;
 }
 
 .sign-input {
-  width: 80%;
-  margin: 0.5em !important;
+  width: 100%;
+  margin: 0.5em 0em !important;
 }
 
 .sign-link {
@@ -34,7 +34,7 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 1em 2.5em;
+  padding: 1em 0.5em;
 }
 
 #fundoo-logo {
@@ -71,6 +71,31 @@
   font-size: 1.5em;
   font-weight: 500;
   padding: 0.25em 0em;
+}
+
+.sign-input-two {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#sign-up {
+  width: 50%;
+  border: #dadce0 solid 1px;
+  border-radius: 10px;
+  margin: 4em auto;
+  padding: 2em 0em;
+  -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+          box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.sign-up-input {
+  padding: 0em 0.25em;
+}
+
+.sign-input-row {
+  width: 80%;
+  margin: auto;
 }
 
 body {

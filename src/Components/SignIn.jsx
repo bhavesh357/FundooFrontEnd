@@ -11,15 +11,17 @@ class SignIn extends React.Component{
             <div id="sign-in">
             <FundooLogo />
             <PageTitle title="Sign in" />
-            <div className="page-subtitle">Continue to Fundoo</div> 
+            <div className="page-subtitle">Continue to Fundoo</div>
+            <div className="sign-input-row" >
             <TextField id="outlined-basic" className="sign-input" label="Email" variant="outlined" />
             <TextField id="outlined-basic" className="sign-input" label="Password" variant="outlined" />
+            </div> 
             <div className="sign-buttons" >
             <div className="sign-links">
-            <Link href="#" className="sign-link" >
+            <Link to={"#"} className="sign-link" >
             Forgot Password?
             </Link>
-            <Link href="#" className="sign-link" >
+            <Link to={"/signup"} className="sign-link" >
             Sign Up Instead 
             </Link>
             </div>
