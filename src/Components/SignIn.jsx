@@ -5,11 +5,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+import { Card } from '@material-ui/core';
 
 class SignIn extends React.Component{
     render(){
         return(
-            <div id="sign-in">
+            <Card id="sign-in">
             <Grid container>
             <Grid item md={12}>
                 <FundooLogo />
@@ -23,7 +24,7 @@ class SignIn extends React.Component{
             <Grid item md={12} container>
                 <Grid item md={1} ></Grid>
                 <Grid item md={10} >
-                    <TextField id="outlined-basic" className="sign-input" label="Email" variant="outlined" />
+                    <TextField className="sign-input" label="Email" variant="outlined" />
                 </Grid>
                 <Grid item md={1} ></Grid>
             </Grid>
@@ -49,12 +50,13 @@ class SignIn extends React.Component{
             <Button variant="contained" color="primary">
             Sign in
             </Button>
-            </div></Grid>
+            </div>
+            </Grid>
                 <Grid item md={1} ></Grid>
             </Grid>
             </Grid>
             
-            </div>
+            </Card>
             );
         }
     }

@@ -9,6 +9,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Card } from '@material-ui/core';
 
 class SignUp extends React.Component{
     state = {
@@ -21,8 +22,8 @@ class SignUp extends React.Component{
     
     render(){
         return(
-            <div id="sign-up">
-            <Grid container>
+            <Card id="sign-up">
+            <Grid container  className="mdc-card mdc-card--outlined">
             <Grid item container md={12} >
             <Grid item md={12} >
             <FundooLogo />
@@ -46,7 +47,7 @@ class SignUp extends React.Component{
             <Grid item md={1} ></Grid>
             <Grid item md={12} container>
             <Grid item md={1} ></Grid>
-            <Grid item md={8} className="sign-up-input" container>
+            <Grid item md={10} className="sign-up-input" container>
             <TextField id="outlined-basic" className="sign-input" label="Email Id" size="small" variant="outlined" />
             </Grid>
             <Grid item md={1} ></Grid>
@@ -100,7 +101,7 @@ class SignUp extends React.Component{
                 </Grid>
                      <Grid item md={1}></Grid>
                 </Grid>
-                </div>
+                </Card>
                 );
             }
         }
