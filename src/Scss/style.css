@@ -10,7 +10,7 @@
 
 .page-subtitle {
   padding: 0.5em;
-  font-size: 1.5em;
+  font-size: 1.25em;
 }
 
 .sign-input {
@@ -25,6 +25,8 @@
   text-decoration: none;
   color: #446DFF;
   font-weight: 600;
+  -ms-flex-item-align: center;
+      align-self: center;
 }
 
 .sign-buttons {
@@ -96,6 +98,22 @@
 .sign-input-row {
   width: 80%;
   margin: auto;
+}
+
+#forgot-password {
+  border: #dadce0 solid 1px;
+  border-radius: 10px;
+  width: 100%;
+  margin: 4em auto;
+  padding: 2em 0em;
+  -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+          box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 body {

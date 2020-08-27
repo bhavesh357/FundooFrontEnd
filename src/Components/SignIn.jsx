@@ -40,7 +40,7 @@ class SignIn extends React.Component{
                 <Grid item md={10} >
                 <div className="sign-buttons" >
             <div className="sign-links">
-            <Link to={"#"} className="sign-link" >
+            <Link to={"/forgotpassword"} className="sign-link" >
             Forgot Password?
             </Link>
             <Link to={"/signup"} className="sign-link" >

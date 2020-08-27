@@ -38,17 +38,17 @@ class SignUp extends React.Component{
             <Grid item md={1} ></Grid>
             <Grid item md={10} container>
             <Grid item md={6} className="sign-up-input" >
-            <TextField id="outlined-basic" className="sign-input" label="First Name" size="small" variant="outlined" />
+            <TextField className="sign-input" label="First Name" size="small" variant="outlined" />
             </Grid>
             <Grid item md={6} className="sign-up-input">
-            <TextField id="outlined-basic" className="sign-input" label="Last Name" size="small" variant="outlined" />
+            <TextField className="sign-input" label="Last Name" size="small" variant="outlined" />
             </Grid>
             </Grid>
             <Grid item md={1} ></Grid>
             <Grid item md={12} container>
             <Grid item md={1} ></Grid>
             <Grid item md={10} className="sign-up-input" container>
-            <TextField id="outlined-basic" className="sign-input" label="Email Id" size="small" variant="outlined" />
+            <TextField className="sign-input" label="Email Id" size="small" variant="outlined" />
             </Grid>
             <Grid item md={1} ></Grid>
             </Grid>
@@ -56,11 +56,10 @@ class SignUp extends React.Component{
             <Grid item md={1} ></Grid>
             <Grid item md={10} container>
             <Grid item md={6} className="sign-up-input" >
-            <TextField id="outlined-basic" type="password" className="sign-input" label="Enter Password" size="small" variant="outlined" />
+            <TextField type="password" className="sign-input" label="Enter Password" size="small" variant="outlined" />
             </Grid>
             <Grid item md={6} className="sign-up-input">
             <TextField
-            id="filled-adornment-password"
             variant="outlined"
             size="small"
             type={this.state.showPassword ? 'text' : 'password'}
