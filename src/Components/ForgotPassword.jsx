@@ -5,6 +5,27 @@ import PageTitle from './PageTitle';
 import { Link } from 'react-router-dom';
 
 class ForgotPassword extends React.Component{
+    state = {
+        isEmailInvalid: false,
+    };
+
+    handleNext = () => {
+        const emailRegex = /^[\w\d]{1,}[.\\\-#!]?[\w\d]{1,}@[\w\d]{1,}.[a-z]{2,3}.?([a-z]{2})?$/;
+        let email= document.getElementById("email").value;
+        this.setState({
+            isEmailInvalid: this.validateInput(email,emailRegex),
+        });
+    }
+
+    validateInput = (input,pattern) =>{
+        if(pattern.test(input)){
+            console.log(input);
+            return false;
+        }
+        return true;
+    }
+    
+
     render(){
         return (
             
@@ -20,7 +41,7 @@ class ForgotPassword extends React.Component{
             <Typography className="page-subtitle">
             Enter your recovery Email
             </Typography>
-            <TextField className="sign-input" label="Email Id" variant="outlined"  ></TextField>
+            <TextField id="email" className="sign-input" label="Email Id" size="small" variant="outlined" error={this.state.isEmailInvalid} helperText="Enter proper Email Id" />
             <CardActions className="sign-buttons">
             <Link to={"/"} className="sign-link" >
             Back
@@ -28,7 +49,7 @@ class ForgotPassword extends React.Component{
             <Link to={"/resetpassword"} className="sign-link" >
             Reset Password
             </Link>
-            <Button variant="contained" color="primary">
+            <Button onClick={this.handleNext} variant="contained" color="primary">
             Next
             </Button>
             </CardActions>
