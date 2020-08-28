@@ -11,17 +11,17 @@ class ForgotPassword extends React.Component{
             <Grid container>
             <Grid item md={4} />
             <Grid item container md={4}>
-            <Card id="forgot-password">
-            <CardContent class="card-content">
+            <Card className="card">
+            <CardContent className="card-content">
             <Grid item md={1}></Grid>
-            <Grid item md={10}>
+            <Grid item md={10}  xs={10}>
             <FundooLogo />
             <PageTitle title="Find Your Password" />
-            <Typography class="page-subtitle">
+            <Typography className="page-subtitle">
             Enter your recovery Email
             </Typography>
             <TextField className="sign-input" label="Email Id" variant="outlined"  ></TextField>
-            <CardActions class="sign-buttons">
+            <CardActions className="sign-buttons">
             <Link to={"/"} className="sign-link" >
             Back
             </Link>

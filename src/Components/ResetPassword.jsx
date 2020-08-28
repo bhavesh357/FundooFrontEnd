@@ -28,7 +28,7 @@ class ResetPassword extends React.Component{
             <Grid container>
             <Grid item md={4} />
             <Grid item container md={4}>
-            <Card id="forgot-password">
+            <Card className="card">
             <CardContent className="card-content">
             <Grid item md={1}></Grid>
             <Grid item md={10}>

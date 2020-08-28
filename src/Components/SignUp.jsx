@@ -9,7 +9,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { Card } from '@material-ui/core';
+import { Card, CardContent, CardActions } from '@material-ui/core';
 
 class SignUp extends React.Component{
     state = {
@@ -22,43 +22,20 @@ class SignUp extends React.Component{
     
     render(){
         return(
-            <Card id="sign-up">
-            <Grid container  className="mdc-card mdc-card--outlined">
-            <Grid item container md={12} >
-            <Grid item md={12} >
+            <Grid container>
+            <Grid item md={4} />
+            <Grid item container md={4}>
+            <Card className="card">
+            <CardContent className="card-content">
+            <Grid item md={1}></Grid>
+            <Grid item md={10}  xs={10}>
             <FundooLogo />
-            </Grid>
-            <Grid item md={12} >
             <PageTitle title="Sign Up" />
             <div className="page-subtitle">Create your Fundoo Account</div>
-            </Grid>
-            </Grid>
-            <Grid item container md={12}>
-            </Grid>
-            <Grid item md={1} ></Grid>
-            <Grid item md={10} container>
-            <Grid item md={6} className="sign-up-input" >
             <TextField className="sign-input" label="First Name" size="small" variant="outlined" />
-            </Grid>
-            <Grid item md={6} className="sign-up-input">
             <TextField className="sign-input" label="Last Name" size="small" variant="outlined" />
-            </Grid>
-            </Grid>
-            <Grid item md={1} ></Grid>
-            <Grid item md={12} container>
-            <Grid item md={1} ></Grid>
-            <Grid item md={10} className="sign-up-input" container>
             <TextField className="sign-input" label="Email Id" size="small" variant="outlined" />
-            </Grid>
-            <Grid item md={1} ></Grid>
-            </Grid>
-            <Grid item container md={12}>
-            <Grid item md={1} ></Grid>
-            <Grid item md={10} container>
-            <Grid item md={6} className="sign-up-input" >
             <TextField type="password" className="sign-input" label="Enter Password" size="small" variant="outlined" />
-            </Grid>
-            <Grid item md={6} className="sign-up-input">
             <TextField
             variant="outlined"
             size="small"
@@ -79,15 +56,7 @@ class SignUp extends React.Component{
                     ),
                 }}
                 />
-                </Grid>
-                </Grid>
-                <Grid item md={1} ></Grid>
-                </Grid>
-                </Grid>
-                <Grid container >
-                     <Grid item md={1}></Grid>
-                     <Grid item md={10}>
-                     <div className="sign-buttons" >
+                <CardActions className="sign-buttons" >
                 <div className="sign-links">
                 <Link to={"/"} className="sign-link" >
                 Sign In Instead
@@ -96,11 +65,14 @@ class SignUp extends React.Component{
                 <Button variant="contained" color="primary">
                 Sign in
                 </Button>
-                </div>
+                </CardActions>
                 </Grid>
-                     <Grid item md={1}></Grid>
-                </Grid>
+                <Grid item md={1} ></Grid>
+                </CardContent>
                 </Card>
+                </Grid>
+                <Grid item md={4} />
+                </Grid>
                 );
             }
         }
