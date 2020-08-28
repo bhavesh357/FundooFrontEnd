@@ -12,6 +12,9 @@ class ResetPassword extends React.Component{
     state = {
         firstPassword: false,
         secondPassword: false,
+        isFirstPasswordInvalid: false,
+        isSecondPasswordinvalid: false,
+        doPasswordsMatch: false,
     };
     
     handleClickShowFirstPassword = () => {
@@ -21,6 +24,34 @@ class ResetPassword extends React.Component{
     handleClickShowSecondPassword = () => {
         this.setState(state => ({ secondPassword: !state.secondPassword }));
     };
+
+    handleNext = () => {
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[A-Za-z0-9@#!$%^&*()_]{8,})[A-Za-z0-9]+?[@#!$%^&*()_][A-Za-z0-9]{1,}?$/;
+        let firstPassword= document.getElementById("password-first").value;
+        let secondPassword= document.getElementById("password-second").value;
+        let firstPasswordStatus= this.validateInput(firstPassword,passwordRegex);
+        let secondPasswordStatus= this.validateInput(firstPassword,passwordRegex);
+        this.setState({
+            isFirstPasswordInvalid: firstPasswordStatus,
+            isSecondPasswordinvalid: secondPasswordStatus,
+            doPasswordsMatch: this.checkIfSame(firstPassword,secondPassword,firstPasswordStatus,secondPasswordStatus),
+        });
+    };
+
+    checkIfSame = (firstInput,secondInput,statusOfFirst,statusOfSecond) => {
+        if(firstInput===secondInput && !statusOfFirst && !statusOfSecond){
+            return true;
+        }
+        return false;
+    }
+
+    validateInput = (input,pattern) =>{
+        if(pattern.test(input)){
+            console.log(input);
+            return false;
+        }
+        return true;
+    }
 
     render(){
         return (
@@ -39,6 +70,7 @@ class ResetPassword extends React.Component{
             </Typography>
             <TextField 
                 type={this.state.firstPassword ? 'text' : 'password'}
+                id="password-first"
                 className="sign-input" label="Enter Password" variant="outlined"  InputProps={{
                 endAdornment: (
                     <InputAdornment position="end">
@@ -50,8 +82,11 @@ class ResetPassword extends React.Component{
                     </IconButton>
                     </InputAdornment>
                     ),
-                }}></TextField>
+                }}
+                error={this.state.isFirstPasswordInvalid} helperText="Use at least 8 characters. One Uppercase One Lowercase One special character and One number atleast."  
+                ></TextField>
                 <TextField 
+                id="password-second"
                 type={this.state.secondPassword ? 'text' : 'password'}
                 className="sign-input" label="Re-enter Password" variant="outlined"  InputProps={{
                 endAdornment: (
@@ -64,7 +99,10 @@ class ResetPassword extends React.Component{
                     </IconButton>
                     </InputAdornment>
                     ),
-                }}></TextField>
+                }}
+                error={this.state.isSecondPasswordinvalid} 
+                helperText={this.state.doPasswordsMatch ? '':'Passwords should match' }
+                ></TextField>
             <CardActions className="sign-buttons">
             <Link to={"/"} className="sign-link" >
             Back
@@ -72,7 +110,7 @@ class ResetPassword extends React.Component{
             <Link to={"/resetpassword"} className="sign-link" >
             Reset Password
             </Link>
-            <Button variant="contained" color="primary">
+            <Button onClick={this.handleNext} variant="contained" color="primary">
             Next
             </Button>
             </CardActions>

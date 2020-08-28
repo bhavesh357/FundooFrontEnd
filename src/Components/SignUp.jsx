@@ -37,7 +37,7 @@ class SignUp extends React.Component{
         const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[A-Za-z0-9@#!$%^&*()_]{8,})[A-Za-z0-9]+?[@#!$%^&*()_][A-Za-z0-9]{1,}?$/;
         let email= document.getElementById("email").value;
         let firstPassword= document.getElementById("password-first").value;
-        let secondPassword= document.getElementById("password-first").value;
+        let secondPassword= document.getElementById("password-second").value;
         let firstName= document.getElementById("first-name").value;
         let lastName= document.getElementById("last-name").value;
         let firstPasswordStatus= this.validateInput(firstPassword,passwordRegex);
