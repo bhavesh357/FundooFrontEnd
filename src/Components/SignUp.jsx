@@ -42,7 +42,7 @@ class SignUp extends React.Component{
         let firstName= document.getElementById("first-name").value;
         let lastName= document.getElementById("last-name").value;
         let firstPasswordStatus= this.validateInput(firstPassword,passwordRegex);
-        let secondPasswordStatus= this.validateInput(firstPassword,passwordRegex);
+        let secondPasswordStatus= this.validateInput(secondPassword,passwordRegex);
         let emailStatus = this.validateInput(email,emailRegex);
         let firstNameStatus = this.validateInput(firstName,nameRegex);
         let lastNameStatus = this.validateInput(lastName,nameRegex);

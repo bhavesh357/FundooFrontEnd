@@ -14,7 +14,7 @@ function App() {
           <Route path='/' exact component={SignIn}></Route>
           <Route path='/signup' exact component={SignUp}></Route>
           <Route path='/forgotpassword' exact component={ForgotPassword}></Route>
-          <Route path='/resetpassword' exact component={ResetPassword}></Route>
+          <Route path={'/resetpassword/:token'} component={ResetPassword}></Route>
         </Switch>
       </BrowserRouter>
     </div>
