@@ -15,13 +15,15 @@ class SignIn extends React.Component{
         passwordInvalid: false,
         snackbarMessage:"hello",
         snackbarStatus:false,
+        email: "",
+        password: "",
     };
     
     handleSignIn = () => {
         const emailRegex = /^[\w\d]{1,}[.\\\-#!]?[\w\d]{1,}@[\w\d]{1,}.[a-z]{2,3}.?([a-z]{2})?$/;
         const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[A-Za-z0-9@#!$%^&*()_]{8,})[A-Za-z0-9]+?[@#!$%^&*()_][A-Za-z0-9]{1,}?$/;
-        let email= document.getElementById("sign-in-email").value;
-        let password= document.getElementById("sign-in-password").value;
+        let email= this.state.email;
+        let password= this.state.password;
         let emailStatus = this.validateInput(email,emailRegex);
         let passwordStatus = this.validateInput(password,passwordRegex);
         this.setState({
@@ -71,6 +73,18 @@ handleSnackbarClose = (event,reason) =>{
     })
 }
 
+handleEmail = (e) => {
+    this.setState({
+        email: e.target.value
+    });
+}
+
+handlePassword = (e) => {
+    this.setState({
+        password: e.target.value
+    });
+}
+
 render(){
     return(
         
@@ -95,8 +109,8 @@ render(){
         <FundooLogo />
         <PageTitle title="Sign in" />
         <Typography className="page-subtitle">Continue to Fundoo</Typography>
-        <TextField id="sign-in-email" className="sign-input" label="Email" variant="outlined" error={this.state.emailInvalid} helperText="Enter Proper Email Id" />
-        <TextField id="sign-in-password" className="sign-input" type="password" label="Password" variant="outlined" error={this.state.passwordInvalid} helperText="Use at least 8 characters. One Uppercase One Lowercase One special character and One number atleast." />
+        <TextField id="sign-in-email" onChange={this.handleEmail} className="sign-input" label="Email" variant="outlined" error={this.state.emailInvalid} helperText="Enter Proper Email Id" />
+        <TextField id="sign-in-password" onChange={this.handlePassword} className="sign-input" type="password" label="Password" variant="outlined" error={this.state.passwordInvalid} helperText="Use at least 8 characters. One Uppercase One Lowercase One special character and One number atleast." />
         <CardActions className="sign-buttons" >
         <div className="sign-links">
         <Link to={"/forgotpassword"} className="sign-link" >
