@@ -17,6 +17,8 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import Axios from "axios";
+import validation from './../../service/validation';
+let Validate = new validation();
 
 class SignUp extends React.Component {
   state = {
@@ -44,25 +46,18 @@ class SignUp extends React.Component {
   };
 
   handleSignUp = () => {
-    const emailRegex = /^[\w\d]{1,}[.\\\-#!]?[\w\d]{1,}@[\w\d]{1,}.[a-z]{2,3}.?([a-z]{2})?$/;
-    const nameRegex = /^[A-Z]{1}[a-z]{2,15}$/;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[A-Za-z0-9@#!$%^&*()_]{8,})[A-Za-z0-9]+?[@#!$%^&*()_][A-Za-z0-9]{1,}?$/;
-    let email = this.state.email;
-    let firstPassword = this.state.firstPassword;
-    let secondPassword = this.state.secondPassword;
-    let firstName = this.state.firstName;
-    let lastName = this.state.lastName;
-    let firstPasswordStatus = this.validateInput(firstPassword, passwordRegex);
-    let secondPasswordStatus = this.validateInput(
-      secondPassword,
-      passwordRegex
+    let patterns = Validate.getRegexs();
+    let firstPasswordStatus = Validate.validateInput(this.state.firstPassword, patterns.password);
+    let secondPasswordStatus = Validate.validateInput(
+      this.state.secondPassword,
+      patterns.password
     );
-    let emailStatus = this.validateInput(email, emailRegex);
-    let firstNameStatus = this.validateInput(firstName, nameRegex);
-    let lastNameStatus = this.validateInput(lastName, nameRegex);
-    let passwordsMatchingStatus = this.checkIfSame(
-      firstPassword,
-      secondPassword,
+    let emailStatus = Validate.validateInput(this.state.email, patterns.email);
+    let firstNameStatus = Validate.validateInput(this.state.firstName, patterns.name);
+    let lastNameStatus = Validate.validateInput(this.state.lastName, patterns.name);
+    let passwordsMatchingStatus = Validate.checkIfSame(
+      this.state.firstPassword,
+      this.state.secondPassword,
       firstPasswordStatus,
       secondPasswordStatus
     );
@@ -81,7 +76,7 @@ class SignUp extends React.Component {
       !lastNameStatus &&
       passwordsMatchingStatus
     ) {
-      this.signUpWithdata(email, firstName, lastName, firstPassword);
+      this.signUpWithdata(this.state.email, this.state.firstName, this.state.lastName, this.state.firstPassword);
     }
   };
 
@@ -119,21 +114,6 @@ class SignUp extends React.Component {
         });
       });
   }
-
-  checkIfSame = (firstInput, secondInput, statusOfFirst, statusOfSecond) => {
-    if (firstInput === secondInput && !statusOfFirst && !statusOfSecond) {
-      return true;
-    }
-    return false;
-  };
-
-  validateInput = (input, pattern) => {
-    if (pattern.test(input)) {
-      console.log(input);
-      return false;
-    }
-    return true;
-  };
 
   handleFirstName = (e) => {
     this.setState({

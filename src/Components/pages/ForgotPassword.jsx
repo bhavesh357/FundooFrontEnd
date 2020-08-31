@@ -22,14 +22,13 @@ class ForgotPassword extends React.Component{
     }
     
     handleNext = () => {
-        let email= this.state.email;
         let patterns = Validate.getRegexs();
-        let emailStatus = Validate.validateInput(email,patterns.email);
+        let emailStatus = Validate.validateInput(this.state.email,patterns.email);
         this.setState({
             isEmailInvalid: emailStatus,
         });
         if(!emailStatus){
-            this.resetWithdata(email);
+            this.resetWithdata(this.state.email);
         }
         
     }

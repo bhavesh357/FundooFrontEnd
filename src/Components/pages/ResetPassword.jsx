@@ -95,14 +95,6 @@ class ResetPassword extends React.Component {
     return false;
   };
 
-  validateInput = (input, pattern) => {
-    if (pattern.test(input)) {
-      console.log(input);
-      return false;
-    }
-    return true;
-  };
-
   handleFirstPassword = (e) => {
     this.setState({
       firstPassword: e.target.value,

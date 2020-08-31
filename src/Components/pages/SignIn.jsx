@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { Card,CardContent, Typography, CardActions, Snackbar } from '@material-ui/core';
 import Axios from 'axios';
+import validation from './../../service/validation';
+let Validate = new validation();
 
 class SignIn extends React.Component{
     
@@ -20,18 +22,15 @@ class SignIn extends React.Component{
     };
     
     handleSignIn = () => {
-        const emailRegex = /^[\w\d]{1,}[.\\\-#!]?[\w\d]{1,}@[\w\d]{1,}.[a-z]{2,3}.?([a-z]{2})?$/;
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[A-Za-z0-9@#!$%^&*()_]{8,})[A-Za-z0-9]+?[@#!$%^&*()_][A-Za-z0-9]{1,}?$/;
-        let email= this.state.email;
-        let password= this.state.password;
-        let emailStatus = this.validateInput(email,emailRegex);
-        let passwordStatus = this.validateInput(password,passwordRegex);
+        let patterns = Validate.getRegexs();
+        let emailStatus = Validate.validateInput(this.state.email,patterns.email);
+        let passwordStatus = Validate.validateInput(this.state.password,patterns.password);
         this.setState({
             emailInvalid: emailStatus,
             passwordInvalid: passwordStatus,
         });
         if(!emailStatus && !passwordStatus){
-            this.singInWithData(email,password);
+            this.singInWithData(this.state.email,this.state.password);
         }
     }
     
@@ -56,14 +55,6 @@ class SignIn extends React.Component{
         });
     });
 } 
-
-validateInput = (input,pattern) =>{
-    if(pattern.test(input)){
-        console.log(input);
-        return false;
-    }
-    return true;
-}
 
 
 handleSnackbarClose = (event,reason) =>{
