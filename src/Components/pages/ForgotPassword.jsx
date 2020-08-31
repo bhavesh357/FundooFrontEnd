@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, Grid, Typography, TextField, CardActions, Button, Snackbar } from '@material-ui/core';
-import FundooLogo from './FundooLogo';
-import PageTitle from './PageTitle';
+import FundooLogo from './../FundooLogo';
+import PageTitle from './../PageTitle';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -92,9 +92,6 @@ render(){
         <CardActions className="sign-buttons">
         <Link to={"/"} className="sign-link" >
         Back
-        </Link>
-        <Link to={"/resetpassword"} className="sign-link" >
-        Reset Password
         </Link>
         <Button onClick={this.handleNext} variant="contained" color="primary">
         Next

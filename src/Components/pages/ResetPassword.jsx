@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, Grid, Typography, TextField, CardActions, Button, Snackbar } from '@material-ui/core';
-import FundooLogo from './FundooLogo';
-import PageTitle from './PageTitle';
+import FundooLogo from './../FundooLogo';
+import PageTitle from './../PageTitle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
@@ -15,7 +15,7 @@ class ResetPassword extends React.Component{
         secondPassword: false,
         isFirstPasswordInvalid: false,
         isSecondPasswordinvalid: false,
-        doPasswordsMatch: false,
+        doPasswordsMatch: true,
     };
     
     handleClickShowFirstPassword = () => {
@@ -139,7 +139,7 @@ render(){
                     </InputAdornment>
                     ),
                 }}
-                error={this.state.isSecondPasswordinvalid} 
+                error={this.state.isSecondPasswordinvalid || !this.state.doPasswordsMatch} 
                 helperText={this.state.doPasswordsMatch ? '':'Passwords should match' }
                 ></TextField>
                 <CardActions className="sign-buttons">
