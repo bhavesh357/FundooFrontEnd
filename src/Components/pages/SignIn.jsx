@@ -109,8 +109,8 @@ render(){
         <FundooLogo />
         <PageTitle title="Sign in" />
         <Typography className="page-subtitle">Continue to Fundoo</Typography>
-        <TextField id="sign-in-email" onChange={this.handleEmail} value={this.state.email} className="sign-input" label="Email" variant="outlined" error={this.state.emailInvalid} helperText="Enter Proper Email Id" />
-        <TextField id="sign-in-password" onChange={this.handlePassword} value={this.state.password} className="sign-input" type="password" label="Password" variant="outlined" error={this.state.passwordInvalid} helperText="Use at least 8 characters. One Uppercase One Lowercase One special character and One number atleast." />
+        <TextField id="sign-in-email" onChange={this.handleEmail} value={this.state.email} className="sign-input" label="Email" variant="outlined" error={this.state.emailInvalid} helperText={this.state.emailInvalid ? "Enter Proper Email Id": ""} />
+        <TextField id="sign-in-password" onChange={this.handlePassword} value={this.state.password} className="sign-input" type="password" label="Password" variant="outlined" error={this.state.passwordInvalid} />
         <CardActions className="sign-buttons" >
         <div className="sign-links">
         <Link to={"/forgotpassword"} className="sign-link" >

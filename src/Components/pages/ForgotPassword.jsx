@@ -95,7 +95,7 @@ render(){
         <Typography className="page-subtitle">
         Enter your recovery Email
         </Typography>
-        <TextField onChange={this.handleEmail} value={this.state.email} id="email" className="sign-input" label="Email Id" size="small" variant="outlined" error={this.state.isEmailInvalid} helperText="Enter proper Email Id" />
+        <TextField onChange={this.handleEmail} value={this.state.email} id="email" className="sign-input" label="Email Id" size="small" variant="outlined" error={this.state.isEmailInvalid} helperText={this.state.isEmailInvalid ? "Enter Proper Email Id": ""}  />
         <CardActions className="sign-buttons">
         <Link to={"/"} className="sign-link" >
         Back
