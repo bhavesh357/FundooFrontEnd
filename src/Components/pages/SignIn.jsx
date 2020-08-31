@@ -12,8 +12,8 @@ import {
   CardActions,
   Snackbar,
 } from "@material-ui/core";
-import validation from "./../../service/validation";
-import calls from "./../../service/calls";
+import validation from "../../Service/validation";
+import calls from "../../Service/calls";
 let Validate = new validation();
 let Calls = new calls();
 
