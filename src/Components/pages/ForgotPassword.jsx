@@ -3,9 +3,10 @@ import { Card, CardContent, Grid, Typography, TextField, CardActions, Button, Sn
 import FundooLogo from './../FundooLogo';
 import PageTitle from './../PageTitle';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
 import validation from './../../service/validation';
+import calls from './../../service/calls';
 let Validate = new validation();
+let Calls = new calls();
 
 class ForgotPassword extends React.Component{
     state = {
@@ -31,29 +32,17 @@ class ForgotPassword extends React.Component{
             let user = {
                 "email": this.state.email,
             }
-            this.resetWithdata(user);
+            Calls.resetWithdata(user, (message) => {
+                this.setState({
+                  snackbarMessage: message,
+                  snackbarStatus: true,
+                });
+            });
         }
         
     }
     
-    resetWithdata(user){
-        Axios.post('http://fundoonotes.incubation.bridgelabz.com/api/user/reset', user)
-    .then((response) => {
-        console.log(response);
-        this.setState({
-            snackbarMessage: response.data.message,
-            snackbarStatus: true,
-        });
-    })
-    .catch( (error) => {
-        // handle error
-        console.log(error.response.data.error.message);
-        this.setState({
-            snackbarMessage: error.response.data.error.message,
-            snackbarStatus: true,
-        });
-    });
-} 
+  
 
 
 

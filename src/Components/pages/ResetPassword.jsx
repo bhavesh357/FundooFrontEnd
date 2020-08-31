@@ -16,9 +16,10 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Link } from "react-router-dom";
-import Axios from "axios";
 import validation from "./../../service/validation";
+import calls from "./../../service/calls";
 let Validate = new validation();
+let Calls = new calls();
 
 class ResetPassword extends React.Component {
   state = {
@@ -68,34 +69,14 @@ class ResetPassword extends React.Component {
       let user = {
         newPassword: this.state.firstPassword,
       };
-      this.resetWithData(user);
-    }
-  };
-
-  resetWithData(user) {
-    Axios.post(
-      "http://fundoonotes.incubation.bridgelabz.com/api/user/reset-password?access_token=" +
-        this.props.match.params.token,
-      user
-    )
-      .then((response) => {
-        console.log(response);
-        let messageSnackbar =
-          response.status === 204 ? "Successfully resetted the password" : "";
+      Calls.resetWithData(user,this.props.match.params.token, (message) => {
         this.setState({
-          snackbarMessage: messageSnackbar,
-          snackbarStatus: true,
-        });
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error.response);
-        this.setState({
-          snackbarMessage: error.response.data.error.message,
+          snackbarMessage: message,
           snackbarStatus: true,
         });
       });
-  }
+    }
+  };
 
   handleFirstPassword = (e) => {
     this.setState({

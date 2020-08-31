@@ -16,9 +16,10 @@ import {
   Typography,
   Snackbar,
 } from "@material-ui/core";
-import Axios from "axios";
-import validation from './../../service/validation';
+import validation from "./../../service/validation";
+import calls from "./../../service/calls";
 let Validate = new validation();
+let Calls = new calls();
 
 class SignUp extends React.Component {
   state = {
@@ -83,7 +84,12 @@ class SignUp extends React.Component {
         password: this.state.firstPassword,
         service: "advance",
       }
-      this.signUpWithdata(user);
+      Calls.signUpWithdata(user , (message) => {
+        this.setState({
+          snackbarMessage: message,
+          snackbarStatus: true,
+        });
+      });
     }
   };
 
@@ -94,27 +100,7 @@ class SignUp extends React.Component {
     });
   };
 
-  signUpWithdata(user) {
-    Axios.post(
-      "http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp",
-      user
-    )
-      .then((response) => {
-        console.log(response.data.data);
-        this.setState({
-          snackbarMessage: response.data.data.message,
-          snackbarStatus: true,
-        });
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error.response);
-        this.setState({
-          snackbarMessage: error.response.data.error.message,
-          snackbarStatus: true,
-        });
-      });
-  }
+  
 
   handleFirstName = (e) => {
     this.setState({
