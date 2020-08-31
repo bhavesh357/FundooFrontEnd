@@ -76,7 +76,14 @@ class SignUp extends React.Component {
       !lastNameStatus &&
       passwordsMatchingStatus
     ) {
-      this.signUpWithdata(this.state.email, this.state.firstName, this.state.lastName, this.state.firstPassword);
+      let user = {
+        email: this.state.email,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        password: this.state.firstPassword,
+        service: "advance",
+      }
+      this.signUpWithdata(user);
     }
   };
 
@@ -87,16 +94,10 @@ class SignUp extends React.Component {
     });
   };
 
-  signUpWithdata(email, firstName, lastName, password) {
+  signUpWithdata(user) {
     Axios.post(
       "http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp",
-      {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        password: password,
-        service: "advance",
-      }
+      user
     )
       .then((response) => {
         console.log(response.data.data);

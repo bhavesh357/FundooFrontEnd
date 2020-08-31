@@ -17,7 +17,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import validation from './../../service/validation';
+import validation from "./../../service/validation";
 let Validate = new validation();
 
 class ResetPassword extends React.Component {
@@ -32,7 +32,9 @@ class ResetPassword extends React.Component {
   };
 
   handleClickShowFirstPassword = () => {
-    this.setState((state) => ({ firstPasswordVisible: !state.firstPasswordVisible }));
+    this.setState((state) => ({
+      firstPasswordVisible: !state.firstPasswordVisible,
+    }));
   };
 
   handleClickShowSecondPassword = () => {
@@ -43,9 +45,15 @@ class ResetPassword extends React.Component {
 
   handleNext = () => {
     let patterns = Validate.getRegexs();
-    let firstPasswordStatus = Validate.validateInput(this.state.firstPassword,patterns.password);
-    let secondPasswordStatus = Validate.validateInput(this.state.secondPassword,patterns.password);
-    let passwordMatchStatus = this.checkIfSame(
+    let firstPasswordStatus = Validate.validateInput(
+      this.state.firstPassword,
+      patterns.password
+    );
+    let secondPasswordStatus = Validate.validateInput(
+      this.state.secondPassword,
+      patterns.password
+    );
+    let passwordMatchStatus = Validate.checkIfSame(
       this.state.firstPassword,
       this.state.secondPassword,
       firstPasswordStatus,
@@ -57,17 +65,18 @@ class ResetPassword extends React.Component {
       doPasswordsMatch: passwordMatchStatus,
     });
     if (passwordMatchStatus) {
-      this.resetWithData(this.state.firstPassword);
+      let user = {
+        newPassword: this.state.firstPassword,
+      };
+      this.resetWithData(user);
     }
   };
 
-  resetWithData(password) {
+  resetWithData(user) {
     Axios.post(
       "http://fundoonotes.incubation.bridgelabz.com/api/user/reset-password?access_token=" +
         this.props.match.params.token,
-      {
-        newPassword: password,
-      }
+      user
     )
       .then((response) => {
         console.log(response);
@@ -87,13 +96,6 @@ class ResetPassword extends React.Component {
         });
       });
   }
-
-  checkIfSame = (firstInput, secondInput, statusOfFirst, statusOfSecond) => {
-    if (firstInput === secondInput && !statusOfFirst && !statusOfSecond) {
-      return true;
-    }
-    return false;
-  };
 
   handleFirstPassword = (e) => {
     this.setState({

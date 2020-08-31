@@ -28,15 +28,16 @@ class ForgotPassword extends React.Component{
             isEmailInvalid: emailStatus,
         });
         if(!emailStatus){
-            this.resetWithdata(this.state.email);
+            let user = {
+                "email": this.state.email,
+            }
+            this.resetWithdata(user);
         }
         
     }
     
-    resetWithdata(email){
-        Axios.post('http://fundoonotes.incubation.bridgelabz.com/api/user/reset', {
-        "email": email,
-    })
+    resetWithdata(user){
+        Axios.post('http://fundoonotes.incubation.bridgelabz.com/api/user/reset', user)
     .then((response) => {
         console.log(response);
         this.setState({
