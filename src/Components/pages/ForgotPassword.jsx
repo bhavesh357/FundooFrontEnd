@@ -10,7 +10,14 @@ class ForgotPassword extends React.Component{
         isEmailInvalid: false,
         snackbarMessage:"hello",
         snackbarStatus:false,
+        email:"",
     };
+
+    handleEmail = (e) => {
+        this.setState({
+            email: e.target.value
+        });
+    }
     
     handleNext = () => {
         const emailRegex = /^[\w\d]{1,}[.\\\-#!]?[\w\d]{1,}@[\w\d]{1,}.[a-z]{2,3}.?([a-z]{2})?$/;
@@ -88,7 +95,7 @@ render(){
         <Typography className="page-subtitle">
         Enter your recovery Email
         </Typography>
-        <TextField id="email" className="sign-input" label="Email Id" size="small" variant="outlined" error={this.state.isEmailInvalid} helperText="Enter proper Email Id" />
+        <TextField onChange={this.handleEmail} value={this.state.email} id="email" className="sign-input" label="Email Id" size="small" variant="outlined" error={this.state.isEmailInvalid} helperText="Enter proper Email Id" />
         <CardActions className="sign-buttons">
         <Link to={"/"} className="sign-link" >
         Back

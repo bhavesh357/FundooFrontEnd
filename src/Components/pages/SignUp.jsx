@@ -27,7 +27,12 @@ class SignUp extends React.Component {
     isLastNameInvalid: false,
     isFirstPasswordInvalid: false,
     isSecondPasswordinvalid: false,
-    doPasswordsMatch: false,
+    doPasswordsMatch: true,
+    firstName: "",
+    lastName: "",
+    email: "",
+    firstPassword: "",
+    secondPassword: "",
   };
 
   handleClickShowPassword = () => {
@@ -42,11 +47,11 @@ class SignUp extends React.Component {
     const emailRegex = /^[\w\d]{1,}[.\\\-#!]?[\w\d]{1,}@[\w\d]{1,}.[a-z]{2,3}.?([a-z]{2})?$/;
     const nameRegex = /^[A-Z]{1}[a-z]{2,15}$/;
     const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[A-Za-z0-9@#!$%^&*()_]{8,})[A-Za-z0-9]+?[@#!$%^&*()_][A-Za-z0-9]{1,}?$/;
-    let email = document.getElementById("email").value;
-    let firstPassword = document.getElementById("password-first").value;
-    let secondPassword = document.getElementById("password-second").value;
-    let firstName = document.getElementById("first-name").value;
-    let lastName = document.getElementById("last-name").value;
+    let email = this.state.email;
+    let firstPassword = this.state.firstPassword;
+    let secondPassword = this.state.secondPassword;
+    let firstName = this.state.firstName;
+    let lastName = this.state.lastName;
     let firstPasswordStatus = this.validateInput(firstPassword, passwordRegex);
     let secondPasswordStatus = this.validateInput(
       secondPassword,
@@ -130,6 +135,36 @@ class SignUp extends React.Component {
     return true;
   };
 
+  handleFirstName = (e) => {
+    this.setState({
+      firstName: e.target.value,
+    });
+  };
+
+  handleLastName = (e) => {
+    this.setState({
+      lastName: e.target.value,
+    });
+  };
+
+  handleEmail = (e) => {
+    this.setState({
+      email: e.target.value,
+    });
+  };
+
+  handleFirstPassword = (e) => {
+    this.setState({
+      firstPassword: e.target.value,
+    });
+  };
+
+  handleSecondPassword = (e) => {
+    this.setState({
+      secondPassword: e.target.value,
+    });
+  };
+
   render() {
     return (
       <Grid container>
@@ -160,6 +195,8 @@ class SignUp extends React.Component {
                       id="first-name"
                       className="sign-input"
                       label="First Name"
+                      onChange={this.handleFirstName}
+                      value={this.state.firstName}
                       size="small"
                       variant="outlined"
                       error={this.state.isFirstNameInvalid}
@@ -171,6 +208,8 @@ class SignUp extends React.Component {
                       id="last-name"
                       className="sign-input"
                       label="Last Name"
+                      onChange={this.handleLastName}
+                      value={this.state.lastName}
                       size="small"
                       variant="outlined"
                       error={this.state.isLastNameInvalid}
@@ -182,6 +221,8 @@ class SignUp extends React.Component {
                   id="email"
                   className="sign-input"
                   label="Email Id"
+                  onChange={this.handleEmail}
+                  value={this.state.email}
                   size="small"
                   variant="outlined"
                   error={this.state.isEmailInvalid}
@@ -192,6 +233,8 @@ class SignUp extends React.Component {
                   type={this.state.showFirstPassword ? "text" : "password"}
                   className="sign-input"
                   label="Enter Password"
+                  onChange={this.handleFirstPassword}
+                  value={this.state.firstPassword}
                   size="small"
                   variant="outlined"
                   InputProps={{
@@ -219,6 +262,8 @@ class SignUp extends React.Component {
                   size="small"
                   type={this.state.showPassword ? "text" : "password"}
                   label="Re-enter Password"
+                  onChange={this.handleSecondPassword}
+                  value={this.state.secondPassword}
                   className="sign-input"
                   InputProps={{
                     endAdornment: (
@@ -236,7 +281,7 @@ class SignUp extends React.Component {
                       </InputAdornment>
                     ),
                   }}
-                  error={this.state.isSecondPasswordinvalid}
+                  error={this.state.isSecondPasswordinvalid || !this.state.doPasswordsMatch}
                   helperText={
                     this.state.doPasswordsMatch ? "" : "Passwords should match"
                   }
