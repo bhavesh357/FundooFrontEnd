@@ -17,6 +17,8 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import validation from './../../service/validation';
+let Validate = new validation();
 
 class ResetPassword extends React.Component {
   state = {
@@ -40,17 +42,12 @@ class ResetPassword extends React.Component {
   };
 
   handleNext = () => {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[A-Za-z0-9@#!$%^&*()_]{8,})[A-Za-z0-9]+?[@#!$%^&*()_][A-Za-z0-9]{1,}?$/;
-    let firstPassword = document.getElementById("password-first").value;
-    let secondPassword = document.getElementById("password-second").value;
-    let firstPasswordStatus = this.validateInput(firstPassword, passwordRegex);
-    let secondPasswordStatus = this.validateInput(
-      secondPassword,
-      passwordRegex
-    );
+    let patterns = Validate.getRegexs();
+    let firstPasswordStatus = Validate.validateInput(this.state.firstPassword,patterns.password);
+    let secondPasswordStatus = Validate.validateInput(this.state.secondPassword,patterns.password);
     let passwordMatchStatus = this.checkIfSame(
-      firstPassword,
-      secondPassword,
+      this.state.firstPassword,
+      this.state.secondPassword,
       firstPasswordStatus,
       secondPasswordStatus
     );
@@ -60,7 +57,7 @@ class ResetPassword extends React.Component {
       doPasswordsMatch: passwordMatchStatus,
     });
     if (passwordMatchStatus) {
-      this.resetWithData(firstPassword);
+      this.resetWithData(this.state.firstPassword);
     }
   };
 

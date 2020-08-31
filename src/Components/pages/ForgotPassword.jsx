@@ -4,6 +4,8 @@ import FundooLogo from './../FundooLogo';
 import PageTitle from './../PageTitle';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import validation from './../../service/validation';
+let Validate = new validation();
 
 class ForgotPassword extends React.Component{
     state = {
@@ -20,9 +22,9 @@ class ForgotPassword extends React.Component{
     }
     
     handleNext = () => {
-        const emailRegex = /^[\w\d]{1,}[.\\\-#!]?[\w\d]{1,}@[\w\d]{1,}.[a-z]{2,3}.?([a-z]{2})?$/;
-        let email= document.getElementById("email").value;
-        let emailStatus = this.validateInput(email,emailRegex);
+        let email= this.state.email;
+        let patterns = Validate.getRegexs();
+        let emailStatus = Validate.validateInput(email,patterns.email);
         this.setState({
             isEmailInvalid: emailStatus,
         });
@@ -54,13 +56,6 @@ class ForgotPassword extends React.Component{
 } 
 
 
-validateInput = (input,pattern) =>{
-    if(pattern.test(input)){
-        console.log(input);
-        return false;
-    }
-    return true;
-}
 
 handleSnackbarClose = (event,reason) =>{
     console.log(event,reason);
