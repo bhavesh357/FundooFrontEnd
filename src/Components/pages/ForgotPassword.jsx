@@ -3,8 +3,8 @@ import { Card, CardContent, Grid, Typography, TextField, CardActions, Button, Sn
 import FundooLogo from './../FundooLogo';
 import PageTitle from './../PageTitle';
 import { Link } from 'react-router-dom';
-import validation from './../../service/validation';
-import calls from './../../service/calls';
+import validation from '../../Service/validation';
+import calls from '../../Service/calls';
 let Validate = new validation();
 let Calls = new calls();
 
