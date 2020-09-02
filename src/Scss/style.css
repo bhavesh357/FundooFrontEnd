@@ -134,7 +134,7 @@
 }
 
 .header {
-  background: #ffffff;
+  background-color: #ffffff;
 }
 
 .app-bar {
@@ -145,10 +145,107 @@
 
 .header-title {
   font-weight: 500;
+  padding: 0.25em;
+  font-size: 21px !important;
+}
+
+.header-search {
+  position: relative;
+  border-radius: 0.5em;
+  background-color: #e1e3e4;
+  height: 3em;
+  opacity: 0.15;
+  color: #000;
+  margin-right: 0.25em;
+  margin-left: 0em;
+  width: 55%;
+  margin: 0em 4em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header-input-input {
+  padding: 0.2em;
+  padding-left: 1em;
+  width: 100%;
+  height: 100%;
+  color: #000 !important;
+  font-size: 1em !important;
+}
+
+.header-input-input input {
+  font-size: 1em;
+  padding: 0em 2em;
+  color: #000;
+}
+
+.header-icon {
+  padding: 10px;
+  height: 100%;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #5f6368;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.header-icon.search {
+  position: absolute;
+}
+
+.header-icon.clear {
+  position: absolute;
+  right: 0%;
+}
+
+.top-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0em 5em;
 }
 
 .keep-icon {
   width: 40px;
+}
+
+.header-logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0em 0.25em;
+}
+
+.user-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.user-photo {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
 }
 
 body {
@@ -157,7 +254,8 @@ body {
   height: 100vh;
   width: 100%;
   background: #ffffff;
-  font: 13px/27px "Roboto", "RobotoDraft", "Arial", sans-serif !important;
+  font: "Roboto", "RobotoDraft", "Arial", sans-serif !important;
+  color: #5f6368;
 }
 
 .App {
