@@ -69,7 +69,13 @@ class ResetPassword extends React.Component {
       let user = {
         newPassword: this.state.firstPassword,
       };
-      Calls.resetWithData(user,this.props.match.params.token, (message) => {
+      Calls.resetWithData(user, this.props.match.params.token, (response) => {
+        let message;
+        if (response.data === undefined) {
+          message = response.response.data.error.message;
+        } else {
+          message = response.data.message;
+        }
         this.setState({
           snackbarMessage: message,
           snackbarStatus: true,

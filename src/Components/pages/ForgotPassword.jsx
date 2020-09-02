@@ -32,11 +32,18 @@ class ForgotPassword extends React.Component{
             let user = {
                 "email": this.state.email,
             }
-            Calls.resetWithdata(user, (message) => {
+            Calls.resetWithdata(user, (response) => {
+                let message;
+                if(response.data === undefined){
+                    message = response.response.data.error.message;
+                }else{
+                    message = response.data.message;
+                }
                 this.setState({
-                  snackbarMessage: message,
-                  snackbarStatus: true,
+                    snackbarMessage: message,
+                    snackbarStatus: true,
                 });
+                
             });
         }
         

@@ -48,14 +48,23 @@ class SignUp extends React.Component {
 
   handleSignUp = () => {
     let patterns = Validate.getRegexs();
-    let firstPasswordStatus = Validate.validateInput(this.state.firstPassword, patterns.password);
+    let firstPasswordStatus = Validate.validateInput(
+      this.state.firstPassword,
+      patterns.password
+    );
     let secondPasswordStatus = Validate.validateInput(
       this.state.secondPassword,
       patterns.password
     );
     let emailStatus = Validate.validateInput(this.state.email, patterns.email);
-    let firstNameStatus = Validate.validateInput(this.state.firstName, patterns.name);
-    let lastNameStatus = Validate.validateInput(this.state.lastName, patterns.name);
+    let firstNameStatus = Validate.validateInput(
+      this.state.firstName,
+      patterns.name
+    );
+    let lastNameStatus = Validate.validateInput(
+      this.state.lastName,
+      patterns.name
+    );
     let passwordsMatchingStatus = Validate.checkIfSame(
       this.state.firstPassword,
       this.state.secondPassword,
@@ -83,8 +92,14 @@ class SignUp extends React.Component {
         lastName: this.state.lastName,
         password: this.state.firstPassword,
         service: "advance",
-      }
-      Calls.signUpWithdata(user , (message) => {
+      };
+      Calls.signUpWithdata(user, (response) => {
+        let message;
+        if (response.data === undefined) {
+          message = response.response.data.error.message;
+        } else {
+          message = response.data.message;
+        }
         this.setState({
           snackbarMessage: message,
           snackbarStatus: true,
@@ -99,8 +114,6 @@ class SignUp extends React.Component {
       snackbarStatus: false,
     });
   };
-
-  
 
   handleFirstName = (e) => {
     this.setState({
@@ -248,7 +261,10 @@ class SignUp extends React.Component {
                       </InputAdornment>
                     ),
                   }}
-                  error={this.state.isSecondPasswordinvalid || !this.state.doPasswordsMatch}
+                  error={
+                    this.state.isSecondPasswordinvalid ||
+                    !this.state.doPasswordsMatch
+                  }
                   helperText={
                     this.state.doPasswordsMatch ? "" : "Passwords should match"
                   }

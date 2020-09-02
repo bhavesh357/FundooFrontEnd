@@ -3,7 +3,7 @@ import FundooLogo from "./../FundooLogo";
 import PageTitle from "./../PageTitle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import {
   Card,
@@ -43,16 +43,22 @@ class SignIn extends React.Component {
         email: this.state.email,
         password: this.state.password,
       };
-      Calls.signInWithData(user ,(message) => {
-        this.setState({
-          snackbarMessage: message,
-          snackbarStatus: true,
-        });
-    });
-}
+      Calls.signInWithData(user, (response) => {
+        let message;
+        if (response.data === undefined) {
+          message = response.response.data.error.message;
+          this.setState({
+            snackbarMessage: message,
+            snackbarStatus: true,
+          });
+        } else {
+          console.log(this.props.history);
+          this.props.history.push("/notes");
+        }
+      });
+    }
   };
 
-  
   handleSnackbarClose = (event, reason) => {
     console.log(event, reason);
     this.setState({
