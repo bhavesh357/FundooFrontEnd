@@ -4,6 +4,7 @@
 @import './pageTitle';
 @import './signUp';
 @import './forgotPassword';
+@import './header';
 
 body{
     margin: 0em;
@@ -11,6 +12,7 @@ body{
     height: 100vh;
     width: 100%;
     background: $background-color;
+    font: $font !important;
 }
 
 .App{
@@ -18,6 +20,10 @@ body{
     min-height: 100%;
     background: $background-color;
     display: flex;
+}
+
+h1,h2,h3,h4,h5,h6{
+    color: $logo-color;
 }
 
 #root{

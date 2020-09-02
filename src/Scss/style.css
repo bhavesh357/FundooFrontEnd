@@ -1,3 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 #sign-in {
   width: 30%;
   border: #dadce0 solid 1px;
@@ -129,12 +133,31 @@
   }
 }
 
+.header {
+  background: #ffffff;
+}
+
+.app-bar {
+  -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+          box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+  border-bottom: #dadce0 solid 1px;
+}
+
+.header-title {
+  font-weight: 500;
+}
+
+.keep-icon {
+  width: 40px;
+}
+
 body {
   margin: 0em;
   padding: 0em;
   height: 100vh;
   width: 100%;
   background: #ffffff;
+  font: 13px/27px "Roboto", "RobotoDraft", "Arial", sans-serif !important;
 }
 
 .App {
@@ -144,6 +167,10 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #5f6368;
 }
 
 #root {
