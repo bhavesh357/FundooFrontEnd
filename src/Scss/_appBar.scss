@@ -38,11 +38,11 @@
 }
 
 .header-input-input{
-  input{
-    font-size: 1em;
-    padding: 0em 2em;
-    color: $black;
-}
+    input{
+        font-size: 1em;
+        padding: 0em 2em;
+        color: $black;
+    }
 }
 
 .header-icon{
@@ -111,11 +111,28 @@
 .list-icon{
     padding: 0.5em 0.5em !important;
     margin: 0em 0.5em !important;
+    &:hover{
+        background-color: $light-gray !important;
+    }
+}
+
+.list-item.active{
+    
+    &:hover{
+        background-color: $active-drawer !important;
+    }
+    .list-icon{
+        background-color: $active-drawer !important;
+    }
 }
 
 .list-item{
     display: flex;
     justify-content: space-between;
+    border-radius: 30px;
+    &:hover{
+        background-color: $light-gray;
+    }
 }
 
 .list-item-text{

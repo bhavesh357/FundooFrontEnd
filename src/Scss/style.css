@@ -271,6 +271,18 @@
   margin: 0em 0.5em !important;
 }
 
+.list-icon:hover {
+  background-color: #f1f3f4 !important;
+}
+
+.list-item.active:hover {
+  background-color: #feefc3 !important;
+}
+
+.list-item.active .list-icon {
+  background-color: #feefc3 !important;
+}
+
 .list-item {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -278,6 +290,11 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  border-radius: 30px;
+}
+
+.list-item:hover {
+  background-color: #f1f3f4;
 }
 
 .list-item-text {
