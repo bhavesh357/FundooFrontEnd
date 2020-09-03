@@ -18,6 +18,7 @@ class Dashboard extends React.Component {
   };
 
   handleDrawerOpen = () => {
+    console.log("Toggled");
     this.setState({
       drawerOpen: !this.state.drawerOpen,
     });
@@ -42,7 +43,7 @@ class Dashboard extends React.Component {
           drawerOpen={this.state.drawerOpen}
         />
         <MiniDrawer 
-          menuClose={this.handleDrawerClose}
+          menuOpen={this.handleDrawerOpen}
           drawerOpen={this.state.drawerOpen}
         />
         <main className="content">

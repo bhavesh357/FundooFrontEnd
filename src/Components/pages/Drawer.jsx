@@ -103,7 +103,7 @@ export default function MiniDrawer(props) {
 
   let listItems = items.map((item) => {
     return (
-      <div className="list-item" key={item.name}>
+      <div className={item.name!=="Notes" ? "list-item" : "list-item active"} onMouseOver={props.menuOpen} onMouseOut={props.menuOpen} key={item.name}>
         <IconButton className="list-icon" >{item.icon}</IconButton>
         <Typography className="list-item-text" >{item.name}</Typography>
       </div>
