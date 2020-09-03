@@ -1,0 +1,10 @@
+@import './variables';
+
+.dashboard{
+    display: flex;
+}
+
+.content{
+    flex-grow: 1;
+    padding: 8em 3em;
+}

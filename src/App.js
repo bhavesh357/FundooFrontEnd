@@ -5,7 +5,7 @@ import SignIn from './Components/pages/SignIn';
 import SignUp from './Components/pages/SignUp';
 import ForgotPassword from './Components/pages/ForgotPassword';
 import ResetPassword from './Components/pages/ResetPassword';
-import Notes from './Components/pages/Notes';
+import Dashboard from './Components/pages/Dashboard';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path='/signup' exact component={SignUp}></Route>
           <Route path='/forgotpassword' exact component={ForgotPassword}></Route>
           <Route path={'/resetpassword/:token'} component={ResetPassword}></Route>
-          <Route path={'/notes'} component={Notes}></Route>
+          <Route path={'/dashboard'} component={Dashboard}></Route>
         </Switch>
       </BrowserRouter>
     </div>
