@@ -4,11 +4,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
+import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
+import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import { IconButton, Typography } from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -74,13 +75,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let items = [
+  {
+    name: "Notes",
+    icon: <EmojiObjectsOutlinedIcon />,
+  },
+  {
+    name: "Reminders",
+    icon: <NotificationsNoneOutlinedIcon />,
+  },
+  {
+    name: "Edit Labels",
+    icon: <CreateOutlinedIcon />,
+  },
+  {
+    name: "Archive",
+    icon: <ArchiveOutlinedIcon />,
+  },
+  {
+    name: "Trash",
+    icon: <DeleteForeverOutlinedIcon />,
+  },
+];
+
 export default function MiniDrawer(props) {
   const classes = useStyles();
+
+  let listItems = items.map((item) => {
+    return (
+      <div className="list-item" key={item.name}>
+        <IconButton className="list-icon" >{item.icon}</IconButton>
+        <Typography className="list-item-text" >{item.name}</Typography>
+      </div>
+    )
+  });
 
   return (
     <Drawer
       variant="permanent"
-      className={clsx(classes.drawer,"drawer", {
+      className={clsx(classes.drawer, "drawer", {
         [classes.drawerOpen]: props.drawerOpen,
         [classes.drawerClose]: !props.drawerOpen,
       })}
@@ -93,23 +126,7 @@ export default function MiniDrawer(props) {
     >
       <Divider />
       <List>
-        <ListItem button key="test">
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="inbox" />
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {listItems}
       </List>
     </Drawer>
   );
