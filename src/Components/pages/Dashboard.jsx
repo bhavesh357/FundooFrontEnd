@@ -7,7 +7,7 @@ class Dashboard extends React.Component {
   state = {
     snackbarMessage: "hello",
     snackbarStatus: false,
-    drawerOpen: true,
+    drawerOpen: false,
   };
 
   handleSnackbarClose = (event, reason) => {
@@ -19,15 +19,10 @@ class Dashboard extends React.Component {
 
   handleDrawerOpen = () => {
     this.setState({
-      drawerOpen: true,
+      drawerOpen: !this.state.drawerOpen,
     });
   };
 
-  handleDrawerClose = () => {
-    this.setState({
-      drawerOpen: false,
-    });
-  };
 
   render() {
     return (
@@ -46,7 +41,7 @@ class Dashboard extends React.Component {
           menuOpen={this.handleDrawerOpen}
           drawerOpen={this.state.drawerOpen}
         />
-        <MiniDrawer
+        <MiniDrawer 
           menuClose={this.handleDrawerClose}
           drawerOpen={this.state.drawerOpen}
         />

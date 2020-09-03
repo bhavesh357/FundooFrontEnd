@@ -82,9 +82,7 @@ export default function MiniAppBar(props) {
   return (
       <AppBar
         position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: props.drawerOpen,
-        })}
+        className={clsx(classes.appBar,"app-bar")}
       >
         <Toolbar>
           <IconButton
@@ -92,9 +90,7 @@ export default function MiniAppBar(props) {
             aria-label="open drawer"
             onClick={props.menuOpen }
             edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: props.drawerOpen,
-            })}
+            className={clsx(classes.menuButton)}
           >
             <MenuIcon className="menu-icon" />
           </IconButton>
@@ -103,8 +99,8 @@ export default function MiniAppBar(props) {
             <Typography className="header-title">Notes</Typography>
           </div>
           <div className="header-search">
-            <IconButton>
-              <SearchIcon className="header-icon search" />
+            <IconButton className="floating-icon" >
+              <SearchIcon className="search" />
             </IconButton>
             <InputBase
               placeholder="Search…"
@@ -112,8 +108,8 @@ export default function MiniAppBar(props) {
               inputProps={{ "aria-label": "search" }}
             />
 
-            <IconButton>
-              <ClearIcon className="header-icon clear" />
+            <IconButton className="floating-icon" >
+              <ClearIcon className="clear" />
             </IconButton>
           </div>
           <div className="top-menu">
