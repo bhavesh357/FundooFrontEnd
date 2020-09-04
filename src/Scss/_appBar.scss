@@ -126,6 +126,10 @@
     }
 }
 
+.opened.list-item.active{
+    background-color: $active-drawer !important;
+}
+
 .list-item{
     display: flex;
     justify-content: space-between;

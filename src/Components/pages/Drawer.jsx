@@ -11,7 +11,7 @@ import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { IconButton, Typography } from "@material-ui/core";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,12 +99,14 @@ let items = [
 ];
 
 
+
 export default function MiniDrawer(props) {
   const classes = useStyles();
+  const isActive = props.drawerOpen || props.tempDrawerOpen ? "opened " : "";
 
   let listItems = items.map((item) => {
     return (
-      <div className={item.name!=="Notes" ? "list-item" : "list-item active"} onMouseOver={props.menuOpen} onMouseOut={props.menuClose} key={item.name}>
+      <div className={item.name!=="Notes" ? isActive+"list-item" : isActive+"list-item active"} onMouseOver={props.menuOpen} onMouseOut={props.menuClose} key={item.name}>
         <IconButton className="list-icon" >{item.icon}</IconButton>
         <Typography className="list-item-text" >{item.name}</Typography>
       </div>

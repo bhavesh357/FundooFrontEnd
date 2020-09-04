@@ -283,6 +283,10 @@
   background-color: #feefc3 !important;
 }
 
+.opened.list-item.active {
+  background-color: #feefc3 !important;
+}
+
 .list-item {
   display: -webkit-box;
   display: -ms-flexbox;
