@@ -104,7 +104,7 @@ export default function MiniDrawer(props) {
 
   let listItems = items.map((item) => {
     return (
-      <div className={item.name!=="Notes" ? "list-item" : "list-item active"} onMouseOver={props.menuOpen} onMouseOut={props.menuOpen} key={item.name}>
+      <div className={item.name!=="Notes" ? "list-item" : "list-item active"} onMouseOver={props.menuOpen} onMouseOut={props.menuClose} key={item.name}>
         <IconButton className="list-icon" >{item.icon}</IconButton>
         <Typography className="list-item-text" >{item.name}</Typography>
       </div>
@@ -115,13 +115,13 @@ export default function MiniDrawer(props) {
     <Drawer
       variant="permanent"
       className={clsx(classes.drawer, "drawer", {
-        [classes.drawerOpen]: props.drawerOpen,
-        [classes.drawerClose]: !props.drawerOpen,
+        [classes.drawerOpen]: props.drawerOpen || props.tempDrawerOpen,
+        [classes.drawerClose]: !props.drawerOpen && !props.tempDrawerOpen,
       })}
       classes={{
         paper: clsx({
-          [classes.drawerOpen]: props.drawerOpen,
-          [classes.drawerClose]: !props.drawerOpen,
+          [classes.drawerOpen]: props.drawerOpen || props.tempDrawerOpen,
+          [classes.drawerClose]: !props.drawerOpen && !props.tempDrawerOpen,
         }),
       }}
     >
