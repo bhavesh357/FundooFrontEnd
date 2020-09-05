@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -79,6 +79,14 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniAppBar(props) {
   const classes = useStyles();
 
+  const [searchFocus , setSearchfocus] = useState(props.searchFocus);
+
+  const handleSearchFocus  = () => {
+    setSearchfocus(true);
+    console.log(document.getElementById("search-input")===document.activeElement);
+  }
+  
+
   return (
       <AppBar
         position="fixed"
@@ -98,17 +106,18 @@ export default function MiniAppBar(props) {
             <img src={keepIcon} alt="logo" className="keep-icon" />
             <Typography className="header-title">Notes</Typography>
           </div>
-          <div className="header-search">
+          <div className={searchFocus ? "header-search floated": "header-search"}>
             <IconButton className="floating-icon" >
               <SearchIcon className="search" />
             </IconButton>
             <InputBase
+              id="search-input"
               placeholder="Search…"
+              onFocus={handleSearchFocus} 
               className="header-input-root header-input-input"
               inputProps={{ "aria-label": "search" }}
             />
-
-            <IconButton className="floating-icon" >
+            <IconButton className={searchFocus ? "floating-icon":"floating-icon icon-invisible"} id="search-clear-button">
               <ClearIcon className="clear" />
             </IconButton>
           </div>
