@@ -17,6 +17,9 @@ const theme = createMuiTheme({
       main: "#ffffff",
     },
   },
+  typography:{
+    fontFamily: "'Roboto',Ariel, sans-serif",
+  },
 });
 
 ReactDOM.render(

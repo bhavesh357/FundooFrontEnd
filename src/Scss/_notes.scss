@@ -13,11 +13,21 @@
 
 .note{
     justify-content: center;
+    font-family: $sans-font !important;
+    letter-spacing: .01428571em;
 }
 
 .note-content{
     max-height: 18em;
     overflow: hidden;
+}
+
+.card-title{
+    padding:  0.5em 0em 0.5em 0em !important;
+    h6{
+        font-weight: 600 !important;
+        font-size: 1em !important;
+    }
 }
 
 .note-content.checklist{
@@ -29,7 +39,8 @@
 .list-check-icon{
     padding: 0 !important;
     svg{
-        height: 20px;
+        height: 18px;
+        width: 18px;
     }
 }
 
@@ -42,4 +53,7 @@
 
 .list-item{
     padding: 0em 1em !important;
+    &:hover{
+        background: none !important;
+    }
 }

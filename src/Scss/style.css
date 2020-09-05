@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto&display=swap");
 #sign-in {
   width: 30%;
   border: #dadce0 solid 1px;
@@ -322,7 +322,7 @@
   text-align: start;
   font-size: .875rem !important;
   font-weight: 600 !important;
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
 }
 
 .MuiDrawer-paperAnchorDockedLeft {
@@ -362,11 +362,22 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  font-family: "Open Sans", sans-serif !important;
+  letter-spacing: .01428571em;
 }
 
 .note-content {
   max-height: 18em;
   overflow: hidden;
+}
+
+.card-title {
+  padding: 0.5em 0em 0.5em 0em !important;
+}
+
+.card-title h6 {
+  font-weight: 600 !important;
+  font-size: 1em !important;
 }
 
 .note-content.checklist {
@@ -383,7 +394,8 @@
 }
 
 .list-check-icon svg {
-  height: 20px;
+  height: 18px;
+  width: 18px;
 }
 
 .list-item-icon {
@@ -396,6 +408,10 @@
 
 .list-item {
   padding: 0em 1em !important;
+}
+
+.list-item:hover {
+  background: none !important;
 }
 
 body {
@@ -419,10 +435,6 @@ li {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #5f6368;
 }
 
 #root {
