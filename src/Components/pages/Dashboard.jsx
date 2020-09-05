@@ -1,7 +1,7 @@
 import React from "react";
 import { Snackbar } from "@material-ui/core";
-import AppBar from "./AppBar";
-import MiniDrawer from "./Drawer";
+import AppBar from "../AppBar";
+import MiniDrawer from "../Drawer";
 import Notes from "../Notes";
 
 class Dashboard extends React.Component {

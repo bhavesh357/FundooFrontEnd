@@ -18,6 +18,10 @@ body{
     color: $logo-color;
 }
 
+li{
+    display: block;
+}
+
 .App{
     width: 100%;
     min-height: 100%;

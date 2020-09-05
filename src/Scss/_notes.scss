@@ -19,3 +19,27 @@
     max-height: 18em;
     overflow: hidden;
 }
+
+.note-content.checklist{
+    padding-inline-start: 0em !important;
+    margin-block-start: 0em !important;
+    margin-block-end: 0em !important;
+}
+
+.list-check-icon{
+    padding: 0 !important;
+    svg{
+        height: 20px;
+    }
+}
+
+.list-item-icon{
+    min-width: 20px !important;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    align-self: baseline;
+}
+
+.list-item{
+    padding: 0em 1em !important;
+}
