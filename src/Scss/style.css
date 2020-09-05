@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
 #sign-in {
   width: 30%;
   border: #dadce0 solid 1px;
@@ -332,6 +333,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  width: inherit;
 }
 
 .content {
@@ -343,6 +345,28 @@
 
 .drawer .MuiPaper-root {
   margin-top: 4em;
+}
+
+.note-card {
+  padding: 1em;
+  text-align: start;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.note-row {
+  height: 10em;
+}
+
+.note {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.note-content {
+  max-height: 18em;
+  overflow: hidden;
 }
 
 body {

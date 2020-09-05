@@ -1,0 +1,21 @@
+@import './variables';
+
+.note-card{
+    padding: 1em;
+    text-align: start;
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+
+.note-row{
+    height: 10em;
+}
+
+.note{
+    justify-content: center;
+}
+
+.note-content{
+    max-height: 18em;
+    overflow: hidden;
+}
