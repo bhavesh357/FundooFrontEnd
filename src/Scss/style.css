@@ -362,7 +362,7 @@
 }
 
 .note-card {
-  padding: 1em;
+  padding-bottom: 0em;
   text-align: start;
   border-radius: 10px !important;
   overflow: hidden;
@@ -381,12 +381,13 @@
 }
 
 .note-content {
+  padding: 0em 1em;
   max-height: 18em;
   overflow: hidden;
 }
 
 .card-title {
-  padding: 0.5em 0em 0.5em 0em !important;
+  padding: 1.5em 1em 1em 1em !important;
 }
 
 .card-title h6 {
@@ -426,6 +427,37 @@
 
 .list-item:hover {
   background: none !important;
+}
+
+.note-action-buttons {
+  max-width: 100%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding-top: 1em !important;
+}
+
+.note-action-buttons div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  padding-left: 0.5em;
+}
+
+.note-actions {
+  padding: 8px 0px !important;
+}
+
+.note-action-buttons .button {
+  padding: 4px;
+}
+
+.note-action-buttons .button svg {
+  height: 18px;
+  width: 18px;
 }
 
 body {

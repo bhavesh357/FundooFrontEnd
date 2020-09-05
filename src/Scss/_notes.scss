@@ -1,7 +1,7 @@
 @import './variables';
 
 .note-card{
-    padding: 1em;
+    padding-bottom: 0em;
     text-align: start;
     border-radius: 10px !important;
     overflow: hidden;
@@ -18,12 +18,13 @@
 }
 
 .note-content{
+    padding: 0em 1em ;
     max-height: 18em;
     overflow: hidden;
 }
 
 .card-title{
-    padding:  0.5em 0em 0.5em 0em !important;
+    padding:  1.5em 1em 1em 1em !important;
     h6{
         font-weight: 600 !important;
         font-size: 1em !important;
@@ -56,4 +57,27 @@
     &:hover{
         background: none !important;
     }
+}
+
+.note-action-buttons{
+    max-width: 100%;
+    justify-content: flex-end;
+    padding-top: 1em !important;
+    div{
+        display: flex;
+        justify-content: space-evenly;
+        padding-left: 0.5em;
+    }
+}
+
+.note-actions{
+    padding: 8px 0px !important;
+}
+
+.note-action-buttons .button{
+    svg{
+        height: 18px;
+        width: 18px;
+    }
+    padding: 4px;
 }
