@@ -209,6 +209,10 @@
   right: 2%;
 }
 
+.menu-icon-button {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
 .top-menu {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -289,13 +293,13 @@
 }
 
 .drawer-list {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 8px 0 !important;
   padding-top: 8px;
   padding-bottom: 8px;
-  margin-left: -1em;
-  position: relative;
-  list-style: none;
+  margin-left: -1em !important;
+  position: relative !important;
+  list-style: none !important;
 }
 
 .list-item {
@@ -399,7 +403,7 @@
 }
 
 .list-item-icon {
-  min-width: 20px !important;
+  min-width: 15px !important;
   margin-top: 4px;
   margin-bottom: 4px;
   -ms-flex-item-align: baseline;

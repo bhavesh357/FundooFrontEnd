@@ -128,7 +128,7 @@ export default function MiniDrawer(props) {
       }}
     >
       <Divider />
-      <List class="drawer-list">
+      <List className="drawer-list">
         {listItems}
       </List>
     </Drawer>

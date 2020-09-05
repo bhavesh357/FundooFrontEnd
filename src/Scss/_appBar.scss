@@ -65,6 +65,10 @@
     right: 2%;
 }
 
+.menu-icon-button{
+    background: $icon-button-hover !important;
+}
+
 .top-menu{
     display: flex;
     padding: 0em 5em;
@@ -130,13 +134,13 @@
     background-color: $active-drawer !important;
 }
 .drawer-list{
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 8px 0 !important;
     padding-top: 8px;
     padding-bottom: 8px;
-    margin-left: -1em;
-    position: relative;
-    list-style: none;
+    margin-left: -1em !important;
+    position: relative !important;
+    list-style: none !important;
 }
 
 .list-item{

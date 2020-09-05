@@ -90,7 +90,7 @@ export default function MiniAppBar(props) {
             aria-label="open drawer"
             onClick={props.menuOpen }
             edge="start"
-            className={clsx(classes.menuButton)}
+            className={clsx(classes.menuButton,props.drawerOpen ? "menu-icon-button": "")}
           >
             <MenuIcon className="menu-icon" />
           </IconButton>
