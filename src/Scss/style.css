@@ -365,7 +365,30 @@
   padding-bottom: 0em;
   text-align: start;
   border-radius: 10px !important;
-  overflow: hidden;
+  overflow: inherit !important;
+  position: relative;
+}
+
+.note-card:hover {
+  -webkit-box-shadow: 0 1px 3px 0px #000;
+          box-shadow: 0 1px 3px 0px #000;
+}
+
+.note-card:hover .select-button {
+  display: block !important;
+}
+
+.note-card:hover .pin-button {
+  display: block !important;
+}
+
+.note-card:hover .note-actions {
+  padding: 8px 0px !important;
+  display: block !important;
+}
+
+.note-card:hover .note-action-buttons .button {
+  display: block !important;
 }
 
 .note-row {
@@ -396,8 +419,8 @@
 }
 
 .note-content.checklist {
-  -webkit-padding-start: 0em !important;
-          padding-inline-start: 0em !important;
+  -webkit-padding-start: 0.5em !important;
+          padding-inline-start: 0.5em !important;
   -webkit-margin-before: 0em !important;
           margin-block-start: 0em !important;
   -webkit-margin-after: 0em !important;
@@ -448,10 +471,25 @@
 }
 
 .note-actions {
-  padding: 8px 0px !important;
+  padding: 21px 0px !important;
+  display: block !important;
+}
+
+.select-button {
+  position: absolute !important;
+  top: -6%;
+  left: -4%;
+  display: none !important;
+}
+
+.pin-button {
+  position: absolute !important;
+  right: 0%;
+  display: none !important;
 }
 
 .note-action-buttons .button {
+  display: none !important;
   padding: 4px;
 }
 

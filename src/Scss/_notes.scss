@@ -4,7 +4,24 @@
     padding-bottom: 0em;
     text-align: start;
     border-radius: 10px !important;
-    overflow: hidden;
+    overflow: inherit !important;
+    position: relative;
+    &:hover{
+        box-shadow: $box-shadow-general;
+        .select-button{
+            display: block !important;
+        }
+        .pin-button{
+            display: block !important;
+        }
+        .note-actions{
+            padding: 8px 0px !important;
+            display: block !important;
+        }
+        .note-action-buttons .button{
+            display: block !important;
+        }
+    }
 }
 
 .note-row{
@@ -32,7 +49,7 @@
 }
 
 .note-content.checklist{
-    padding-inline-start: 0em !important;
+    padding-inline-start: 0.5em !important;
     margin-block-start: 0em !important;
     margin-block-end: 0em !important;
 }
@@ -70,11 +87,29 @@
     }
 }
 
+
+
+
 .note-actions{
-    padding: 8px 0px !important;
+    padding: 21px 0px !important;
+    display: block !important;
+}
+
+.select-button{
+    position: absolute !important;
+    top: -6%;
+    left: -4%;
+    display: none !important;
+}
+
+.pin-button{
+    position: absolute !important;
+    right: 0%;
+    display: none !important;
 }
 
 .note-action-buttons .button{
+    display: none !important;
     svg{
         height: 18px;
         width: 18px;
