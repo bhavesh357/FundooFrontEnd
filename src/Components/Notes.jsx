@@ -35,12 +35,55 @@ class Notes extends React.Component {
   handleNewNote = () => {
     console.log("test");
     this.setState({
-      isNewNote: true,
+      isNewNote: !this.state.isNewNote,
     });
   };
 
   render() {
-    let newNoteSmall = (
+    let newNoteBig= <Card className="new-note-big">
+    <InputBase
+      placeholder="Title"
+      className="new-note-title-input"
+      inputProps={{ "aria-label": "search" }}
+    />
+    <InputBase
+      placeholder="Take a Note..."
+      className="new-note-text-input"
+      inputProps={{ "aria-label": "search" }}
+    />
+    <div className="new-note-buttons">
+      <div className="new-note-action-button">
+        <IconButton className="new-note-icon">
+          <AddAlertOutlinedIcon />
+        </IconButton>
+        <IconButton className="new-note-icon">
+          <PersonAddOutlinedIcon />
+        </IconButton>
+        <IconButton className="new-note-icon">
+          <ColorLensOutlinedIcon />
+        </IconButton>
+        <IconButton className="new-note-icon">
+          <CropOriginalIcon />
+        </IconButton>
+        <IconButton className="new-note-icon">
+          <ArchiveOutlinedIcon />
+        </IconButton>
+        <IconButton className="new-note-icon">
+          <MoreVertIcon />
+        </IconButton>
+        <IconButton disabled className="new-note-icon">
+          <UndoIcon />
+        </IconButton>
+        <IconButton disabled className="new-note-icon">
+          <RedoIcon />
+        </IconButton>
+      </div>
+      <div className="new-note-close-button">
+      <Button onClick={this.handleNewNote}>Close</Button>
+      </div>
+    </div>
+  </Card> 
+    let newNoteSmall = 
       <Card className="new-note-small">
         {" "}
         <InputBase
@@ -57,53 +100,10 @@ class Notes extends React.Component {
           </IconButton>
         </div>
       </Card>
-    );
     return (
       <Grid container className="note">
         <Grid item md={6} onClick={this.handleNewNote}>
-          <Card className="new-note-big">
-            <InputBase
-              placeholder="Title"
-              className="new-note-title-input"
-              inputProps={{ "aria-label": "search" }}
-            />
-            <InputBase
-              placeholder="Take a Note..."
-              className="new-note-text-input"
-              inputProps={{ "aria-label": "search" }}
-            />
-            <div className="new-note-buttons">
-              <div className="new-note-action-button">
-                <IconButton className="new-note-icon">
-                  <AddAlertOutlinedIcon />
-                </IconButton>
-                <IconButton className="new-note-icon">
-                  <PersonAddOutlinedIcon />
-                </IconButton>
-                <IconButton className="new-note-icon">
-                  <ColorLensOutlinedIcon />
-                </IconButton>
-                <IconButton className="new-note-icon">
-                  <CropOriginalIcon />
-                </IconButton>
-                <IconButton className="new-note-icon">
-                  <ArchiveOutlinedIcon />
-                </IconButton>
-                <IconButton className="new-note-icon">
-                  <MoreVertIcon />
-                </IconButton>
-                <IconButton disabled className="new-note-icon">
-                  <UndoIcon />
-                </IconButton>
-                <IconButton disabled className="new-note-icon">
-                  <RedoIcon />
-                </IconButton>
-              </div>
-              <div className="new-note-close-button">
-              <Button>Close</Button>
-              </div>
-            </div>
-          </Card>
+            {this.state.isNewNote ? newNoteBig : newNoteSmall  }
         </Grid>
         <Grid item md={this.props.isDrawerOpen ? 12 : 10}>
           <Grid container spacing={2} className="note-row">
