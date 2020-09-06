@@ -108,10 +108,20 @@ export default function MiniDrawer(props) {
     history.push("/dashboard/" + name);
   };
 
+  const handleEditLabels= () => {
+
+  }
+
   let listItems = items.map((item) => {
     return (
       <div
-        onClick={()=>handleClick(""+item.name)}
+        onClick={() => {
+          if (item.name !== "Edit Labels") {
+            handleClick("" + item.name);
+          }else{
+            handleEditLabels();
+          }
+        }}
         className={
           item.name !== "Notes"
             ? isActive + "list-item"

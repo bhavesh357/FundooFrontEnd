@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -11,6 +11,7 @@ import ClearIcon from "@material-ui/icons/Clear";
 import ViewStreamIcon from "@material-ui/icons/ViewStream";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import { IconButton, Toolbar, Typography, InputBase } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -78,12 +79,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MiniAppBar(props) {
   const classes = useStyles();
-
-  const [searchFocus , setSearchfocus] = useState(props.searchFocus);
+  const history = useHistory();
 
   const handleSearchFocus  = () => {
-    setSearchfocus(true);
-    console.log(document.getElementById("search-input")===document.activeElement);
+    history.push("/dashboard/search");
   }
   
 
@@ -106,7 +105,7 @@ export default function MiniAppBar(props) {
             <img src={keepIcon} alt="logo" className="keep-icon" />
             <Typography className="header-title">Notes</Typography>
           </div>
-          <div className={searchFocus ? "header-search floated": "header-search"}>
+          <div className={props.searchFocus ? "header-search floated": "header-search"}>
             <IconButton className="floating-icon" >
               <SearchIcon className="search" />
             </IconButton>
@@ -117,7 +116,7 @@ export default function MiniAppBar(props) {
               className="header-input-root header-input-input"
               inputProps={{ "aria-label": "search" }}
             />
-            <IconButton className={searchFocus ? "floating-icon":"floating-icon icon-invisible"} id="search-clear-button">
+            <IconButton className={props.searchFocus ? "floating-icon":"floating-icon icon-invisible"} id="search-clear-button">
               <ClearIcon className="clear" />
             </IconButton>
           </div>

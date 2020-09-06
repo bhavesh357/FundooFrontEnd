@@ -31,7 +31,7 @@
 .note{
     justify-content: center;
     font-family: $sans-font !important;
-    letter-spacing: .01428571em;
+    letter-spacing: $letter-spacing;
 }
 
 .note-content{

@@ -7,6 +7,7 @@
 @import './appBar';
 @import './dashboard';
 @import './notes';
+@import './search';
 
 body{
     margin: 0em;
@@ -16,6 +17,7 @@ body{
     background: $background-color;
     font: $font !important;
     color: $logo-color;
+    letter-spacing: $letter-spacing;
 }
 
 li{

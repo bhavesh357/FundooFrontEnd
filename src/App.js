@@ -6,6 +6,7 @@ import SignUp from './Components/pages/SignUp';
 import ForgotPassword from './Components/pages/ForgotPassword';
 import ResetPassword from './Components/pages/ResetPassword';
 import Dashboard from './Components/pages/Dashboard';
+import Search from './Components/pages/Search';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/signup' exact component={SignUp}></Route>
           <Route path='/forgotpassword' exact component={ForgotPassword}></Route>
           <Route path={'/resetpassword/:token'} component={ResetPassword}></Route>
+          <Route path={'/dashboard/search'} exact component={Search}></Route>
           <Route path={'/dashboard/:page'} component={Dashboard}></Route>
         </Switch>
       </BrowserRouter>
