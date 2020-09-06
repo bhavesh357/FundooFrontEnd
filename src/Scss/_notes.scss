@@ -103,7 +103,7 @@
 
 .select-button{
     position: absolute !important;
-    top: -6%;
+    top: -20px;
     left: -4%;
     display: none !important;
 }
@@ -121,4 +121,67 @@
         width: 18px;
     }
     padding: 4px;
+}
+
+.new-note-small{
+    box-shadow: $box-shadow-general !important;
+    padding: 0em 1em !important;
+    margin: 1em 0em 3em 0em !important;
+    border-radius: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    position: absolute;
+    width: 50%;
+    top: 12%
+}
+
+.new-note-big{
+    box-shadow: $box-shadow-general !important;
+    padding: 0.25em 1em !important;
+    margin: 1em 0em 3em 0em !important;
+    border-radius: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    top: 12%;
+}
+
+.new-note-input{
+    font-weight: 600 !important;
+}
+
+.new-note-title-input{
+    padding: 0.5em 0em 1em 0em !important;
+    font-size: 0.9em !important;
+    font-weight: 600 !important;
+}
+
+.new-note-text-input{
+    padding: 0em 0em 0em 0em !important;
+    font-size: 0.85em !important;
+    font-weight: 600 !important;
+}
+
+.new-note-buttons{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+
+.new-note-icon{
+    padding: 0.5em 0.5em !important;
+    margin: 0em 0.2em !important;
+    svg{
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+.new-note-close-button{
+    font-family: $sans-font !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
