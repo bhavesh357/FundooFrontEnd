@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
   };
   
   handleDrawerToggle = () => {
+    console.log(this.props.history);
     console.log("Toggled");
     this.setState({
       drawerOpen: !this.state.drawerOpen,

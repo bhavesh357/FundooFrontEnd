@@ -4,12 +4,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
-import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
+import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
+import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import { IconButton, Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 280;
 
@@ -98,24 +99,37 @@ let items = [
   },
 ];
 
-
-
 export default function MiniDrawer(props) {
   const classes = useStyles();
   const isActive = props.drawerOpen || props.tempDrawerOpen ? "opened " : "";
 
+  const history = useHistory();
+  const handleClick = (name) => {
+    history.push("/dashboard/" + name);
+  };
+
   let listItems = items.map((item) => {
     return (
-      <div className={item.name!=="Notes" ? isActive+"list-item" : isActive+"list-item active"} onMouseOver={props.menuOpen} onMouseOut={props.menuClose} key={item.name}>
-        <IconButton className="list-icon" >{item.icon}</IconButton>
-        <Typography className="list-item-text" >{item.name}</Typography>
+      <div
+        onClick={()=>handleClick(""+item.name)}
+        className={
+          item.name !== "Notes"
+            ? isActive + "list-item"
+            : isActive + "list-item active"
+        }
+        key={item.name}
+      >
+        <IconButton className="list-icon">{item.icon}</IconButton>
+        <Typography className="list-item-text">{item.name}</Typography>
       </div>
-    )
+    );
   });
 
   return (
     <Drawer
       variant="permanent"
+      onMouseOver={props.menuOpen}
+      onMouseOut={props.menuClose}
       className={clsx(classes.drawer, "drawer", {
         [classes.drawerOpen]: props.drawerOpen || props.tempDrawerOpen,
         [classes.drawerClose]: !props.drawerOpen && !props.tempDrawerOpen,
@@ -128,9 +142,7 @@ export default function MiniDrawer(props) {
       }}
     >
       <Divider />
-      <List className="drawer-list">
-        {listItems}
-      </List>
+      <List className="drawer-list">{listItems}</List>
     </Drawer>
   );
 }

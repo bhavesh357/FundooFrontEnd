@@ -444,14 +444,6 @@
       align-self: baseline;
 }
 
-.list-item {
-  padding: 0em 1em !important;
-}
-
-.list-item:hover {
-  background: none !important;
-}
-
 .note-action-buttons {
   max-width: 100%;
   -webkit-box-pack: end;
