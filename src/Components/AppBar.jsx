@@ -103,7 +103,7 @@ export default function MiniAppBar(props) {
           </IconButton>
           <div className="header-logo">
             <img src={keepIcon} alt="logo" className="keep-icon" />
-            <Typography className="header-title">Notes</Typography>
+            <Typography className="header-title">{props.title}</Typography>
           </div>
           <div className={props.searchFocus ? "header-search floated": "header-search"}>
             <IconButton className="floating-icon" >

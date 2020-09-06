@@ -35,7 +35,7 @@
 }
 
 .note-content{
-    padding: 0em 1em ;
+    padding: 0em 1em !important;
     max-height: 18em;
     overflow: hidden;
 }
@@ -61,6 +61,18 @@
         width: 18px;
     }
 }
+
+.list-item-checklist{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 30px;
+    padding-top: 0em !important;
+    cursor: pointer;
+    &:hover{
+        background-color: $light-gray;
+    }
+}
+
 
 .list-item-icon{
     min-width: 15px !important;

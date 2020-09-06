@@ -57,6 +57,7 @@ class Dashboard extends React.Component {
           menuOpen={this.handleDrawerToggle}
           drawerOpen={this.state.drawerOpen}
           searchFocus={false}
+          title={this.props.match.params.page}
         />
         <MiniDrawer
           menuOpen={this.handleDrawerOpen}

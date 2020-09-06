@@ -406,7 +406,7 @@
 }
 
 .note-content {
-  padding: 0em 1em;
+  padding: 0em 1em !important;
   max-height: 18em;
   overflow: hidden;
 }
@@ -436,6 +436,22 @@
 .list-check-icon svg {
   height: 18px;
   width: 18px;
+}
+
+.list-item-checklist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-radius: 30px;
+  padding-top: 0em !important;
+  cursor: pointer;
+}
+
+.list-item-checklist:hover {
+  background-color: #f1f3f4;
 }
 
 .list-item-icon {

@@ -45,7 +45,7 @@ class Notes extends React.Component {
                       <ListItem
                         key={value}
                         role={undefined}
-                        className="list-item"
+                        className="list-item-checklist"
                         dense
                         button
                       >
@@ -63,12 +63,6 @@ class Notes extends React.Component {
                           id={labelId}
                           primary="testing testing testing testing teasting"
                         />
-                        <ListItemSecondaryAction>
-                          <IconButton
-                            edge="end"
-                            aria-label="comments"
-                          ></IconButton>
-                        </ListItemSecondaryAction>
                       </ListItem>
                     );
                   })}

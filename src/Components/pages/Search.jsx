@@ -60,6 +60,7 @@ class Search extends React.Component {
           menuOpen={this.handleDrawerToggle}
           drawerOpen={this.state.drawerOpen}
           searchFocus={true}
+          title={"Notes"}
         />
         <MiniDrawer
           menuOpen={this.handleDrawerOpen}
