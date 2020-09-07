@@ -7,11 +7,11 @@ import Divider from "@material-ui/core/Divider";
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
-import CloseIcon from '@material-ui/icons/Close';
-import DoneIcon from '@material-ui/icons/Done';
-import AddIcon from '@material-ui/icons/Add';
-import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
-import CreateIcon from '@material-ui/icons/Create';
+import CloseIcon from "@material-ui/icons/Close";
+import DoneIcon from "@material-ui/icons/Done";
+import AddIcon from "@material-ui/icons/Add";
+import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
+import CreateIcon from "@material-ui/icons/Create";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import {
@@ -22,6 +22,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import LableModalTab from "./LableModalTab";
 
 const drawerWidth = 280;
 
@@ -97,10 +98,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function MiniDrawer(props) {
   const classes = useStyles();
   const isActive = props.drawerOpen || props.tempDrawerOpen ? "opened " : "";
+
+  let labelsComponent = props.labels.slice(2, props.labels.length - 3);
+  let labels = labelsComponent.map((item) => {
+    return <LableModalTab item={item} />;
+  });
 
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
@@ -169,7 +174,7 @@ export default function MiniDrawer(props) {
         aria-describedby="simple-modal-description"
       >
         <div className={classes.paper + " modal-body"}>
-          <Typography class="simple-modal-title">Edit Labels</Typography>
+          <Typography className="simple-modal-title">Edit Labels</Typography>
           <div className="modal-inputs">
             <IconButton className="modal-icon">
               <CloseIcon />
@@ -179,10 +184,10 @@ export default function MiniDrawer(props) {
               <DoneIcon />
             </IconButton>
           </div>
-          
+          {labels}
           <Divider />
           <div className="modal-buttons">
-              <Button onClick={handleClose} >Done</Button>
+            <Button onClick={handleClose}>Done</Button>
           </div>
         </div>
       </Modal>

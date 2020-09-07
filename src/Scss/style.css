@@ -148,6 +148,9 @@
   margin-left: 0.25em !important;
   font-size: 22px !important;
   line-height: 24px !important;
+  width: -webkit-max-content !important;
+  width: -moz-max-content !important;
+  width: max-content !important;
 }
 
 .header-search {
@@ -370,6 +373,11 @@
   margin: 0em 0.5em !important;
 }
 
+.modal .modal-body .modal-label {
+  width: -webkit-fill-available;
+  padding: 0em 1em;
+}
+
 .modal .modal-body .modal-inputs {
   -webkit-box-align: end;
       -ms-flex-align: end;
@@ -378,6 +386,9 @@
   display: -ms-flexbox;
   display: flex;
   padding: 0em 0em 1.5em 0em;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
 }
 
 .modal .modal-body .modal-icon {
