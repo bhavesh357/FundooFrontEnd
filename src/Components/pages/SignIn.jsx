@@ -53,7 +53,9 @@ class SignIn extends React.Component {
           });
         } else {
           console.log(this.props.history);
-          localStorage.setItem('token',"ObHN3LIO9d1ZKDYKOFG177g14MduYgxZKBPBEvUDePk68Jogw8ROPtLvhDinllG7");
+          console.log(response.data);
+          localStorage.setItem('token',response.data.id);
+          localStorage.setItem('userId',response.data.userId);
           this.props.history.push("/dashboard/notes");
         }
       });

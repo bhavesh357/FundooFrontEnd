@@ -104,11 +104,12 @@ export default function MiniDrawer(props) {
 
   let labelsComponent = props.labels.slice(2, props.labels.length - 3);
   let labels = labelsComponent.map((item) => {
-    return <LableModalTab item={item} />;
+    return <LableModalTab item={item} key={item.name} />;
   });
 
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
+  const [modalInput, setModalInput] = React.useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -125,6 +126,12 @@ export default function MiniDrawer(props) {
   const handleEditLabels = () => {
     handleOpen();
   };
+
+  const handleNewLabel = () => {
+    if(modalInput!==""){
+      props.addNewLabel(modalInput);
+    }
+  }
 
   let listItems = props.labels.map((item) => {
     return (
@@ -179,8 +186,8 @@ export default function MiniDrawer(props) {
             <IconButton className="modal-icon">
               <CloseIcon />
             </IconButton>
-            <TextField label="Create new label" className="modal-input" />
-            <IconButton className="modal-icon">
+            <TextField onChange={(e) => setModalInput(e.target.value)} label="Create new label" className="modal-input" />
+            <IconButton onClick={handleNewLabel} className="modal-icon">
               <DoneIcon />
             </IconButton>
           </div>

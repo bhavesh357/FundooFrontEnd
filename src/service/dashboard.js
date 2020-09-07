@@ -13,8 +13,26 @@ class DashboardCalls {
       });
   }
 
-  getAllLabels(token,callback) {
-    this.callGet(baseUrl + "/getNoteLabelList?access_token="+token, callback);
+  callPost(url, data, callback) {
+    Axios.post(url, data)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((error) => {
+        callback(error);
+      });
+  }
+
+  addNewLabel(token, label, callback) {
+    this.callPost(
+      baseUrl + "?access_token=" + token,
+      label,
+      callback
+    );
+  }
+
+  getAllLabels(token, callback) {
+    this.callGet(baseUrl + "/getNoteLabelList?access_token=" + token, callback);
   }
 }
 

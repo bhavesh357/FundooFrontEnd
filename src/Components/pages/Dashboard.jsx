@@ -18,30 +18,33 @@ import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined"
 import dashboardCalls from "./../../Service/dashboard";
 const DashboardCalls = new dashboardCalls();
 
-let items = [
-  {
-    name: "Notes",
-    icon: <EmojiObjectsOutlinedIcon />,
-  },
-  {
-    name: "Reminders",
-    icon: <NotificationsNoneOutlinedIcon />,
-  },
-  {
-    name: "Edit Labels",
-    icon: <CreateOutlinedIcon />,
-  },
-  {
-    name: "Archive",
-    icon: <ArchiveOutlinedIcon />,
-  },
-  {
-    name: "Trash",
-    icon: <DeleteForeverOutlinedIcon />,
-  },
-];
 
 class Dashboard extends React.Component {
+  originalItems = [
+    {
+      name: "Notes",
+      icon: <EmojiObjectsOutlinedIcon />,
+    },
+    {
+      name: "Reminders",
+      icon: <NotificationsNoneOutlinedIcon />,
+    },
+    {
+      name: "Edit Labels",
+      icon: <CreateOutlinedIcon />,
+    },
+    {
+      name: "Archive",
+      icon: <ArchiveOutlinedIcon />,
+    },
+    {
+      name: "Trash",
+      icon: <DeleteForeverOutlinedIcon />,
+    },
+  ];
+  
+  items= [...this.originalItems]; 
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +52,7 @@ class Dashboard extends React.Component {
       snackbarStatus: false,
       drawerOpen: false,
       tempDrawerOpen: false,
-      labels: items,
+      labels: this.items,
     };
     this.getData();
   }
@@ -83,7 +86,6 @@ class Dashboard extends React.Component {
   };
 
   getNewlabels = (labels) => {
-    console.log(labels);
     let newLabels = labels.map((item) => {
       return {
         name: item.label,
@@ -92,11 +94,27 @@ class Dashboard extends React.Component {
       };
     });
     newLabels.forEach((item) => {
-      items.splice(2, 0, item);
+      this.items.splice(2, 0, item);
     });
+  };
 
-    console.log(items);
-    return items;
+  addNewLabel = (label) => {
+    DashboardCalls.addNewLabel(
+      localStorage.getItem("token"),
+      {
+        label: label,
+        isDeleted: false,
+        userId: localStorage.getItem("userId"),
+      },
+      (response) => {
+        if (response.data === undefined) {
+          console.log(response);
+        } else {
+          this.items = [...this.originalItems];
+          this.getData();
+        }
+      }
+    );
   };
 
   getData = () => {
@@ -105,7 +123,7 @@ class Dashboard extends React.Component {
         const newLabels = response.data.data.details;
         this.getNewlabels(newLabels);
         this.setState({
-          labels: items,
+          labels: this.items,
         });
       } else {
         console.log(response);
@@ -136,6 +154,7 @@ class Dashboard extends React.Component {
           menuOpen={this.handleDrawerOpen}
           menuClose={this.handleDrawerClose}
           drawerOpen={this.state.drawerOpen}
+          addNewLabel={this.addNewLabel}
           labels={this.state.labels}
           tempDrawerOpen={this.state.tempDrawerOpen}
         />
