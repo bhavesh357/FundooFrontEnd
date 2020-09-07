@@ -7,9 +7,20 @@ import Divider from "@material-ui/core/Divider";
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import CloseIcon from '@material-ui/icons/Close';
+import DoneIcon from '@material-ui/icons/Done';
+import AddIcon from '@material-ui/icons/Add';
+import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
+import CreateIcon from '@material-ui/icons/Create';
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
-import { IconButton, Typography } from "@material-ui/core";
+import {
+  IconButton,
+  Typography,
+  Modal,
+  TextField,
+  Button,
+} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 const drawerWidth = 280;
@@ -74,6 +85,16 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  paper: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    top: "50%",
+    left: "50%",
+    transform: "translate( -50%, -50%)",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+  },
 }));
 
 let items = [
@@ -104,13 +125,23 @@ export default function MiniDrawer(props) {
   const isActive = props.drawerOpen || props.tempDrawerOpen ? "opened " : "";
 
   const history = useHistory();
+  const [open, setOpen] = React.useState(true);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleClick = (name) => {
     history.push("/dashboard/" + name);
   };
 
-  const handleEditLabels= () => {
-
-  }
+  const handleEditLabels = () => {
+    handleOpen();
+  };
 
   let listItems = items.map((item) => {
     return (
@@ -118,7 +149,7 @@ export default function MiniDrawer(props) {
         onClick={() => {
           if (item.name !== "Edit Labels") {
             handleClick("" + item.name);
-          }else{
+          } else {
             handleEditLabels();
           }
         }}
@@ -152,6 +183,31 @@ export default function MiniDrawer(props) {
       }}
     >
       <Divider />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        className="modal"
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <div className={classes.paper + " modal-body"}>
+          <Typography class="simple-modal-title">Edit Labels</Typography>
+          <div className="modal-inputs">
+            <IconButton className="modal-icon">
+              <CloseIcon />
+            </IconButton>
+            <TextField label="Create new label" className="modal-input" />
+            <IconButton className="modal-icon">
+              <DoneIcon />
+            </IconButton>
+          </div>
+          
+          <Divider />
+          <div className="modal-buttons">
+              <Button onClick={handleClose} >Done</Button>
+          </div>
+        </div>
+      </Modal>
       <List className="drawer-list">{listItems}</List>
     </Drawer>
   );
