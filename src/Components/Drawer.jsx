@@ -97,35 +97,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let items = [
-  {
-    name: "Notes",
-    icon: <EmojiObjectsOutlinedIcon />,
-  },
-  {
-    name: "Reminders",
-    icon: <NotificationsNoneOutlinedIcon />,
-  },
-  {
-    name: "Edit Labels",
-    icon: <CreateOutlinedIcon />,
-  },
-  {
-    name: "Archive",
-    icon: <ArchiveOutlinedIcon />,
-  },
-  {
-    name: "Trash",
-    icon: <DeleteForeverOutlinedIcon />,
-  },
-];
 
 export default function MiniDrawer(props) {
   const classes = useStyles();
   const isActive = props.drawerOpen || props.tempDrawerOpen ? "opened " : "";
 
   const history = useHistory();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -143,7 +121,7 @@ export default function MiniDrawer(props) {
     handleOpen();
   };
 
-  let listItems = items.map((item) => {
+  let listItems = props.labels.map((item) => {
     return (
       <div
         onClick={() => {

@@ -85,7 +85,6 @@ class Notes extends React.Component {
   </Card> 
     let newNoteSmall = 
       <Card className="new-note-small">
-        {" "}
         <InputBase
           placeholder="Take a Note..."
           className="new-note-input"

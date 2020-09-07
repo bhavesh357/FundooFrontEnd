@@ -4,13 +4,55 @@ import AppBar from "../AppBar";
 import MiniDrawer from "../Drawer";
 import Notes from "../Notes";
 
+import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
+import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import CloseIcon from "@material-ui/icons/Close";
+import DoneIcon from "@material-ui/icons/Done";
+import AddIcon from "@material-ui/icons/Add";
+import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
+import CreateIcon from "@material-ui/icons/Create";
+import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
+import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
+
+import dashboardCalls from "./../../Service/dashboard";
+const DashboardCalls = new dashboardCalls();
+
+let items = [
+  {
+    name: "Notes",
+    icon: <EmojiObjectsOutlinedIcon />,
+  },
+  {
+    name: "Reminders",
+    icon: <NotificationsNoneOutlinedIcon />,
+  },
+  {
+    name: "Edit Labels",
+    icon: <CreateOutlinedIcon />,
+  },
+  {
+    name: "Archive",
+    icon: <ArchiveOutlinedIcon />,
+  },
+  {
+    name: "Trash",
+    icon: <DeleteForeverOutlinedIcon />,
+  },
+];
+
 class Dashboard extends React.Component {
-  state = {
-    snackbarMessage: "hello",
-    snackbarStatus: false,
-    drawerOpen: false,
-    tempDrawerOpen: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      snackbarMessage: "hello",
+      snackbarStatus: false,
+      drawerOpen: false,
+      tempDrawerOpen: false,
+      labels: items,
+    };
+    this.getData();
+  }
 
   handleSnackbarClose = (event, reason) => {
     console.log(event, reason);
@@ -40,6 +82,37 @@ class Dashboard extends React.Component {
     });
   };
 
+  getNewlabels = (labels) => {
+    console.log(labels);
+    let newLabels = labels.map((item) => {
+      return {
+        name: item.label,
+        icon: <LabelOutlinedIcon />,
+        id: item.id,
+      };
+    });
+    newLabels.forEach((item) => {
+      items.splice(2, 0, item);
+    });
+
+    console.log(items);
+    return items;
+  };
+
+  getData = () => {
+    DashboardCalls.getAllLabels(localStorage.getItem("token"), (response) => {
+      if (response.data.data.details !== undefined) {
+        const newLabels = response.data.data.details;
+        this.getNewlabels(newLabels);
+        this.setState({
+          labels: items,
+        });
+      } else {
+        console.log(response);
+      }
+    });
+  };
+
   render() {
     return (
       <div className="dashboard">
@@ -63,6 +136,7 @@ class Dashboard extends React.Component {
           menuOpen={this.handleDrawerOpen}
           menuClose={this.handleDrawerClose}
           drawerOpen={this.state.drawerOpen}
+          labels={this.state.labels}
           tempDrawerOpen={this.state.tempDrawerOpen}
         />
         <main className="content">
