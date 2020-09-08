@@ -140,6 +140,7 @@ class SignIn extends React.Component {
                     onClick={this.handleSignIn}
                     variant="contained"
                     color="primary"
+                    className="sign-links-button"
                   >
                     Sign in
                   </Button>

@@ -279,6 +279,7 @@ class SignUp extends React.Component {
                     onClick={this.handleSignUp}
                     variant="contained"
                     color="primary"
+                    className="sign-links-button"
                   >
                     Sign Up
                   </Button>

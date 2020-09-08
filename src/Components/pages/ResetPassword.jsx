@@ -187,6 +187,7 @@ class ResetPassword extends React.Component {
                     onClick={this.handleNext}
                     variant="contained"
                     color="primary"
+                    className="sign-links-button"
                   >
                     Next
                   </Button>
