@@ -41,6 +41,14 @@ class DashboardCalls {
     );
   }
 
+  editLabel(token, label, callback) {
+    this.callPost(
+      baseUrl+"/"+label.id+"/updateNoteLabel?access_token=" + token,
+      label,
+      callback
+    );
+  }
+
   deleteLabel(token,id,callback ) {
     this.callDelete(
       baseUrl+"/"+id+"/deleteNoteLabel?access_token=" + token,

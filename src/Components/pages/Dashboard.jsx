@@ -7,13 +7,9 @@ import Notes from "../Notes";
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
-import CloseIcon from "@material-ui/icons/Close";
-import DoneIcon from "@material-ui/icons/Done";
-import AddIcon from "@material-ui/icons/Add";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
-import CreateIcon from "@material-ui/icons/Create";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
-import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 
 import dashboardCalls from "./../../Service/dashboard";
 const DashboardCalls = new dashboardCalls();
@@ -39,7 +35,7 @@ class Dashboard extends React.Component {
     },
     {
       name: "Trash",
-      icon: <DeleteForeverOutlinedIcon />,
+      icon: <DeleteOutlineIcon />,
     },
   ];
   
@@ -130,6 +126,26 @@ class Dashboard extends React.Component {
     );
   };
 
+  editLabel = (id,label) => {
+    DashboardCalls.editLabel(
+      localStorage.getItem("token"),
+      {
+        label: label,
+        isDeleted: false,
+        id: id,
+        userId: localStorage.getItem("userId"),
+      },
+      (response) => {
+        if (response.data === undefined) {
+          console.log(response);
+        } else {
+          console.log(response);
+          this.getData();
+        }
+      }
+    );
+  };
+
   getData = () => {
     this.items = [...this.originalItems];
     DashboardCalls.getAllLabels(localStorage.getItem("token"), (response) => {
@@ -170,6 +186,7 @@ class Dashboard extends React.Component {
           drawerOpen={this.state.drawerOpen}
           addNewLabel={this.addNewLabel}
           deleteLabel={this.deleteLabel}
+          editLabel={this.editLabel}
           labels={this.state.labels}
           tempDrawerOpen={this.state.tempDrawerOpen}
         />

@@ -9,10 +9,8 @@ import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneO
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
-import AddIcon from "@material-ui/icons/Add";
-import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
-import CreateIcon from "@material-ui/icons/Create";
-import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
+
+
 import {
   IconButton,
   Typography,
@@ -103,6 +101,7 @@ export default function MiniDrawer(props) {
 
 
   const history = useHistory();
+  const [editingLabel, setEditingLabel] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [modalInput, setModalInput] = React.useState("");
 
@@ -133,9 +132,17 @@ export default function MiniDrawer(props) {
     props.deleteLabel(id);
   }
 
+  const handleEditLabel = (item) => {
+    props.editLabel(item.id,item.name);
+  }
+
+  const disableEdit = (name) => {
+    setEditingLabel(name);
+  }
+
   let labelsComponent = props.labels.slice(2, props.labels.length - 3);
   let labels = labelsComponent.map((item) => {
-    return <LableModalTab item={item} key={item.name} handleDelete={handleDeleteLabel} />;
+    return <LableModalTab item={item} key={item.name} disableEdit={disableEdit} isEditing={editingLabel === item.name} handleDelete={handleDeleteLabel} handleEditLabel={handleEditLabel} />;
   });
 
   let listItems = props.labels.map((item) => {
