@@ -5,16 +5,84 @@ import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import LinkIcon from '@material-ui/icons/Link';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import ListIcon from '@material-ui/icons/List';
+import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
+import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
+import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import { Snackbar, Grid, Typography } from "@material-ui/core";
 
-class Search extends React.Component {
-  state = {
-    snackbarMessage: "hello",
-    snackbarStatus: false,
-    drawerOpen: false,
-    tempDrawerOpen: false,
-  };
+import dashboardCalls from "./../../Service/dashboard";
+const DashboardCalls = new dashboardCalls();
 
+class Search extends React.Component {
+  originalItems = [
+    {
+      name: "Notes",
+      icon: <EmojiObjectsOutlinedIcon />,
+    },
+    {
+      name: "Reminders",
+      icon: <NotificationsNoneOutlinedIcon />,
+    },
+    {
+      name: "Edit Labels",
+      icon: <CreateOutlinedIcon />,
+    },
+    {
+      name: "Archive",
+      icon: <ArchiveOutlinedIcon />,
+    },
+    {
+      name: "Trash",
+      icon: <DeleteOutlineIcon />,
+    },
+  ];
+  
+  items= [...this.originalItems]; 
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      snackbarMessage: "hello",
+      snackbarStatus: false,
+      drawerOpen: false,
+      tempDrawerOpen: false,
+      labels: this.items,
+    };
+    this.getData();
+  }
+
+  
+  getNewlabels = (labels) => {
+    let newLabels = labels.map((item) => {
+      return {
+        name: item.label,
+        icon: <LabelOutlinedIcon />,
+        id: item.id,
+      };
+    });
+    newLabels.forEach((item) => {
+      this.items.splice(2, 0, item);
+    });
+  };
+  
+  getData = () => {
+    this.items = [...this.originalItems];
+    DashboardCalls.getAllLabels(localStorage.getItem("token"), (response) => {
+      if (response.data.data.details !== undefined) {
+        const newLabels = response.data.data.details;
+        this.getNewlabels(newLabels);
+        this.setState({
+          labels: this.items,
+        });
+      } else {
+        console.log(response);
+      }
+    });
+  };
+  
   handleSnackbarClose = (event, reason) => {
     console.log(event, reason);
     this.setState({
@@ -59,13 +127,17 @@ class Search extends React.Component {
         <AppBar
           menuOpen={this.handleDrawerToggle}
           drawerOpen={this.state.drawerOpen}
-          searchFocus={true}
-          title={"Notes"}
+          searchFocus={false}
+          title={this.props.match.params.page}
         />
         <MiniDrawer
           menuOpen={this.handleDrawerOpen}
           menuClose={this.handleDrawerClose}
           drawerOpen={this.state.drawerOpen}
+          addNewLabel={this.addNewLabel}
+          deleteLabel={this.deleteLabel}
+          editLabel={this.editLabel}
+          labels={this.state.labels}
           tempDrawerOpen={this.state.tempDrawerOpen}
         />
         <main className="content">

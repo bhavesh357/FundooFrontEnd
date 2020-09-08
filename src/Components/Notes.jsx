@@ -24,7 +24,6 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import UndoIcon from '@material-ui/icons/Undo';
 import RedoIcon from '@material-ui/icons/Redo';
-import RoomIcon from "@material-ui/icons/Room";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 
 class Notes extends React.Component {

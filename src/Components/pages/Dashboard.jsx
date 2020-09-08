@@ -120,6 +120,7 @@ class Dashboard extends React.Component {
         if (response.data === undefined) {
           console.log(response);
         } else {
+          console.log(response);
           this.getData();
         }
       }
