@@ -110,7 +110,20 @@ class Dashboard extends React.Component {
         if (response.data === undefined) {
           console.log(response);
         } else {
-          this.items = [...this.originalItems];
+          this.getData();
+        }
+      }
+    );
+  };
+
+  deleteLabel = (id) => {
+    DashboardCalls.deleteLabel(
+      localStorage.getItem("token"),
+      id,
+      (response) => {
+        if (response.data === undefined) {
+          console.log(response);
+        } else {
           this.getData();
         }
       }
@@ -118,6 +131,7 @@ class Dashboard extends React.Component {
   };
 
   getData = () => {
+    this.items = [...this.originalItems];
     DashboardCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;
@@ -155,6 +169,7 @@ class Dashboard extends React.Component {
           menuClose={this.handleDrawerClose}
           drawerOpen={this.state.drawerOpen}
           addNewLabel={this.addNewLabel}
+          deleteLabel={this.deleteLabel}
           labels={this.state.labels}
           tempDrawerOpen={this.state.tempDrawerOpen}
         />

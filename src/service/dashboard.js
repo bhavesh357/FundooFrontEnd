@@ -23,12 +23,29 @@ class DashboardCalls {
       });
   }
 
+  callDelete(url, callback) {
+    Axios.delete(url)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((error) => {
+        callback(error);
+      });
+  }
+
   addNewLabel(token, label, callback) {
     this.callPost(
       baseUrl + "?access_token=" + token,
       label,
       callback
     );
+  }
+
+  deleteLabel(token,id,callback ) {
+    this.callDelete(
+      baseUrl+"/"+id+"/deleteNoteLabel?access_token=" + token,
+      callback
+    )
   }
 
   getAllLabels(token, callback) {

@@ -13,7 +13,6 @@ import AddIcon from "@material-ui/icons/Add";
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import CreateIcon from "@material-ui/icons/Create";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
-import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import {
   IconButton,
   Typography,
@@ -102,10 +101,6 @@ export default function MiniDrawer(props) {
   const classes = useStyles();
   const isActive = props.drawerOpen || props.tempDrawerOpen ? "opened " : "";
 
-  let labelsComponent = props.labels.slice(2, props.labels.length - 3);
-  let labels = labelsComponent.map((item) => {
-    return <LableModalTab item={item} key={item.name} />;
-  });
 
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
@@ -129,9 +124,19 @@ export default function MiniDrawer(props) {
 
   const handleNewLabel = () => {
     if(modalInput!==""){
+      setModalInput("");
       props.addNewLabel(modalInput);
     }
   }
+
+  const handleDeleteLabel = (id) => {
+    props.deleteLabel(id);
+  }
+
+  let labelsComponent = props.labels.slice(2, props.labels.length - 3);
+  let labels = labelsComponent.map((item) => {
+    return <LableModalTab item={item} key={item.name} handleDelete={handleDeleteLabel} />;
+  });
 
   let listItems = props.labels.map((item) => {
     return (
@@ -186,7 +191,7 @@ export default function MiniDrawer(props) {
             <IconButton className="modal-icon">
               <CloseIcon />
             </IconButton>
-            <TextField onChange={(e) => setModalInput(e.target.value)} label="Create new label" className="modal-input" />
+            <TextField onChange={(e) => setModalInput(e.target.value)} value={modalInput} label="Create new label" className="modal-input" />
             <IconButton onClick={handleNewLabel} className="modal-icon">
               <DoneIcon />
             </IconButton>
