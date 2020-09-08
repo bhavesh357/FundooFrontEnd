@@ -26,8 +26,6 @@ class Dashboard extends React.Component {
     this.state = {
       snackbarMessage: "hello",
       snackbarStatus: false,
-      drawerOpen: false,
-      tempDrawerOpen: false,
       labels: this.items,
     };
     this.getData();
@@ -41,25 +39,11 @@ class Dashboard extends React.Component {
   };
 
   handleDrawerToggle = () => {
-    console.log(this.props.history);
-    console.log("Toggled");
-    this.setState({
-      drawerOpen: !this.state.drawerOpen,
-      tempDrawerOpen: false,
-    });
+    this.props.dispatch({
+      type: "TOGGLE"
+    })
   };
 
-  handleDrawerClose = () => {
-    this.setState({
-      tempDrawerOpen: false,
-    });
-  };
-
-  handleDrawerOpen = () => {
-    this.setState({
-      tempDrawerOpen: true,
-    });
-  };
 
   getNewlabels = (labels) => {
     let newLabels = labels.map((item) => {
@@ -173,23 +157,19 @@ class Dashboard extends React.Component {
         />
         <AppBar
           menuOpen={this.handleDrawerToggle}
-          drawerOpen={this.state.drawerOpen}
+          drawerOpen={this.props.drawerOpen}
           searchFocus={false}
           title={this.props.match.params.page}
         />
         <MiniDrawer
-          menuOpen={this.handleDrawerOpen}
-          menuClose={this.handleDrawerClose}
-          drawerOpen={this.state.drawerOpen}
           addNewLabel={this.addNewLabel}
           deleteLabel={this.deleteLabel}
           editLabel={this.editLabel}
           labels={this.state.labels}
-          tempDrawerOpen={this.state.tempDrawerOpen}
         />
         <main className="content">
           <Notes
-            isDrawerOpen={this.state.drawerOpen || this.state.tempDrawerOpen}
+            isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
           />
         </main>
       </div>

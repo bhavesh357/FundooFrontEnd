@@ -17,6 +17,8 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import LableModalTab from "./LableModalTab";
+import { useSelector, useDispatch } from "react-redux";
+import { tempClose, tempOpen } from "../redux/actions";
 
 const drawerWidth = 280;
 
@@ -94,16 +96,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MiniDrawer(props) {
   const classes = useStyles();
-  const isActive = props.drawerOpen || props.tempDrawerOpen ? "opened " : "";
 
+  const drawerOpen = useSelector(state => state.drawer.drawerOpen);
+  const tempDrawerOpen = useSelector(state => state.drawer.tempDrawerOpen);
+  const dispatch = useDispatch();
 
   const history = useHistory();
+  const isActive = drawerOpen || tempDrawerOpen ? "opened " : "";
   const [editingLabel, setEditingLabel] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [modalInput, setModalInput] = React.useState("");
 
   const handleOpen = () => {
     setOpen(true);
+  };
+
+  
+  const handleDrawerClose = () => {
+      dispatch(tempClose());
+  };
+
+  const handleDrawerOpen = () => {
+    dispatch(tempOpen());
   };
 
   const handleClose = () => {
@@ -168,16 +182,16 @@ export default function MiniDrawer(props) {
   return (
     <Drawer
       variant="permanent"
-      onMouseOver={props.menuOpen}
-      onMouseOut={props.menuClose}
+      onMouseOver={handleDrawerOpen}
+      onMouseOut={handleDrawerClose}
       className={clsx(classes.drawer, "drawer", {
-        [classes.drawerOpen]: props.drawerOpen || props.tempDrawerOpen,
-        [classes.drawerClose]: !props.drawerOpen && !props.tempDrawerOpen,
+        [classes.drawerOpen]: drawerOpen || tempDrawerOpen,
+        [classes.drawerClose]: !drawerOpen && !tempDrawerOpen,
       })}
       classes={{
         paper: clsx({
-          [classes.drawerOpen]: props.drawerOpen || props.tempDrawerOpen,
-          [classes.drawerClose]: !props.drawerOpen && !props.tempDrawerOpen,
+          [classes.drawerOpen]: drawerOpen || tempDrawerOpen,
+          [classes.drawerClose]: !drawerOpen && !tempDrawerOpen,
         }),
       }}
     >

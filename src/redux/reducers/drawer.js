@@ -5,15 +5,10 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case "OPEN":
+    case "TOGGLE":
       return {
-        ...state,
-        drawerOpen: true,
-      };
-    case "CLOSE":
-      return {
-        ...state,
-        drawerOpen: false,
+          drawerOpen: !state.drawerOpen,
+          tempDrawerOpen: false,
       };
     case "TEMP_OPEN":
       return {
