@@ -4,43 +4,23 @@ import AppBar from "../AppBar";
 import MiniDrawer from "../Drawer";
 import Notes from "../Notes";
 
-import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
-import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
-import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
-import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 
 import dashboardCalls from "./../../Service/dashboard";
+import { connect } from "react-redux";
 const DashboardCalls = new dashboardCalls();
 
 
+const mapStateToProps = state => ({
+  originalItems: state.originalItems.originalItems,
+  drawerOpen:state.drawer.drawerOpen,
+  tempDrawerOpen: state.drawer.tempDrawerOpen,
+});
+
+
 class Dashboard extends React.Component {
-  originalItems = [
-    {
-      name: "Notes",
-      icon: <EmojiObjectsOutlinedIcon />,
-    },
-    {
-      name: "Reminders",
-      icon: <NotificationsNoneOutlinedIcon />,
-    },
-    {
-      name: "Edit Labels",
-      icon: <CreateOutlinedIcon />,
-    },
-    {
-      name: "Archive",
-      icon: <ArchiveOutlinedIcon />,
-    },
-    {
-      name: "Trash",
-      icon: <DeleteOutlineIcon />,
-    },
-  ];
-  
-  items= [...this.originalItems]; 
-  
+  items = [...this.props.originalItems];
+
   constructor(props) {
     super(props);
     this.state = {
@@ -103,7 +83,7 @@ class Dashboard extends React.Component {
         userId: localStorage.getItem("userId"),
       },
       (response) => {
-        let message="";
+        let message = "";
         if (response.data === undefined) {
           message = response.response.data.error.message;
         } else {
@@ -123,7 +103,7 @@ class Dashboard extends React.Component {
       localStorage.getItem("token"),
       id,
       (response) => {
-        let message="";
+        let message = "";
         if (response.data === undefined) {
           message = response.response.data.error.message;
         } else {
@@ -138,7 +118,7 @@ class Dashboard extends React.Component {
     );
   };
 
-  editLabel = (id,label) => {
+  editLabel = (id, label) => {
     DashboardCalls.editLabel(
       localStorage.getItem("token"),
       {
@@ -148,7 +128,7 @@ class Dashboard extends React.Component {
         userId: localStorage.getItem("userId"),
       },
       (response) => {
-        let message="";
+        let message = "";
         if (response.data === undefined) {
           message = response.response.data.error.message;
         } else {
@@ -164,7 +144,7 @@ class Dashboard extends React.Component {
   };
 
   getData = () => {
-    this.items = [...this.originalItems];
+    this.items = [...this.props.originalItems];
     DashboardCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;
@@ -217,4 +197,6 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+export default connect(
+  mapStateToProps,
+)(Dashboard);

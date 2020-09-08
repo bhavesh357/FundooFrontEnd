@@ -5,6 +5,9 @@ import './Scss/style.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -23,9 +26,11 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
+  <Provider store={store}>
   <ThemeProvider theme={theme} >
     <App />
-  </ThemeProvider>,
+  </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 );
 
