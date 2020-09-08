@@ -14,33 +14,18 @@ import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import { Snackbar, Grid, Typography } from "@material-ui/core";
 
 import dashboardCalls from "./../../Service/dashboard";
+import { connect } from "react-redux";
 const DashboardCalls = new dashboardCalls();
 
+
+const mapStateToProps = state => ({
+  originalItems: state.originalItems.originalItems,
+  drawerOpen:state.drawer.drawerOpen,
+  tempDrawerOpen: state.drawer.tempDrawerOpen,
+});
+
 class Search extends React.Component {
-  originalItems = [
-    {
-      name: "Notes",
-      icon: <EmojiObjectsOutlinedIcon />,
-    },
-    {
-      name: "Reminders",
-      icon: <NotificationsNoneOutlinedIcon />,
-    },
-    {
-      name: "Edit Labels",
-      icon: <CreateOutlinedIcon />,
-    },
-    {
-      name: "Archive",
-      icon: <ArchiveOutlinedIcon />,
-    },
-    {
-      name: "Trash",
-      icon: <DeleteOutlineIcon />,
-    },
-  ];
-  
-  items= [...this.originalItems]; 
+  items = [...this.props.originalItems];
   
   constructor(props) {
     super(props);
@@ -139,7 +124,7 @@ class Search extends React.Component {
   };
   
   getData = () => {
-    this.items = [...this.originalItems];
+    this.items = [...this.props.originalItems];
     DashboardCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;
@@ -264,4 +249,4 @@ class Search extends React.Component {
   }
 }
 
-export default Search;
+export default connect(mapStateToProps)(Search);
