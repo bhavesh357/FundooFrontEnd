@@ -1,3 +1,8 @@
+export const open = () => {
+    return {
+        type: 'TEMP_OPEN'
+    }
+}
 export const tempOpen = () => {
     return {
         type: 'TEMP_OPEN'

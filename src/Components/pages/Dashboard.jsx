@@ -8,6 +8,7 @@ import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 
 import dashboardCalls from "./../../Service/dashboard";
 import { connect } from "react-redux";
+import { open } from "../../redux/actions";
 const DashboardCalls = new dashboardCalls();
 
 
@@ -39,9 +40,7 @@ class Dashboard extends React.Component {
   };
 
   handleDrawerToggle = () => {
-    this.props.dispatch({
-      type: "TOGGLE"
-    })
+    this.props.dispatch(open());
   };
 
 
