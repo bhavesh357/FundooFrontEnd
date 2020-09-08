@@ -103,11 +103,17 @@ class Dashboard extends React.Component {
         userId: localStorage.getItem("userId"),
       },
       (response) => {
+        let message="";
         if (response.data === undefined) {
-          console.log(response);
+          message = response.response.data.error.message;
         } else {
+          message = "Added Successfully";
           this.getData();
         }
+        this.setState({
+          snackbarMessage: message,
+          snackbarStatus: true,
+        });
       }
     );
   };
@@ -117,12 +123,17 @@ class Dashboard extends React.Component {
       localStorage.getItem("token"),
       id,
       (response) => {
+        let message="";
         if (response.data === undefined) {
-          console.log(response);
+          message = response.response.data.error.message;
         } else {
-          console.log(response);
+          message = "Deleted Successfully";
           this.getData();
         }
+        this.setState({
+          snackbarMessage: message,
+          snackbarStatus: true,
+        });
       }
     );
   };
@@ -137,12 +148,17 @@ class Dashboard extends React.Component {
         userId: localStorage.getItem("userId"),
       },
       (response) => {
+        let message="";
         if (response.data === undefined) {
-          console.log(response);
+          message = response.response.data.error.message;
         } else {
-          console.log(response);
+          message = "Updated Successfully";
           this.getData();
         }
+        this.setState({
+          snackbarMessage: message,
+          snackbarStatus: true,
+        });
       }
     );
   };

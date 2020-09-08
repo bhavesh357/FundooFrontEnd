@@ -67,6 +67,76 @@ class Search extends React.Component {
       this.items.splice(2, 0, item);
     });
   };
+
+  
+  addNewLabel = (label) => {
+    DashboardCalls.addNewLabel(
+      localStorage.getItem("token"),
+      {
+        label: label,
+        isDeleted: false,
+        userId: localStorage.getItem("userId"),
+      },
+      (response) => {
+        let message="";
+        if (response.data === undefined) {
+          message = response.response.data.error.message;
+        } else {
+          message = "Added Successfully";
+          this.getData();
+        }
+        this.setState({
+          snackbarMessage: message,
+          snackbarStatus: true,
+        });
+      }
+    );
+  };
+
+  deleteLabel = (id) => {
+    DashboardCalls.deleteLabel(
+      localStorage.getItem("token"),
+      id,
+      (response) => {
+        let message="";
+        if (response.data === undefined) {
+          message = response.response.data.error.message;
+        } else {
+          message = "Deleted Successfully";
+          this.getData();
+        }
+        this.setState({
+          snackbarMessage: message,
+          snackbarStatus: true,
+        });
+      }
+    );
+  };
+
+  editLabel = (id,label) => {
+    DashboardCalls.editLabel(
+      localStorage.getItem("token"),
+      {
+        label: label,
+        isDeleted: false,
+        id: id,
+        userId: localStorage.getItem("userId"),
+      },
+      (response) => {
+        let message="";
+        if (response.data === undefined) {
+          message = response.response.data.error.message;
+        } else {
+          message = "Updated Successfully";
+          this.getData();
+        }
+        this.setState({
+          snackbarMessage: message,
+          snackbarStatus: true,
+        });
+      }
+    );
+  };
   
   getData = () => {
     this.items = [...this.originalItems];
