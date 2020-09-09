@@ -31,6 +31,7 @@ class Dashboard extends React.Component {
       snackbarStatus: false,
       labels: this.items,
       notes: [],
+      isPinned: false,
     };
     this.getData();
     this.getNotes();
@@ -151,12 +152,29 @@ class Dashboard extends React.Component {
         console.log(response.data.data.data);
         this.setState({
           notes: [...response.data.data.data],
+          isPinned : this.checkIsPinned([...response.data.data.data]),
         });
+
       } else {
         console.log(response.data.data.data);
       }
     });
   };
+
+  checkIsPinned = (arr) => {
+    try{
+      for(let i=0;i<arr.length; i++){
+      let temp = arr[i];
+      if(temp.isPined){
+        return true;
+      }
+    }
+    return false;
+    } catch (e){
+      return false;
+    }
+    
+  }
 
   render() {
     return (
@@ -188,6 +206,7 @@ class Dashboard extends React.Component {
             isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
             notes = {this.state.notes}
             reloadNotes={this.getNotes}
+            isPinned={this.state.isPinned}
           />
         </main>
       </div>
