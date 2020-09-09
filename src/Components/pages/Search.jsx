@@ -15,6 +15,7 @@ import { Snackbar, Grid, Typography } from "@material-ui/core";
 
 import dashboardCalls from "./../../Service/dashboard";
 import { connect } from "react-redux";
+import { toggle } from "../../redux/actions";
 const DashboardCalls = new dashboardCalls();
 
 
@@ -32,8 +33,6 @@ class Search extends React.Component {
     this.state = {
       snackbarMessage: "hello",
       snackbarStatus: false,
-      drawerOpen: false,
-      tempDrawerOpen: false,
       labels: this.items,
     };
     this.getData();
@@ -146,12 +145,7 @@ class Search extends React.Component {
   };
 
   handleDrawerToggle = () => {
-    console.log(this.props.history);
-    console.log("Toggled");
-    this.setState({
-      drawerOpen: !this.state.drawerOpen,
-      tempDrawerOpen: false,
-    });
+    this.props.dispatch(toggle());
   };
 
   handleDrawerClose = () => {
@@ -181,19 +175,15 @@ class Search extends React.Component {
         />
         <AppBar
           menuOpen={this.handleDrawerToggle}
-          drawerOpen={this.state.drawerOpen}
+          drawerOpen={this.props.drawerOpen}
           searchFocus={false}
           title={this.props.match.params.page}
         />
         <MiniDrawer
-          menuOpen={this.handleDrawerOpen}
-          menuClose={this.handleDrawerClose}
-          drawerOpen={this.state.drawerOpen}
           addNewLabel={this.addNewLabel}
           deleteLabel={this.deleteLabel}
           editLabel={this.editLabel}
           labels={this.state.labels}
-          tempDrawerOpen={this.state.tempDrawerOpen}
         />
         <main className="content">
           <Grid item container md={6} className="search-tiles">

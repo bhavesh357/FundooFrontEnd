@@ -1,6 +1,6 @@
-export const open = () => {
+export const toggle = () => {
     return {
-        type: 'TEMP_OPEN'
+        type: 'TOGGLE'
     }
 }
 export const tempOpen = () => {
