@@ -146,13 +146,12 @@ class Dashboard extends React.Component {
   };
 
   getNotes = () => {
-    NotesCalls.getAllNotes(localStorage.getItem("token"), (response) => {
+    NotesCalls.getAllNotes((response) => {
       if (response.data.data.data !== undefined) {
         console.log(response.data.data.data);
         this.setState({
           notes: [...response.data.data.data],
         });
-        console.log(this.state.notes);
       } else {
         console.log(response.data.data.data);
       }
