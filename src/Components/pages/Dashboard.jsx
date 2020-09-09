@@ -187,6 +187,7 @@ class Dashboard extends React.Component {
           <Notes
             isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
             notes = {this.state.notes}
+            reloadNotes={this.getNotes}
           />
         </main>
       </div>

@@ -29,29 +29,21 @@ import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 
-import notesCalls from './../Service/notes';
+import notesCalls from "./../Service/notes";
 
 const NotesCalls = new notesCalls();
 
 export default class Note extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      note: this.props.note,
-      isPinned: this.props.note.isPined,
-    };
-  }
-
   handlePinned = () => {
     NotesCalls.pinUnpinNote(
       {
-        isPined: !this.state.isPinned,
-        noteIdList: [this.state.note.id],
+        isPined: !this.props.note.isPined,
+        noteIdList: [this.props.note.id],
       },
       (response) => {
         let message = "";
-        if (response.data.data === undefined) {
-          console.log(response);
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
         } else {
           console.log(response);
         }
@@ -78,7 +70,7 @@ export default class Note extends React.Component {
             edge="start"
             onClick={this.handlePinned}
           >
-            {this.state.isPinned ? (
+            {this.props.note.isPined ? (
               <RoomIcon className="menu-icon" />
             ) : (
               <RoomOutlinedIcon className="menu-icon" />
@@ -86,12 +78,12 @@ export default class Note extends React.Component {
           </IconButton>
           <CardHeader
             title={
-              <Typography variant="h6">{this.state.note.title}</Typography>
+              <Typography variant="h6">{this.props.note.title}</Typography>
             }
             className="card-title"
           />
           <Typography variant="body2" className="note-content">
-            {this.state.note.description}
+            {this.props.note.description}
           </Typography>
           <CardActions className="note-actions">
             <Grid container className="note-action-buttons">

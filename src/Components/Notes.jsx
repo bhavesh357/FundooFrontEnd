@@ -104,9 +104,17 @@ class Notes extends React.Component {
       </Card>
     );
 
-    let noteList = this.props.notes.map( (note) => {
-      return note.noteCheckLists.length===0 ? <Note note={note} key={note.id} /> : <CheckNote note={note} key={note.id} />
-    })
+    let noteList = this.props.notes.map((note) => {
+      return note.noteCheckLists.length === 0 ? (
+        <Note note={note} key={note.id} reloadNotes={this.props.reloadNotes} />
+      ) : (
+        <CheckNote
+          note={note}
+          key={note.id}
+          reloadNotes={this.props.reloadNotes}
+        />
+      );
+    });
     return (
       <Grid container className="note">
         <Grid item md={6} onClick={this.handleNewNote}>
@@ -334,7 +342,7 @@ class Notes extends React.Component {
               </Card>
             </Grid>
             {noteList}
-            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     );
