@@ -29,9 +29,7 @@ import Note from "./Note";
 import CheckNote from "./CheckNote";
 
 class Notes extends React.Component {
-  
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       isNewNote: false,
@@ -110,11 +108,15 @@ class Notes extends React.Component {
     );
 
     let noteList = this.props.notes.map((note) => {
-      if(note.isPined){
+      if (note.isPined) {
         return null;
-      }else{
+      } else {
         return note.noteCheckLists.length === 0 ? (
-          <Note note={note} key={note.id}  reloadNotes={this.props.reloadNotes} />
+          <Note
+            note={note}
+            key={note.id}
+            reloadNotes={this.props.reloadNotes}
+          />
         ) : (
           <CheckNote
             note={note}
@@ -126,11 +128,15 @@ class Notes extends React.Component {
     });
 
     let noteListPinned = this.props.notes.map((note) => {
-      if(!note.isPined){
+      if (!note.isPined) {
         return "";
-      }else{
+      } else {
         return note.noteCheckLists.length === 0 ? (
-          <Note note={note} key={note.id} reloadNotes={this.props.reloadNotes} />
+          <Note
+            note={note}
+            key={note.id}
+            reloadNotes={this.props.reloadNotes}
+          />
         ) : (
           <CheckNote
             note={note}
@@ -140,25 +146,51 @@ class Notes extends React.Component {
         );
       }
     });
-    
 
     return (
       <Grid container className="note">
         <Grid item md={6} onClick={this.handleNewNote}>
           {this.state.isNewNote ? newNoteBig : newNoteSmall}
         </Grid>
-        {!this.props.isPinned ? "" : <Grid item className="note-list" md={this.props.isDrawerOpen ? 12 : 10}>
-          <Typography className="note-list-name">Pinned</Typography>
-          <Grid container spacing={2} className="note-row">
-            {noteListPinned}
+        {!this.props.isPinned ? (
+          ""
+        ) : (
+          <Grid
+            item
+            className="note-list"
+            md={this.props.isDrawerOpen ? 12 : 10}
+          >
+            <Typography className="note-list-name">Pinned</Typography>
+            <Grid container spacing={2} className="note-row">
+              {noteListPinned}
+            </Grid>
           </Grid>
-        </Grid>
-      }
+        )}
         <Grid item className="note-list" md={this.props.isDrawerOpen ? 12 : 10}>
-          {!this.props.isPinned ? "" :<Typography className="note-list-name" >Others</Typography> }
+          {!this.props.isPinned ? (
+            ""
+          ) : (
+            <Typography className="note-list-name">Others</Typography>
+          )}
           <Grid container spacing={2} className="note-row">
             <Grid item md={3}>
               <Card elevation={3} variant="outlined" className="note-card">
+                <IconButton
+                  className="select-button"
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="start"
+                >
+                  <CheckCircleIcon className="menu-icon" />
+                </IconButton>
+                <IconButton
+                  className="pin-button"
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="start"
+                >
+                  <RoomOutlinedIcon className="menu-icon" />
+                </IconButton>
                 <CardHeader
                   title={
                     <Typography variant="h6">{"Title of the note"}</Typography>

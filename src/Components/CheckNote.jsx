@@ -22,30 +22,70 @@ import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import ColorLensOutlinedIcon from "@material-ui/icons/ColorLensOutlined";
 import CropOriginalIcon from "@material-ui/icons/CropOriginal";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import RoomIcon from "@material-ui/icons/Room";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 
+
+import notesCalls from "./../Service/notes";
+
+const NotesCalls = new notesCalls();
+
+
 export default class CheckNote extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      note: this.props.note,
-    };
-  }
+  handlePinned = () => {
+    NotesCalls.pinUnpinNote(
+      {
+        isPined: !this.props.note.isPined,
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  };
 
   render() {
     return (
       <Grid item md={3}>
         <Card elevation={3} variant="outlined" className="note-card">
+        <IconButton
+            className="select-button"
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+          >
+            <CheckCircleIcon className="menu-icon" />
+          </IconButton>
+          <IconButton
+            className="pin-button"
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={this.handlePinned}
+          >
+            {this.props.note.isPined ? (
+              <RoomIcon className="menu-icon" />
+            ) : (
+              <RoomOutlinedIcon className="menu-icon" />
+            )}
+          </IconButton>
           <CardHeader
-            title={<Typography variant="h6">{this.state.note.title}</Typography>}
+            title={
+              <Typography variant="h6">{this.props.note.title}</Typography>
+            }
             className="card-title"
           />
           <List className="note-content checklist">
-            {this.state.note.noteCheckLists.map((value) => {
+            {this.props.note.noteCheckLists.map((value) => {
               const labelId = `checkbox-list-label-${value.id}`;
 
               return (
@@ -66,10 +106,7 @@ export default class CheckNote extends React.Component {
                       inputProps={{ "aria-labelledby": labelId }}
                     />
                   </ListItemIcon>
-                  <ListItemText
-                    id={labelId}
-                    primary={value.itemName}
-                  />
+                  <ListItemText id={labelId} primary={value.itemName} />
                 </ListItem>
               );
             })}
