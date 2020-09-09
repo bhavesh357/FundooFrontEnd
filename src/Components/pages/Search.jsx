@@ -5,18 +5,14 @@ import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import LinkIcon from '@material-ui/icons/Link';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import ListIcon from '@material-ui/icons/List';
-import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
-import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
-import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
-import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import { Snackbar, Grid, Typography } from "@material-ui/core";
 
-import dashboardCalls from "./../../Service/dashboard";
+
+import sideMenuCalls from "../../Service/sideMenu";
 import { connect } from "react-redux";
 import { toggle } from "../../redux/actions";
-const DashboardCalls = new dashboardCalls();
+const SideMenuCalls = new sideMenuCalls();
 
 
 const mapStateToProps = state => ({
@@ -54,7 +50,7 @@ class Search extends React.Component {
 
   
   addNewLabel = (label) => {
-    DashboardCalls.addNewLabel(
+    sideMenuCalls.addNewLabel(
       localStorage.getItem("token"),
       {
         label: label,
@@ -78,7 +74,7 @@ class Search extends React.Component {
   };
 
   deleteLabel = (id) => {
-    DashboardCalls.deleteLabel(
+    sideMenuCalls.deleteLabel(
       localStorage.getItem("token"),
       id,
       (response) => {
@@ -98,7 +94,7 @@ class Search extends React.Component {
   };
 
   editLabel = (id,label) => {
-    DashboardCalls.editLabel(
+    sideMenuCalls.editLabel(
       localStorage.getItem("token"),
       {
         label: label,
@@ -124,7 +120,7 @@ class Search extends React.Component {
   
   getData = () => {
     this.items = [...this.props.originalItems];
-    DashboardCalls.getAllLabels(localStorage.getItem("token"), (response) => {
+    sideMenuCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;
         this.getNewlabels(newLabels);

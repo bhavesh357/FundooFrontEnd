@@ -6,10 +6,12 @@ import Notes from "../Notes";
 
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 
-import dashboardCalls from "./../../Service/dashboard";
+import sideMenuCalls from "../../Service/sideMenu";
+import notesCalls from "../../Service/notes";
 import { connect } from "react-redux";
 import { toggle } from "../../redux/actions";
-const DashboardCalls = new dashboardCalls();
+const SideMenuCalls = new sideMenuCalls();
+const NotesCalls = new notesCalls();
 
 
 const mapStateToProps = state => ({
@@ -28,8 +30,10 @@ class Dashboard extends React.Component {
       snackbarMessage: "hello",
       snackbarStatus: false,
       labels: this.items,
+      notes: [],
     };
     this.getData();
+    this.getNotes();
   }
 
   handleSnackbarClose = (event, reason) => {
@@ -58,7 +62,7 @@ class Dashboard extends React.Component {
   };
 
   addNewLabel = (label) => {
-    DashboardCalls.addNewLabel(
+    SideMenuCalls.addNewLabel(
       localStorage.getItem("token"),
       {
         label: label,
@@ -82,7 +86,7 @@ class Dashboard extends React.Component {
   };
 
   deleteLabel = (id) => {
-    DashboardCalls.deleteLabel(
+    SideMenuCalls.deleteLabel(
       localStorage.getItem("token"),
       id,
       (response) => {
@@ -102,7 +106,7 @@ class Dashboard extends React.Component {
   };
 
   editLabel = (id, label) => {
-    DashboardCalls.editLabel(
+    SideMenuCalls.editLabel(
       localStorage.getItem("token"),
       {
         label: label,
@@ -128,7 +132,7 @@ class Dashboard extends React.Component {
 
   getData = () => {
     this.items = [...this.props.originalItems];
-    DashboardCalls.getAllLabels(localStorage.getItem("token"), (response) => {
+    SideMenuCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;
         this.getNewlabels(newLabels);
@@ -137,6 +141,20 @@ class Dashboard extends React.Component {
         });
       } else {
         console.log(response);
+      }
+    });
+  };
+
+  getNotes = () => {
+    NotesCalls.getAllNotes(localStorage.getItem("token"), (response) => {
+      if (response.data.data.data !== undefined) {
+        console.log(response.data.data.data);
+        this.setState({
+          notes: [...response.data.data.data],
+        });
+        console.log(this.state.notes);
+      } else {
+        console.log(response.data.data.data);
       }
     });
   };
@@ -169,6 +187,7 @@ class Dashboard extends React.Component {
         <main className="content">
           <Notes
             isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
+            notes = {this.state.notes}
           />
         </main>
       </div>
