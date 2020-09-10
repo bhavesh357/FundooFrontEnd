@@ -65,6 +65,21 @@ export default class Note extends React.Component {
   };
 
   handleClose = () => {
+    NotesCalls.updateNotes(
+      {
+        noteId: this.props.note.id,
+        title: this.state.editTitle,
+        description: this.state.editDescription,
+      },
+      (response) => {
+        let message = "";
+        if (response.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
     this.setState({
       isEditing: false,
     });
@@ -74,6 +89,25 @@ export default class Note extends React.Component {
     this.setState({
       isEditing: true,
     });
+  };
+
+  handleEditPinned = () => {
+    NotesCalls.pinUnpinNote(
+      {
+        isPined: !this.props.note.isPined,
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.setState({
+            editPinned : !this.state.editPinned,
+          });
+        } else {
+          console.log(response);
+        }
+      }
+    );
   };
 
   render() {
@@ -93,9 +127,9 @@ export default class Note extends React.Component {
                 color="inherit"
                 aria-label="open drawer"
                 edge="start"
-                onClick={this.handlePinned}
+                onClick={this.handleEditPinned}
               >
-                {this.props.note.isPined ? (
+                {this.state.editPinned ? (
                   <RoomIcon className="menu-icon" />
                 ) : (
                   <RoomOutlinedIcon className="menu-icon" />
