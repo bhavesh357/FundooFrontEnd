@@ -27,34 +27,100 @@ import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import Note from "./Note";
 import CheckNote from "./CheckNote";
+import RoomIcon from "@material-ui/icons/Room";
+
+import notesCalls from "./../Service/notes";
+
+const NotesCalls = new notesCalls();
 
 class Notes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isNewNote: false,
+      newNoteTitle: "",
+      newNoteDescription: "",
+      isNewNotePinned: false,
+      newNoteColor: "#ffffff",
     };
   }
 
   handleNewNote = () => {
     console.log("test");
+    if (this.state.isNewNote) {
+      NotesCalls.addNotes(
+        {
+          title: this.state.newNoteTitle,
+          description: this.state.newNoteDescription,
+          isPined: this.state.isNewNotePinned,
+          color: this.state.newNoteColor,
+          isArchived: false,
+          labelIdList: [],
+          reminder: "",
+          collaberators: [],
+        },
+        (response) => {
+          let message = "";
+          if (response.status !== undefined) {
+            this.props.reloadNotes();
+          } else {
+            console.log(response);
+          }
+        }
+      );
+    }
     this.setState({
       isNewNote: !this.state.isNewNote,
+      newNoteTitle: "",
+      newNoteDescription: "",
+      isNewNotePinned: false,
+    });
+  };
+
+  handlePinned = () => {
+    this.setState({
+      isNewNotePinned: !this.state.isNewNotePinned,
     });
   };
 
   render() {
     let newNoteBig = (
       <Card className="new-note-big">
+        <IconButton
+          className="pin-button-new"
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={this.handlePinned}
+        >
+          {this.state.isNewNotePinned ? (
+            <RoomIcon className="menu-icon" />
+          ) : (
+            <RoomOutlinedIcon className="menu-icon" />
+          )}
+        </IconButton>
+
         <InputBase
           placeholder="Title"
           className="new-note-title-input"
           inputProps={{ "aria-label": "search" }}
+          value={this.state.newNoteTitle}
+          onChange={(e) => {
+            this.setState({
+              newNoteTitle: e.target.value,
+            });
+          }}
         />
         <InputBase
           placeholder="Take a Note..."
           className="new-note-text-input"
           inputProps={{ "aria-label": "search" }}
+          value={this.state.newNoteDescription}
+          onChange={(e) => {
+            this.setState({
+              newNoteDescription: e.target.value,
+            });
+          }}
         />
         <div className="new-note-buttons">
           <div className="new-note-action-button">
@@ -90,11 +156,17 @@ class Notes extends React.Component {
       </Card>
     );
     let newNoteSmall = (
-      <Card className="new-note-small">
+      <Card className="new-note-small" onClick={this.handleNewNote}>
         <InputBase
           placeholder="Take a Note..."
           className="new-note-input"
           inputProps={{ "aria-label": "search" }}
+          value={this.state.newNoteTitle}
+          onChange={(e) => {
+            this.setState({
+              newNoteTitle: e.target.value,
+            });
+          }}
         />
         <div className="new-note-icons">
           <IconButton className="new-note-icon">
@@ -149,7 +221,7 @@ class Notes extends React.Component {
 
     return (
       <Grid container className="note">
-        <Grid item md={6} onClick={this.handleNewNote}>
+        <Grid item md={this.props.isDrawerOpen ? 8 : 6}>
           {this.state.isNewNote ? newNoteBig : newNoteSmall}
         </Grid>
         {!this.props.isPinned ? (

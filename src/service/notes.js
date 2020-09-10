@@ -38,6 +38,10 @@ class NotesCalls {
     this.callPost(baseUrl+"/pinUnpinNotes?access_token=" + token, data, callback)
   }
 
+  addNotes(data,callback){
+    this.callPost(baseUrl+"/addNotes?access_token=" + token, data, callback)
+  }
+
 }
 
 export default NotesCalls;

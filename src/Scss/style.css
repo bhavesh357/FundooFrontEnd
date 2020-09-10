@@ -583,6 +583,13 @@
   display: none !important;
 }
 
+.pin-button-new {
+  position: absolute !important;
+  right: 4%;
+  cursor: pointer !important;
+  z-index: 2;
+}
+
 .note-action-buttons .button {
   display: none !important;
   padding: 4px;
@@ -623,6 +630,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  position: relative;
 }
 
 .new-note-input {

@@ -124,6 +124,13 @@
     display: none !important;
 }
 
+.pin-button-new{
+    position: absolute !important;
+    right: 4%;
+    cursor: pointer !important;
+    z-index: 2;
+}
+
 .note-action-buttons .button{
     display: none !important;
     svg{
@@ -150,6 +157,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    position: relative;
 }
 
 .new-note-input{
