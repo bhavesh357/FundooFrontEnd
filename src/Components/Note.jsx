@@ -14,6 +14,9 @@ import {
   CardActions,
   InputBase,
   Button,
+  Modal,
+  TextField,
+  Divider,
 } from "@material-ui/core";
 
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -34,6 +37,16 @@ import notesCalls from "./../Service/notes";
 const NotesCalls = new notesCalls();
 
 export default class Note extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEditing: false,
+      editTitle: this.props.note.title,
+      editDescription: this.props.note.description,
+      editPinned: this.props.note.isPined,
+    };
+  }
+
   handlePinned = () => {
     NotesCalls.pinUnpinNote(
       {
@@ -51,10 +64,149 @@ export default class Note extends React.Component {
     );
   };
 
+  handleClose = () => {
+    this.setState({
+      isEditing: false,
+    });
+  };
+
+  handleOpen = () => {
+    this.setState({
+      isEditing: true,
+    });
+  };
+
   render() {
     return (
       <Grid item md={3}>
-        <Card elevation={3} variant="outlined" className="note-card">
+        <Modal
+          open={this.state.isEditing}
+          onClose={this.handleClose}
+          className="modal"
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div className="modal-body-note">
+            <Card elevation={3} variant="outlined" className="note-card-edit">
+              <IconButton
+                className="pin-button-edit"
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={this.handlePinned}
+              >
+                {this.props.note.isPined ? (
+                  <RoomIcon className="menu-icon" />
+                ) : (
+                  <RoomOutlinedIcon className="menu-icon" />
+                )}
+              </IconButton>
+              <InputBase
+                className="note-title"
+                onChange={(e) =>
+                  this.setState({
+                    editTitle: e.target.value,
+                  })
+                }
+                variant="outlined"
+                value={this.state.editTitle}
+                placeholder="Note Title"
+              />
+              <Divider/>
+              <InputBase
+                onChange={(e) =>
+                  this.setState({
+                    editDescription: e.target.value,
+                  })
+                }
+                value={this.state.editDescription}
+                className="note-content"
+                variant="outlined"
+                multiline
+                placeholder="Note Title"
+              />
+              <Grid md={12} container>
+                <Grid md={9} item>
+                  <CardActions className="note-actions-edit">
+                    <Grid container className="note-action-buttons-edit">
+                      <Grid item md={2}>
+                        <IconButton
+                          className="button"
+                          color="inherit"
+                          aria-label="open drawer"
+                          edge="start"
+                        >
+                          <AddAlertOutlinedIcon className="menu-icon" />
+                        </IconButton>
+                      </Grid>
+                      <Grid item md={2}>
+                        <IconButton
+                          className="button"
+                          color="inherit"
+                          aria-label="open drawer"
+                          edge="start"
+                        >
+                          <PersonAddOutlinedIcon className="menu-icon" />
+                        </IconButton>
+                      </Grid>
+                      <Grid item md={2}>
+                        <IconButton
+                          className="button"
+                          color="inherit"
+                          aria-label="open drawer"
+                          edge="start"
+                        >
+                          <ColorLensOutlinedIcon className="menu-icon" />
+                        </IconButton>
+                      </Grid>
+                      <Grid item md={2}>
+                        <IconButton
+                          className="button"
+                          color="inherit"
+                          aria-label="open drawer"
+                          edge="start"
+                        >
+                          <CropOriginalIcon className="menu-icon" />
+                        </IconButton>
+                      </Grid>
+                      <Grid item md={2}>
+                        <IconButton
+                          className="button"
+                          color="inherit"
+                          aria-label="open drawer"
+                          edge="start"
+                        >
+                          <ArchiveOutlinedIcon className="menu-icon" />
+                        </IconButton>
+                      </Grid>
+                      <Grid item md={2}>
+                        <IconButton
+                          className="button"
+                          color="inherit"
+                          aria-label="open drawer"
+                          edge="start"
+                        >
+                          <MoreVertIcon className="menu-icon" />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                  </CardActions>
+                </Grid>
+                <Grid md={3} item className="modal-buttons-edit">
+                  <div className="modal-buttons-edit-close">
+                    <Button onClick={this.handleClose}>Close</Button>
+                  </div>
+                </Grid>
+              </Grid>
+            </Card>
+          </div>
+        </Modal>
+        <Card
+          elevation={3}
+          variant="outlined"
+          className="note-card"
+          onClick={this.handleOpen}
+        >
           <IconButton
             className="select-button"
             color="inherit"

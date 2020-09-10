@@ -666,6 +666,129 @@
           align-items: center;
 }
 
+.modal-body-note {
+  padding: 0em 1em !important;
+  min-height: 40vh;
+  min-width: 40vw;
+  border-radius: 5px;
+  position: absolute !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+  -webkit-box-pack: center !important;
+      -ms-flex-pack: center !important;
+          justify-content: center !important;
+  top: 50% !important;
+  left: 50% !important;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 2px 6px 2px rgba(60, 64, 67, 0.149);
+          box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 2px 6px 2px rgba(60, 64, 67, 0.149);
+}
+
+.modal-body-note:focus {
+  outline: none !important;
+}
+
+.modal-body-note .note-card-edit {
+  padding-bottom: 0em;
+  text-align: start;
+  border-radius: 10px !important;
+  overflow: inherit !important;
+  position: relative;
+  border: none !important;
+}
+
+.modal-body-note .pin-button-edit {
+  position: absolute !important;
+  right: 0px;
+  top: 10px;
+  z-index: 2;
+  display: block !important;
+}
+
+.modal-body-note .note-actions-edit {
+  padding: 10px 0px !important;
+  display: block !important;
+  width: 70%;
+}
+
+.modal-body-note .note-title {
+  padding: 1.5em 1em 1em 1em !important;
+  width: 100%;
+}
+
+.modal-body-note .note-title label {
+  padding: 1.5em 1em 1em 1em !important;
+}
+
+.modal-body-note .note-content {
+  width: 100%;
+  padding: 1.5em 1em 1em 1em !important;
+  min-height: 10em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.modal-body-note .note-content label {
+  padding: 1.5em 1em 1em 1em !important;
+}
+
+.modal-body-note .note-action-buttons-edit {
+  max-width: 100%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+}
+
+.modal-body-note .note-action-buttons-edit div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  padding-left: 0.5em;
+}
+
+.modal-body-note .note-action-buttons-edit .button {
+  padding: 4px;
+  display: block !important;
+}
+
+.modal-body-note .note-action-buttons-edit .button svg {
+  height: 18px;
+  width: 18px;
+}
+
+.modal-body-note .modal-buttons-edit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.modal-body-note .modal-buttons-edit-close {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 10px 0px !important;
+}
+
 .new-note-icon {
   padding: 0.5em 0.5em !important;
   margin: 0em 0.2em !important;

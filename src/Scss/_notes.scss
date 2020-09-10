@@ -184,6 +184,91 @@
     align-items: center;
 }
 
+
+.modal-body-note{
+    padding: 0em 1em !important;
+    min-height: 40vh;
+    min-width: 40vw;
+    border-radius: 5px;
+    position: absolute !important;
+    align-items: center !important;
+    justify-content: center !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate( -50%, -50%);
+    background-color: $background-color;
+    box-shadow: $box-shadow-general;
+    &:focus{
+        outline: none !important;
+    }
+    .note-card-edit{
+        padding-bottom: 0em;
+        text-align: start;
+        border-radius: 10px !important;
+        overflow: inherit !important;
+        position: relative;
+        border: none !important;
+    }
+    .pin-button-edit{
+        position: absolute !important;
+        right: 0px;
+        top: 10px;
+        z-index: 2;
+        display: block !important;
+    }
+    .note-actions-edit{
+        padding: 10px 0px !important;
+        display: block !important;
+        width: 70%;
+    }
+    .note-title{
+        padding:  1.5em 1em 1em 1em !important;
+        width: 100%;
+    }
+    .note-title label{
+        padding:  1.5em 1em 1em 1em !important;
+    }
+    .note-content{
+        width: 100%;
+        padding:  1.5em 1em 1em 1em !important;
+        min-height: 10em;
+        display: flex;
+        align-items: flex-start;
+    }
+    .note-content label{
+        padding:  1.5em 1em 1em 1em !important;
+    }
+    .note-action-buttons-edit{
+        max-width: 100%;
+        justify-content: flex-end;
+        padding-top: 0.5em !important;
+        padding-bottom: 0.5em !important;
+        div{
+            display: flex;
+            justify-content: space-evenly;
+            padding-left: 0.5em;
+        }
+    }
+    .note-action-buttons-edit .button{
+        svg{
+            height: 18px;
+            width: 18px;
+        }
+        padding: 4px;
+        display: block !important;
+    }
+    .modal-buttons-edit{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .modal-buttons-edit-close{
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 0px !important;
+    }
+}
+
 .new-note-icon{
     padding: 0.5em 0.5em !important;
     margin: 0em 0.2em !important;
