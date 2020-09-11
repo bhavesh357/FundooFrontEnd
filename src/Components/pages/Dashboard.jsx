@@ -36,7 +36,7 @@ class Dashboard extends React.Component {
   }
 
   reloadNotes = () => {
-    switch (this.props.page) {
+    switch (this.props.match.params.page) {
       case "archive":
         this.getArchivedNotes();
         break;
@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidUpdate(prevProps){
-    if(prevProps.page !== this.props.page){
+    if(prevProps.match.params.page !== this.props.match.params.page){
       this.reloadNotes();
     }
   }
@@ -217,7 +217,7 @@ class Dashboard extends React.Component {
           menuOpen={this.handleDrawerToggle}
           drawerOpen={this.props.drawerOpen}
           searchFocus={false}
-          title={this.props.page}
+          title={this.props.match.params.page}
         />
         <MiniDrawer
           addNewLabel={this.addNewLabel}
@@ -229,7 +229,7 @@ class Dashboard extends React.Component {
           <Notes
             isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
             notes={this.state.notes}
-            label={this.props.page}
+            label={this.props.match.params.page}
             reloadNotes={this.reloadNotes}
             isPinned={this.state.isPinned}
           />

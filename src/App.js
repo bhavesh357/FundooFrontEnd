@@ -18,8 +18,7 @@ function App() {
           <Route path='/forgotpassword' exact component={ForgotPassword}></Route>
           <Route path={'/resetpassword/:token'} component={ResetPassword}></Route>
           <Route path={'/dashboard/search'} exact component={Search}></Route>
-          <Route path={'/dashboard/archive'} exact render={() => <Dashboard page={"archive"}/>} ></Route>
-          <Route path={'/dashboard/:page'} render={() => <Dashboard page={"notes"}/>} ></Route>
+          <Route path={'/dashboard/:page'} component={Dashboard} ></Route>
         </Switch>
       </BrowserRouter>
     </div>
