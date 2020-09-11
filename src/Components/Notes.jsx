@@ -111,42 +111,6 @@ class Notes extends React.Component {
             });
           }}
         />
-        {/* <List className="note-content checklist">
-          <ListItem
-            role={undefined}
-            className="list-item-checklist"
-            dense
-            button
-          >
-            <ListItemIcon className="list-item-icon">
-              <Checkbox
-                className="list-check-icon"
-                edge="start"
-                color="primary"
-                tabIndex={-1}
-                disableRipple
-              />
-            </ListItemIcon>
-            <ListItemText id={1} primary={"testing"} />
-          </ListItem>
-          <ListItem
-            role={undefined}
-            className="list-item-checklist"
-            dense
-            button
-          >
-            <ListItemIcon className="list-item-icon">
-              <Checkbox
-                className="list-check-icon"
-                edge="start"
-                color="primary"
-                tabIndex={-1}
-                disableRipple
-              />
-            </ListItemIcon>
-            <InputBase id={1} value={"testing"} />
-          </ListItem>
-        </List> */}
         <InputBase
           placeholder="Take a Note..."
           className="new-note-text-input"

@@ -148,15 +148,14 @@ class Dashboard extends React.Component {
 
   getNotes = () => {
     NotesCalls.getAllNotes((response) => {
-      if (response.data.data.data !== undefined) {
+      if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
+      } else {
         this.setState({
           notes: [...response.data.data.data],
           isPinned : this.checkIsPinned([...response.data.data.data]),
         });
 
-      } else {
-        console.log(response.data.data.data);
       }
     });
   };

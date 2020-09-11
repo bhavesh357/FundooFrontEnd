@@ -101,7 +101,7 @@ export default class Note extends React.Component {
         let message = "";
         if (response.data.data !== undefined) {
           this.setState({
-            editPinned : !this.state.editPinned,
+            editPinned: !this.state.editPinned,
           });
         } else {
           console.log(response);
@@ -146,7 +146,7 @@ export default class Note extends React.Component {
                 value={this.state.editTitle}
                 placeholder="Note Title"
               />
-              <Divider/>
+              <Divider />
               <InputBase
                 onChange={(e) =>
                   this.setState({
@@ -159,7 +159,7 @@ export default class Note extends React.Component {
                 multiline
                 placeholder="Note Title"
               />
-              <Grid md={12} container>
+              <Grid container>
                 <Grid md={9} item>
                   <CardActions className="note-actions-edit">
                     <Grid container className="note-action-buttons-edit">
@@ -235,12 +235,7 @@ export default class Note extends React.Component {
             </Card>
           </div>
         </Modal>
-        <Card
-          elevation={3}
-          variant="outlined"
-          className="note-card"
-          onClick={this.handleOpen}
-        >
+        <Card elevation={3} variant="outlined" className="note-card">
           <IconButton
             className="select-button"
             color="inherit"
@@ -266,9 +261,14 @@ export default class Note extends React.Component {
             title={
               <Typography variant="h6">{this.props.note.title}</Typography>
             }
+            onClick={this.handleOpen}
             className="card-title"
           />
-          <Typography variant="body2" className="note-content">
+          <Typography
+            variant="body2"
+            onClick={this.handleOpen}
+            className="note-content"
+          >
             {this.props.note.description}
           </Typography>
           <CardActions className="note-actions">
