@@ -46,6 +46,10 @@ class NotesCalls {
     this.callPost(baseUrl+"/addNotes?access_token=" + token, data, callback)
   }
 
+  archiveNotes(data,callback){
+    this.callPost(baseUrl+"/archiveNotes?access_token=" + token, data, callback)
+  }
+
   updateNotes(data,callback){
     this.callPost(baseUrl+"/updateNotes?access_token=" + token, data, callback)
   }

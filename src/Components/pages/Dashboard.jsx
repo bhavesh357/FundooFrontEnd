@@ -45,8 +45,16 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidUpdate(){
+  componentDidMount(){
+    this.reloadNotes();
   }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.page !== this.props.page){
+      this.reloadNotes();
+    }
+  }
+
 
   handleSnackbarClose = (event, reason) => {
     console.log(event, reason);

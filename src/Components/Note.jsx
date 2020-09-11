@@ -49,6 +49,9 @@ export default class Note extends React.Component {
   }
 
   handlePinned = () => {
+    if(this.props.note.isArchived){
+      this.handleArchive();
+    }
     NotesCalls.pinUnpinNote(
       {
         isPined: !this.props.note.isPined,
@@ -64,6 +67,23 @@ export default class Note extends React.Component {
       }
     );
   };
+
+  handleArchive = () => {
+    NotesCalls.archiveNotes(
+      {
+        isArchived: !this.props.note.isArchived,
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  }
 
   handleClose = () => {
     NotesCalls.updateNotes(
@@ -210,6 +230,7 @@ export default class Note extends React.Component {
                           color="inherit"
                           aria-label="open drawer"
                           edge="start"
+                          onClick={this.handleArchive}
                         >
                           {this.props.note.isArchived ? (
                             <UnarchiveOutlinedIcon className="menu-icon" />
@@ -324,6 +345,7 @@ export default class Note extends React.Component {
                   color="inherit"
                   aria-label="open drawer"
                   edge="start"
+                  onClick={this.handleArchive}
                 >
                   {this.props.note.isArchived ? (
                     <UnarchiveOutlinedIcon className="menu-icon" />

@@ -83,6 +83,22 @@ class Notes extends React.Component {
     });
   };
 
+  rendorNote = (note) => {
+    return note.noteCheckLists.length === 0 ? (
+      <Note
+        note={note}
+        key={note.id}
+        reloadNotes={this.props.reloadNotes}
+      />
+    ) : (
+      <CheckNote
+        note={note}
+        key={note.id}
+        reloadNotes={this.props.reloadNotes}
+      />
+    );
+  }
+
   render() {
     let newNoteBig = (
       <Card className="new-note-big">
@@ -181,39 +197,26 @@ class Notes extends React.Component {
     );
 
     let noteList = this.props.notes.map((note) => {
-      if(this.props.label === "archive" || this.props.label === "trash"){
-        return note.noteCheckLists.length === 0 ? (
-          <Note
-            note={note}
-            key={note.id}
-            reloadNotes={this.props.reloadNotes}
-          />
-        ) : (
-          <CheckNote
-            note={note}
-            key={note.id}
-            reloadNotes={this.props.reloadNotes}
-          />
-        );
+      if(this.props.label === "archive"){
+        if(note.isArchived){
+          return this.rendorNote(note);
+        }else{
+          return null;
+        }
+      } 
+      if(this.props.label === "trash"){
+        if(note.isDeleted){
+          return this.rendorNote(note);
+        }else{
+          return null;
+        }
       }
       if (note.isPined) {
         return null;
       } if(note.isArchived && this.props.label !== "archive"){
         return null;
       } else {
-        return note.noteCheckLists.length === 0 ? (
-          <Note
-            note={note}
-            key={note.id}
-            reloadNotes={this.props.reloadNotes}
-          />
-        ) : (
-          <CheckNote
-            note={note}
-            key={note.id}
-            reloadNotes={this.props.reloadNotes}
-          />
-        );
+        return this.rendorNote(note);
       }
     });
 
@@ -221,19 +224,7 @@ class Notes extends React.Component {
       if (!note.isPined) {
         return "";
       } else {
-        return note.noteCheckLists.length === 0 ? (
-          <Note
-            note={note}
-            key={note.id}
-            reloadNotes={this.props.reloadNotes}
-          />
-        ) : (
-          <CheckNote
-            note={note}
-            key={note.id}
-            reloadNotes={this.props.reloadNotes}
-          />
-        );
+        return this.rendorNote(note);
       }
     });
 
