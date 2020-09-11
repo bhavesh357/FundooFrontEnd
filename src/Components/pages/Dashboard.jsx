@@ -32,6 +32,10 @@ class Dashboard extends React.Component {
       isPinned: false,
     };
     this.getData();
+    this.reloadNotes();
+  }
+
+  reloadNotes = () => {
     switch (this.props.page) {
       case "archive":
         this.getArchivedNotes();
@@ -218,7 +222,7 @@ class Dashboard extends React.Component {
             isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
             notes={this.state.notes}
             label={this.props.page}
-            reloadNotes={this.getNotes}
+            reloadNotes={this.reloadNotes}
             isPinned={this.state.isPinned}
           />
         </main>

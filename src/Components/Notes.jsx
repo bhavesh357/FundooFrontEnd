@@ -181,7 +181,24 @@ class Notes extends React.Component {
     );
 
     let noteList = this.props.notes.map((note) => {
+      if(this.props.label === "archive" || this.props.label === "trash"){
+        return note.noteCheckLists.length === 0 ? (
+          <Note
+            note={note}
+            key={note.id}
+            reloadNotes={this.props.reloadNotes}
+          />
+        ) : (
+          <CheckNote
+            note={note}
+            key={note.id}
+            reloadNotes={this.props.reloadNotes}
+          />
+        );
+      }
       if (note.isPined) {
+        return null;
+      } if(note.isArchived && this.props.label !== "archive"){
         return null;
       } else {
         return note.noteCheckLists.length === 0 ? (
