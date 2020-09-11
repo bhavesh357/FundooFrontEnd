@@ -206,7 +206,7 @@ class Dashboard extends React.Component {
     try {
       for (let i = 0; i < arr.length; i++) {
         let temp = arr[i];
-        if (temp.isPined) {
+        if (temp.isPined && !temp.isDeleted && !temp.isArchived) {
           return true;
         }
       }

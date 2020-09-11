@@ -32,8 +32,9 @@ import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import UnarchiveOutlinedIcon from "@material-ui/icons/UnarchiveOutlined";
-import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
-import RestoreFromTrashOutlinedIcon from '@material-ui/icons/RestoreFromTrashOutlined';
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import RestoreFromTrashOutlinedIcon from "@material-ui/icons/RestoreFromTrashOutlined";
+import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 
 import notesCalls from "./../Service/notes";
 
@@ -53,7 +54,7 @@ export default class Note extends React.Component {
   }
 
   handlePinned = () => {
-    if(this.props.note.isArchived){
+    if (this.props.note.isArchived) {
       this.handleArchive();
     }
     NotesCalls.pinUnpinNote(
@@ -87,7 +88,7 @@ export default class Note extends React.Component {
         }
       }
     );
-  }
+  };
 
   handleDelete = () => {
     NotesCalls.deleteNotes(
@@ -104,8 +105,23 @@ export default class Note extends React.Component {
         }
       }
     );
-  }
+  };
 
+  handleDeleteForever = () => {
+    NotesCalls.deleteNotesForever(
+      {
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  };
 
   handleClose = () => {
     NotesCalls.updateNotes(
@@ -129,9 +145,11 @@ export default class Note extends React.Component {
   };
 
   handleOpen = () => {
-    this.setState({
-      isEditing: true,
-    });
+    if (!this.props.note.isDeleted) {
+      this.setState({
+        isEditing: true,
+      });
+    }
   };
 
   handleEditPinned = () => {
@@ -190,7 +208,6 @@ export default class Note extends React.Component {
       }
     );
   };
-
 
   render() {
     return (
@@ -309,10 +326,10 @@ export default class Note extends React.Component {
                           onClick={this.handleDeleteEdit}
                         >
                           {this.state.editDeleted ? (
-                    <RestoreFromTrashOutlinedIcon className="menu-icon" />
-                  ) : (
-                    <DeleteOutlineOutlinedIcon className="menu-icon" />
-                  )}
+                            <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                          ) : (
+                            <DeleteOutlineOutlinedIcon className="menu-icon" />
+                          )}
                         </IconButton>
                       </Grid>
                     </Grid>
@@ -364,78 +381,109 @@ export default class Note extends React.Component {
             {this.props.note.description}
           </Typography>
           <CardActions className="note-actions">
-            <Grid container className="note-action-buttons">
-              <Grid item md={2}>
-                <IconButton
-                  className="button"
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                >
-                  <AddAlertOutlinedIcon className="menu-icon" />
-                </IconButton>
+            {this.props.note.isDeleted ? (
+              <Grid container className="note-action-buttons">
+                <Grid item md={2}>
+                  <IconButton
+                    className="button"
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={this.handleDeleteForever}
+                  >
+                    <HighlightOffOutlinedIcon className="menu-icon" />
+                  </IconButton>
+                </Grid>
+                <Grid item md={2}>
+                  <IconButton
+                    className="button"
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={this.handleDelete}
+                  >
+                    {this.props.note.isDeleted ? (
+                      <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                    ) : (
+                      <DeleteOutlineOutlinedIcon className="menu-icon" />
+                    )}
+                  </IconButton>
+                </Grid>
               </Grid>
-              <Grid item md={2}>
-                <IconButton
-                  className="button"
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                >
-                  <PersonAddOutlinedIcon className="menu-icon" />
-                </IconButton>
+            ) : (
+              <Grid container className="note-action-buttons">
+                <Grid item md={2}>
+                  <IconButton
+                    className="button"
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                  >
+                    <AddAlertOutlinedIcon className="menu-icon" />
+                  </IconButton>
+                </Grid>
+                <Grid item md={2}>
+                  <IconButton
+                    className="button"
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                  >
+                    <PersonAddOutlinedIcon className="menu-icon" />
+                  </IconButton>
+                </Grid>
+                <Grid item md={2}>
+                  <IconButton
+                    className="button"
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                  >
+                    <ColorLensOutlinedIcon className="menu-icon" />
+                  </IconButton>
+                </Grid>
+                <Grid item md={2}>
+                  <IconButton
+                    className="button"
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                  >
+                    <CropOriginalIcon className="menu-icon" />
+                  </IconButton>
+                </Grid>
+                <Grid item md={2}>
+                  <IconButton
+                    className="button"
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={this.handleArchive}
+                  >
+                    {this.props.note.isArchived ? (
+                      <UnarchiveOutlinedIcon className="menu-icon" />
+                    ) : (
+                      <ArchiveOutlinedIcon className="menu-icon" />
+                    )}
+                  </IconButton>
+                </Grid>
+                <Grid item md={2}>
+                  <IconButton
+                    className="button"
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={this.handleDelete}
+                  >
+                    {this.props.note.isDeleted ? (
+                      <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                    ) : (
+                      <DeleteOutlineOutlinedIcon className="menu-icon" />
+                    )}
+                  </IconButton>
+                </Grid>
               </Grid>
-              <Grid item md={2}>
-                <IconButton
-                  className="button"
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                >
-                  <ColorLensOutlinedIcon className="menu-icon" />
-                </IconButton>
-              </Grid>
-              <Grid item md={2}>
-                <IconButton
-                  className="button"
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                >
-                  <CropOriginalIcon className="menu-icon" />
-                </IconButton>
-              </Grid>
-              <Grid item md={2}>
-                <IconButton
-                  className="button"
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                  onClick={this.handleArchive}
-                >
-                  {this.props.note.isArchived ? (
-                    <UnarchiveOutlinedIcon className="menu-icon" />
-                  ) : (
-                    <ArchiveOutlinedIcon className="menu-icon" />
-                  )}
-                </IconButton>
-              </Grid>
-              <Grid item md={2}>
-                <IconButton
-                  className="button"
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                  onClick={this.handleDelete}
-                >
-                  {this.props.note.isDeleted ? (
-                    <RestoreFromTrashOutlinedIcon className="menu-icon" />
-                  ) : (
-                    <DeleteOutlineOutlinedIcon className="menu-icon" />
-                  )}
-                </IconButton>
-              </Grid>
-            </Grid>
+            )}
           </CardActions>
         </Card>
       </Grid>

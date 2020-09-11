@@ -58,6 +58,10 @@ class NotesCalls {
     this.callPost(baseUrl+"/trashNotes?access_token=" + token, data, callback)
   }
 
+  deleteNotesForever(data,callback){
+    this.callPost(baseUrl+"/deleteForeverNotes?access_token=" + token, data, callback)
+  }
+
   updateNotes(data,callback){
     this.callPost(baseUrl+"/updateNotes?access_token=" + token, data, callback)
   }

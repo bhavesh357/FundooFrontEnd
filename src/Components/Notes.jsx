@@ -221,10 +221,10 @@ class Notes extends React.Component {
     });
 
     let noteListPinned = this.props.notes.map((note) => {
-      if (!note.isPined) {
-        return "";
-      } else {
+      if (note.isPined && !note.isDeleted && !note.isArchived) {
         return this.rendorNote(note);
+      } else {
+        return "";
       }
     });
 
