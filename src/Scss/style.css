@@ -584,6 +584,24 @@
   display: none !important;
 }
 
+.reminder-datepicker {
+  width: 13em;
+  padding: 1em !important;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: center !important;
+      -ms-flex-pack: center !important;
+          justify-content: center !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+}
+
+.reminder-datepicker div {
+  width: 100%;
+}
+
 .pin-button-new {
   position: absolute !important;
   right: 4%;

@@ -62,6 +62,10 @@ class NotesCalls {
     this.callPost(baseUrl+"/deleteForeverNotes?access_token=" + token, data, callback)
   }
 
+  addUpdateReminderNotes(data,callback){
+    this.callPost(baseUrl+"/addUpdateReminderNotes?access_token=" + token, data, callback)
+  }
+
   updateNotes(data,callback){
     this.callPost(baseUrl+"/updateNotes?access_token=" + token, data, callback)
   }

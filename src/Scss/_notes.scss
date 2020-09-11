@@ -125,6 +125,17 @@
     display: none !important;
 }
 
+.reminder-datepicker{
+    width: 13em;
+    padding: 1em !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    div{
+        width: 100%;
+    }
+}
+
 .pin-button-new{
     position: absolute !important;
     right: 4%;
