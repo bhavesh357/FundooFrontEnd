@@ -71,10 +71,10 @@ class ResetPassword extends React.Component {
       };
       Calls.resetWithData(user, this.props.match.params.token, (response) => {
         let message;
-        if (response.data === undefined) {
-          message = response.response.data.error.message;
+        if (response.status === 204) {
+          message = "Successfully resetted password";
         } else {
-          message = response.data.message;
+          message = "Couldnt reset password";
         }
         this.setState({
           snackbarMessage: message,
@@ -181,7 +181,7 @@ class ResetPassword extends React.Component {
                 ></TextField>
                 <CardActions className="sign-buttons">
                   <Link to={"/"} className="sign-link">
-                    Back
+                    Sign In
                   </Link>
                   <Button
                     onClick={this.handleNext}

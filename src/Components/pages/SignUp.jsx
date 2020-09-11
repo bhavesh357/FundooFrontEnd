@@ -98,7 +98,7 @@ class SignUp extends React.Component {
         if (response.data === undefined) {
           message = response.response.data.error.message;
         } else {
-          message = response.data.message;
+          message = response.data.data.message;
         }
         this.setState({
           snackbarMessage: message,
