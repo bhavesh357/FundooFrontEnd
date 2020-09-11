@@ -13,13 +13,11 @@ import { toggle } from "../../redux/actions";
 const SideMenuCalls = new sideMenuCalls();
 const NotesCalls = new notesCalls();
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   originalItems: state.originalItems.originalItems,
-  drawerOpen:state.drawer.drawerOpen,
+  drawerOpen: state.drawer.drawerOpen,
   tempDrawerOpen: state.drawer.tempDrawerOpen,
 });
-
 
 class Dashboard extends React.Component {
   items = [...this.props.originalItems];
@@ -34,7 +32,16 @@ class Dashboard extends React.Component {
       isPinned: false,
     };
     this.getData();
-    this.getNotes();
+    switch (this.props.page) {
+      case "archive":
+        this.getArchivedNotes();
+        break;
+      default:
+          this.getNotes();
+    }
+  }
+
+  componentDidUpdate(){
   }
 
   handleSnackbarClose = (event, reason) => {
@@ -47,7 +54,6 @@ class Dashboard extends React.Component {
   handleDrawerToggle = () => {
     this.props.dispatch(toggle());
   };
-
 
   getNewlabels = (labels) => {
     let newLabels = labels.map((item) => {
@@ -87,23 +93,19 @@ class Dashboard extends React.Component {
   };
 
   deleteLabel = (id) => {
-    SideMenuCalls.deleteLabel(
-      localStorage.getItem("token"),
-      id,
-      (response) => {
-        let message = "";
-        if (response.data === undefined) {
-          message = response.response.data.error.message;
-        } else {
-          message = "Deleted Successfully";
-          this.getData();
-        }
-        this.setState({
-          snackbarMessage: message,
-          snackbarStatus: true,
-        });
+    SideMenuCalls.deleteLabel(localStorage.getItem("token"), id, (response) => {
+      let message = "";
+      if (response.data === undefined) {
+        message = response.response.data.error.message;
+      } else {
+        message = "Deleted Successfully";
+        this.getData();
       }
-    );
+      this.setState({
+        snackbarMessage: message,
+        snackbarStatus: true,
+      });
+    });
   };
 
   editLabel = (id, label) => {
@@ -153,27 +155,38 @@ class Dashboard extends React.Component {
       } else {
         this.setState({
           notes: [...response.data.data.data],
-          isPinned : this.checkIsPinned([...response.data.data.data]),
+          isPinned: this.checkIsPinned([...response.data.data.data]),
         });
+      }
+    });
+  };
 
+  getArchivedNotes = () => {
+    NotesCalls.getArchivedNotes((response) => {
+      if (response.data.data.data === undefined) {
+        console.log(response.data.data.data);
+      } else {
+        this.setState({
+          notes: [...response.data.data.data],
+          isPinned: false,
+        });
       }
     });
   };
 
   checkIsPinned = (arr) => {
-    try{
-      for(let i=0;i<arr.length; i++){
-      let temp = arr[i];
-      if(temp.isPined){
-        return true;
+    try {
+      for (let i = 0; i < arr.length; i++) {
+        let temp = arr[i];
+        if (temp.isPined) {
+          return true;
+        }
       }
-    }
-    return false;
-    } catch (e){
+      return false;
+    } catch (e) {
       return false;
     }
-    
-  }
+  };
 
   render() {
     return (
@@ -192,7 +205,7 @@ class Dashboard extends React.Component {
           menuOpen={this.handleDrawerToggle}
           drawerOpen={this.props.drawerOpen}
           searchFocus={false}
-          title={this.props.match.params.page}
+          title={this.props.page}
         />
         <MiniDrawer
           addNewLabel={this.addNewLabel}
@@ -203,7 +216,8 @@ class Dashboard extends React.Component {
         <main className="content">
           <Notes
             isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
-            notes = {this.state.notes}
+            notes={this.state.notes}
+            label={this.props.page}
             reloadNotes={this.getNotes}
             isPinned={this.state.isPinned}
           />
@@ -213,6 +227,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);

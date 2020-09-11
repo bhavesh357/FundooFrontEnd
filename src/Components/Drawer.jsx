@@ -125,7 +125,7 @@ export default function MiniDrawer(props) {
   };
 
   const handleClick = (name) => {
-    history.push("/dashboard/" + name);
+    history.push("/dashboard/" + name.toLowerCase() );
   };
 
   const handleEditLabels = () => {

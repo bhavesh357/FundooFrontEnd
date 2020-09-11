@@ -223,7 +223,11 @@ class Notes extends React.Component {
     return (
       <Grid container className="note">
         <Grid item md={this.props.isDrawerOpen ? 8 : 6}>
-          {this.state.isNewNote ? newNoteBig : newNoteSmall}
+          {this.props.label !== "archive" && this.props.label !== "trash"
+            ? this.state.isNewNote
+              ? newNoteBig
+              : newNoteSmall
+            : "" }
         </Grid>
         {!this.props.isPinned ? (
           ""

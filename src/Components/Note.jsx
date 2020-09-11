@@ -31,6 +31,7 @@ import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
+import UnarchiveOutlinedIcon from "@material-ui/icons/UnarchiveOutlined";
 
 import notesCalls from "./../Service/notes";
 
@@ -210,7 +211,11 @@ export default class Note extends React.Component {
                           aria-label="open drawer"
                           edge="start"
                         >
-                          <ArchiveOutlinedIcon className="menu-icon" />
+                          {this.props.note.isArchived ? (
+                            <UnarchiveOutlinedIcon className="menu-icon" />
+                          ) : (
+                            <ArchiveOutlinedIcon className="menu-icon" />
+                          )}
                         </IconButton>
                       </Grid>
                       <Grid item md={2}>
@@ -320,7 +325,11 @@ export default class Note extends React.Component {
                   aria-label="open drawer"
                   edge="start"
                 >
-                  <ArchiveOutlinedIcon className="menu-icon" />
+                  {this.props.note.isArchived ? (
+                    <UnarchiveOutlinedIcon className="menu-icon" />
+                  ) : (
+                    <ArchiveOutlinedIcon className="menu-icon" />
+                  )}
                 </IconButton>
               </Grid>
               <Grid item md={2}>

@@ -34,6 +34,10 @@ class NotesCalls {
     this.callGet(baseUrl+"/getNotesList?access_token=" + token,callback);
   }
 
+  getArchivedNotes(callback) {
+    this.callGet(baseUrl+"/getArchiveNotesList?access_token=" + token,callback);
+  }
+
   pinUnpinNote(data,callback){
     this.callPost(baseUrl+"/pinUnpinNotes?access_token=" + token, data, callback)
   }
