@@ -32,6 +32,8 @@ import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import UnarchiveOutlinedIcon from "@material-ui/icons/UnarchiveOutlined";
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import RestoreFromTrashOutlinedIcon from '@material-ui/icons/RestoreFromTrashOutlined';
 
 import notesCalls from "./../Service/notes";
 
@@ -45,6 +47,8 @@ export default class Note extends React.Component {
       editTitle: this.props.note.title,
       editDescription: this.props.note.description,
       editPinned: this.props.note.isPined,
+      editDeleted: this.props.note.isDeleted,
+      editArchived: this.props.note.isArchived,
     };
   }
 
@@ -84,6 +88,24 @@ export default class Note extends React.Component {
       }
     );
   }
+
+  handleDelete = () => {
+    NotesCalls.deleteNotes(
+      {
+        isDeleted: !this.props.note.isDeleted,
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  }
+
 
   handleClose = () => {
     NotesCalls.updateNotes(
@@ -130,6 +152,45 @@ export default class Note extends React.Component {
       }
     );
   };
+
+  handleArchiveEdit = () => {
+    NotesCalls.archiveNotes(
+      {
+        isArchived: !this.props.note.isArchived,
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.setState({
+            editArchived: !this.state.editArchived,
+          });
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  };
+
+  handleDeleteEdit = () => {
+    NotesCalls.deleteNotes(
+      {
+        isDeleted: !this.props.note.isPined,
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.setState({
+            editDeleted: !this.state.editDeleted,
+          });
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  };
+
 
   render() {
     return (
@@ -230,9 +291,9 @@ export default class Note extends React.Component {
                           color="inherit"
                           aria-label="open drawer"
                           edge="start"
-                          onClick={this.handleArchive}
+                          onClick={this.handleArchiveEdit}
                         >
-                          {this.props.note.isArchived ? (
+                          {this.state.editArchived ? (
                             <UnarchiveOutlinedIcon className="menu-icon" />
                           ) : (
                             <ArchiveOutlinedIcon className="menu-icon" />
@@ -245,8 +306,13 @@ export default class Note extends React.Component {
                           color="inherit"
                           aria-label="open drawer"
                           edge="start"
+                          onClick={this.handleDeleteEdit}
                         >
-                          <MoreVertIcon className="menu-icon" />
+                          {this.state.editDeleted ? (
+                    <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                  ) : (
+                    <DeleteOutlineOutlinedIcon className="menu-icon" />
+                  )}
                         </IconButton>
                       </Grid>
                     </Grid>
@@ -360,8 +426,13 @@ export default class Note extends React.Component {
                   color="inherit"
                   aria-label="open drawer"
                   edge="start"
+                  onClick={this.handleDelete}
                 >
-                  <MoreVertIcon className="menu-icon" />
+                  {this.props.note.isDeleted ? (
+                    <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                  ) : (
+                    <DeleteOutlineOutlinedIcon className="menu-icon" />
+                  )}
                 </IconButton>
               </Grid>
             </Grid>

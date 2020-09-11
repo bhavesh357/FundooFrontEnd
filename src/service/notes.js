@@ -38,6 +38,10 @@ class NotesCalls {
     this.callGet(baseUrl+"/getArchiveNotesList?access_token=" + token,callback);
   }
 
+  getTrashedNotes(callback) {
+    this.callGet(baseUrl+"/getTrashNotesList?access_token=" + token,callback);
+  }
+
   pinUnpinNote(data,callback){
     this.callPost(baseUrl+"/pinUnpinNotes?access_token=" + token, data, callback)
   }
@@ -48,6 +52,10 @@ class NotesCalls {
 
   archiveNotes(data,callback){
     this.callPost(baseUrl+"/archiveNotes?access_token=" + token, data, callback)
+  }
+
+  deleteNotes(data,callback){
+    this.callPost(baseUrl+"/trashNotes?access_token=" + token, data, callback)
   }
 
   updateNotes(data,callback){

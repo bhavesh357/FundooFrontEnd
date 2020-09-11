@@ -40,6 +40,9 @@ class Dashboard extends React.Component {
       case "archive":
         this.getArchivedNotes();
         break;
+        case "trash":
+        this.getTrashedNotes();
+        break;
       default:
           this.getNotes();
     }
@@ -175,6 +178,19 @@ class Dashboard extends React.Component {
 
   getArchivedNotes = () => {
     NotesCalls.getArchivedNotes((response) => {
+      if (response.data.data.data === undefined) {
+        console.log(response.data.data.data);
+      } else {
+        this.setState({
+          notes: [...response.data.data.data],
+          isPinned: false,
+        });
+      }
+    });
+  };
+
+  getTrashedNotes = () => {
+    NotesCalls.getTrashedNotes((response) => {
       if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
       } else {

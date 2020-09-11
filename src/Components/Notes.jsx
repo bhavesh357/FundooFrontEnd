@@ -198,14 +198,14 @@ class Notes extends React.Component {
 
     let noteList = this.props.notes.map((note) => {
       if(this.props.label === "archive"){
-        if(note.isArchived){
+        if(note.isArchived && !note.isDeleted){
           return this.rendorNote(note);
         }else{
           return null;
         }
       } 
       if(this.props.label === "trash"){
-        if(note.isDeleted){
+        if(note.isDeleted ){
           return this.rendorNote(note);
         }else{
           return null;
@@ -213,7 +213,7 @@ class Notes extends React.Component {
       }
       if (note.isPined) {
         return null;
-      } if(note.isArchived && this.props.label !== "archive"){
+      } if((note.isArchived && this.props.label !== "archive") || (note.isDeleted && this.props.label !=="trash")){
         return null;
       } else {
         return this.rendorNote(note);
