@@ -19,6 +19,7 @@ import {
   Divider,
   Popover,
   Chip,
+  Popper,
 } from "@material-ui/core";
 
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -37,7 +38,11 @@ import UnarchiveOutlinedIcon from "@material-ui/icons/UnarchiveOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import RestoreFromTrashOutlinedIcon from "@material-ui/icons/RestoreFromTrashOutlined";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
-import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
+import PopupState, {
+  bindTrigger,
+  bindPopover,
+  bindToggle,
+} from "material-ui-popup-state";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import DateFnsUtils from "@date-io/date-fns";
 
@@ -60,28 +65,72 @@ export default class Note extends React.Component {
       editArchived: this.props.note.isArchived,
       reminderDate: new Date(),
       reminder: this.updateReminderlabel(),
+      reminderId: undefined,
+      reminderOpen: false,
+      reminderAnchorEl: null,
+      reminderIdEdit: undefined,
+      reminderOpenEdit: false,
+      reminderAnchorElEdit: null,
     };
   }
 
-  componentDidUpdate(){
+  handleClickReminderEdit = (e) => {
+    if (this.state.reminderAnchorElEdit === null) {
+      this.setState({
+        reminderAnchorElEdit: e.currentTarget,
+        reminderOpenEdit: !this.state.reminderOpenEdit,
+        reminderIdEdit: "reminder-popper-edit",
+      });
+    } else {
+      this.setState({
+        reminderAnchorElEdit: null,
+        reminderOpenEdit: !this.state.reminderOpenEdit,
+        reminderIdEdit: undefined,
+      });
+    }
+  };
+
+  handleClickReminder = (e) => {
+    if (this.state.reminderAnchorEl === null) {
+      this.setState({
+        reminderAnchorEl: e.currentTarget,
+        reminderOpen: !this.state.reminderOpen,
+        reminderId: "reminder-popper",
+      });
+    } else {
+      this.setState({
+        reminderAnchorEl: null,
+        reminderOpen: !this.state.reminderOpen,
+        reminderId: undefined,
+      });
+    }
+  };
+
+  componentDidUpdate() {
     const reminderLabel = this.updateReminderlabel();
-    if(reminderLabel !== this.state.reminder){
+    if (reminderLabel !== this.state.reminder) {
       this.setState({
         reminder: reminderLabel,
       });
     }
   }
 
-  updateReminderlabel(){
+  updateReminderlabel() {
     if (this.props.note.reminder.length > 0) {
       if (isToday(new Date(this.props.note.reminder[0]))) {
-        return "Today, " + new Date(this.props.note.reminder[0]).toLocaleTimeString();
+        return (
+          "Today, " + new Date(this.props.note.reminder[0]).toLocaleTimeString()
+        );
       } else if (isTomorrow(new Date(this.props.note.reminder[0]))) {
-        return  "Tomorrow, " +
-          new Date(this.props.note.reminder[0]).toLocaleTimeString();
+        return (
+          "Tomorrow, " +
+          new Date(this.props.note.reminder[0]).toLocaleTimeString()
+        );
       } else if (isYesterday(new Date(this.props.note.reminder[0]))) {
-        return  "Yesterday, " +
-          new Date(this.props.note.reminder[0]).toLocaleTimeString();
+        return (
+          "Yesterday, " +
+          new Date(this.props.note.reminder[0]).toLocaleTimeString()
+        );
       } else {
         return new Date(this.props.note.reminder[0]).toLocaleString();
       }
@@ -108,7 +157,12 @@ export default class Note extends React.Component {
     );
   };
 
-  handleReminder = () => {
+  handleReminder = (isEditing) => {
+    if(isEditing){
+      this.handleClickReminderEdit();
+    }else{
+      this.handleClickReminder();
+    }
     NotesCalls.addUpdateReminderNotes(
       {
         reminder: this.state.reminderDate,
@@ -359,54 +413,40 @@ export default class Note extends React.Component {
                   <CardActions className="note-actions-edit">
                     <Grid container className="note-action-buttons-edit">
                       <Grid item md={2}>
-                        <PopupState
-                          variant="popover"
-                          popupId="demo-popup-popover"
-                        >
-                          {(popupState) => (
-                            <div>
-                              <IconButton
-                                className="button"
-                                color="inherit"
-                                aria-label="open drawer"
-                                edge="start"
-                                {...bindTrigger(popupState)}
-                              >
-                                <AddAlertOutlinedIcon className="menu-icon" />
-                              </IconButton>
-                              <Popover
-                                {...bindPopover(popupState)}
-                                anchorOrigin={{
-                                  vertical: "bottom",
-                                  horizontal: "center",
-                                }}
-                                transformOrigin={{
-                                  vertical: "top",
-                                  horizontal: "center",
-                                }}
-                              >
-                                <div className="popover reminder-popover">
-                                  <div className="reminder-input">
-                                    <MuiPickersUtilsProvider
-                                      utils={DateFnsUtils}
-                                    >
-                                      <DateTimePicker
-                                        className="reminder-datepicker"
-                                        value={this.state.reminderDate}
-                                        onChange={this.handleReminderDateChange}
-                                      />
-                                    </MuiPickersUtilsProvider>
-                                  </div>
-                                  <div className="reminder-input reminder-button">
-                                    <Button onClick={this.handleReminder}>
-                                      Remind Me
-                                    </Button>
-                                  </div>
-                                </div>
-                              </Popover>
+                        <div>
+                          <IconButton
+                            className="button"
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            aria-describedby={this.state.reminderId}
+                            onClick={this.handleClickReminderEdit}
+                          >
+                            <AddAlertOutlinedIcon className="menu-icon" />
+                          </IconButton>
+                          <Popper
+                            id={this.state.reminderIdEdit}
+                            open={this.state.reminderOpenEdit}
+                            anchorEl={this.state.reminderAnchorElEdit}
+                          >
+                            <div className="popover reminder-popover">
+                              <div className="reminder-input">
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                  <DateTimePicker
+                                    className="reminder-datepicker"
+                                    value={this.state.reminderDate}
+                                    onChange={this.handleReminderDateChange}
+                                  />
+                                </MuiPickersUtilsProvider>
+                              </div>
+                              <div className="reminder-input reminder-button">
+                                <Button onClick={() => this.handleReminder(true)}>
+                                  Remind Me
+                                </Button>
+                              </div>
                             </div>
-                          )}
-                        </PopupState>
+                          </Popper>
+                        </div>
                       </Grid>
                       <Grid item md={2}>
                         <IconButton
@@ -566,49 +606,40 @@ export default class Note extends React.Component {
             ) : (
               <Grid container className="note-action-buttons">
                 <Grid item md={2}>
-                  <PopupState variant="popover" popupId="demo-popup-popover">
-                    {(popupState) => (
-                      <div>
-                        <IconButton
-                          className="button"
-                          color="inherit"
-                          aria-label="open drawer"
-                          edge="start"
-                          {...bindTrigger(popupState)}
-                        >
-                          <AddAlertOutlinedIcon className="menu-icon" />
-                        </IconButton>
-                        <Popover
-                          {...bindPopover(popupState)}
-                          anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                          }}
-                          transformOrigin={{
-                            vertical: "top",
-                            horizontal: "center",
-                          }}
-                        >
-                          <div className="popover reminder-popover">
-                            <div className="reminder-input">
-                              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <DateTimePicker
-                                  className="reminder-datepicker"
-                                  value={this.state.reminderDate}
-                                  onChange={this.handleReminderDateChange}
-                                />
-                              </MuiPickersUtilsProvider>
-                            </div>
-                            <div className="reminder-input reminder-button">
-                              <Button onClick={this.handleReminder}>
-                                Remind Me
-                              </Button>
-                            </div>
-                          </div>
-                        </Popover>
+                  <div>
+                    <IconButton
+                      className="button"
+                      color="inherit"
+                      aria-label="open drawer"
+                      edge="start"
+                      aria-describedby={this.state.reminderId}
+                      onClick={this.handleClickReminder}
+                    >
+                      <AddAlertOutlinedIcon className="menu-icon" />
+                    </IconButton>
+                    <Popper
+                      id={this.state.reminderId}
+                      open={this.state.reminderOpen}
+                      anchorEl={this.state.reminderAnchorEl}
+                    >
+                      <div className="popover reminder-popover">
+                        <div className="reminder-input">
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <DateTimePicker
+                              className="reminder-datepicker"
+                              value={this.state.reminderDate}
+                              onChange={this.handleReminderDateChange}
+                            />
+                          </MuiPickersUtilsProvider>
+                        </div>
+                        <div className="reminder-input reminder-button">
+                          <Button onClick={() => this.handleReminder(false)}>
+                            Remind Me
+                          </Button>
+                        </div>
                       </div>
-                    )}
-                  </PopupState>
+                    </Popper>
+                  </div>
                 </Grid>
                 <Grid item md={2}>
                   <IconButton
