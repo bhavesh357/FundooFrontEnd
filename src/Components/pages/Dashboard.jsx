@@ -43,8 +43,14 @@ class Dashboard extends React.Component {
         case "trash":
         this.getTrashedNotes();
         break;
+        case "reminders":
+        this.getReminderNotes();
+        break;
+        case "notes":
+        this.getNotes();
+        break;
       default:
-          this.getNotes();
+          this.getNotesByLabel();
     }
   }
 
@@ -197,6 +203,20 @@ class Dashboard extends React.Component {
         this.setState({
           notes: [...response.data.data.data],
           isPinned: false,
+        });
+      }
+    });
+  };
+
+  getReminderNotes = () => {
+    NotesCalls.getReminderNotes((response) => {
+      if (response.data.data.data === undefined) {
+        console.log(response.data.data.data);
+      } else {
+        console.log(response.data.data.data);
+        this.setState({
+          notes: [...response.data.data.data],
+          isPinned: this.checkIsPinned([...response.data.data.data]),
         });
       }
     });
