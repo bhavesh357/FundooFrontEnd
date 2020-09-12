@@ -22,6 +22,7 @@ import {
   Popper,
 } from "@material-ui/core";
 
+import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
@@ -50,6 +51,7 @@ import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import notesCalls from "./../Service/notes";
 import { isBefore, isToday, isTomorrow, isYesterday } from "date-fns";
+import LabelPopper from "./LabelPopper";
 
 const NotesCalls = new notesCalls();
 
@@ -71,6 +73,12 @@ export default class Note extends React.Component {
       reminderIdEdit: undefined,
       reminderOpenEdit: false,
       reminderAnchorElEdit: null,
+      labelId: undefined,
+      labelOpen: false,
+      labelAnchorEl: null,
+      labelIdEdit: undefined,
+      labelOpenEdit: false,
+      labelAnchorElEdit: null,
     };
   }
 
@@ -86,6 +94,22 @@ export default class Note extends React.Component {
         reminderAnchorElEdit: null,
         reminderOpenEdit: !this.state.reminderOpenEdit,
         reminderIdEdit: undefined,
+      });
+    }
+  };
+
+  handleClickLabelEdit = (e) => {
+    if (this.state.labelAnchorElEdit === null) {
+      this.setState({
+        labelAnchorElEdit: e.currentTarget,
+        labelOpenEdit: !this.state.labelOpenEdit,
+        labelIdEdit: "label-popper-edit",
+      });
+    } else {
+      this.setState({
+        labelAnchorElEdit: null,
+        labelOpenEdit: !this.state.labelOpenEdit,
+        labelIdEdit: undefined,
       });
     }
   };
@@ -158,9 +182,9 @@ export default class Note extends React.Component {
   };
 
   handleReminder = (isEditing) => {
-    if(isEditing){
+    if (isEditing) {
       this.handleClickReminderEdit();
-    }else{
+    } else {
       this.handleClickReminder();
     }
     NotesCalls.addUpdateReminderNotes(
@@ -440,7 +464,9 @@ export default class Note extends React.Component {
                                 </MuiPickersUtilsProvider>
                               </div>
                               <div className="reminder-input reminder-button">
-                                <Button onClick={() => this.handleReminder(true)}>
+                                <Button
+                                  onClick={() => this.handleReminder(true)}
+                                >
                                   Remind Me
                                 </Button>
                               </div>
@@ -469,14 +495,26 @@ export default class Note extends React.Component {
                         </IconButton>
                       </Grid>
                       <Grid item md={2}>
-                        <IconButton
-                          className="button"
-                          color="inherit"
-                          aria-label="open drawer"
-                          edge="start"
-                        >
-                          <CropOriginalIcon className="menu-icon" />
-                        </IconButton>
+                        <div>
+                          <IconButton
+                            className="button"
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            aria-describedby={this.state.labelIdEdit}
+                            onClick={this.handleClickLabelEdit}
+                          >
+                            <LabelOutlinedIcon className="menu-icon" />
+                          </IconButton>
+                          <Popper
+                            id={this.state.labelIdEdit}
+                            open={this.state.labelOpenEdit}
+                            anchorEl={this.state.labelAnchorElEdit}
+                            placement="right-end"
+                          >
+                              <LabelPopper note={this.props.note} close={this.handleClickLabelEdit}/>
+                          </Popper>
+                        </div>
                       </Grid>
                       <Grid item md={2}>
                         <IconButton
@@ -662,14 +700,19 @@ export default class Note extends React.Component {
                   </IconButton>
                 </Grid>
                 <Grid item md={2}>
-                  <IconButton
-                    className="button"
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                  >
-                    <CropOriginalIcon className="menu-icon" />
-                  </IconButton>
+                  <div>
+                    <IconButton
+                      className="button"
+                      color="inherit"
+                      aria-label="open drawer"
+                      edge="start"
+                      aria-describedby={this.state.labelIdEdit}
+                      onClick={this.handleClickLabelEdit}
+                    >
+                      <LabelOutlinedIcon className="menu-icon" />
+                    </IconButton>
+                    
+                  </div>
                 </Grid>
                 <Grid item md={2}>
                   <IconButton

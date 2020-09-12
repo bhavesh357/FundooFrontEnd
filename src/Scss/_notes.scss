@@ -24,11 +24,38 @@
         }
     }
 }
-
-.reminder-popover{
+.popover{
     background: $background-color;
     border: solid 1px $border-color;
     border-radius: 10px;
+}
+
+.label-popover{
+    padding: 0.5em;
+}
+
+.label-popover-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.label-popover-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25em;
+}
+
+.label-popover-search{
+    display: flex;
+    align-items: flex-end;
+    padding: 0.25em;
+}
+
+.label-popover-button{
+    cursor: pointer;
+}
+
+.reminder-popover{
     display: flex;
     align-items: flex-end;
     flex-direction: column;
@@ -148,6 +175,10 @@
 }
 
 #reminder-popper-edit{
+    z-index: 1301;
+}
+
+#label-popper-edit{
     z-index: 1301;
 }
 
