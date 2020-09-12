@@ -74,6 +74,14 @@ class NotesCalls {
     this.callPost(baseUrl+"/updateNotes?access_token=" + token, data, callback)
   }
 
+  addLabelNote(noteId,labelId,callback){
+    this.callPost(baseUrl+"/"+noteId+"/addLabelToNotes/"+labelId+"/add?access_token="+ token,{},callback);
+  }
+
+  removeLabelNote(noteId,labelId,callback){
+    this.callPost(baseUrl+"/"+noteId+"/addLabelToNotes/"+labelId+"/remove?access_token="+ token,{},callback);
+  }
+
 }
 
 export default NotesCalls;

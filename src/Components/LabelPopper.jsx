@@ -18,22 +18,40 @@ export default class LabelPopper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedA: false,
       labels: [],
     };
+    console.log(this.props.labels);
+    if(this.props.labels.length > 0){
+      this.loadStates();
+    }
     this.getData();
   }
 
-  handleChange = (e) => {
+  loadStates = () =>{
+    for(let i=0;i<this.props.labels.length;i++){
+      console.log(this.props.labels[i]);
+      this.state={
+        ...this.state,
+        [this.props.labels[i].label]: true,
+      };
+    }
+  }
+
+  handleChange = (e,id) => {
     let state = e.target.name;
     let value = e.target.checked;
     console.log(state, value);
     this.setState({
-      checkedA: !this.state[e.target.name],
+      [state]: !this.state[e.target.name],
     });
+    if(this.state[e.target.name]){
+      this.props.removeLabel(id);
+    }else{
+      this.props.addLabel(id);
+    }
   };
 
-  getData = () => {
+  getData = (e) => {
     SideMenuCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;
@@ -54,9 +72,9 @@ export default class LabelPopper extends React.Component {
           key={item.label}
           control={
             <Checkbox
-              checked={this.state["checked" + item.label]}
-              onChange={this.handleChange}
-              name={"checked" + item.label}
+              checked={this.state[item.label]}
+              onChange={(e) => this.handleChange(e,item.id)}
+              name={item.label}
               color="primary"
             />
           }
@@ -70,10 +88,10 @@ export default class LabelPopper extends React.Component {
           <Typography>Labels</Typography>
           <ClearIcon className="label-popover-button" onClick={this.props.close} />
         </div>
-        <div className="label-popover-search">
+        {/* <div className="label-popover-search">
           <TextField label="Search" focused/>
           <SearchIcon className="label-popover-button" />
-        </div>
+        </div> */}
         <div className="label-popover-list">{allLabels}</div>
       </div>
     );

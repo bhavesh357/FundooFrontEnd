@@ -82,6 +82,38 @@ export default class Note extends React.Component {
     };
   }
 
+  addLabel = (id) => {
+    console.log(id);
+    NotesCalls.addLabelNote(
+      this.props.note.id,
+      id,
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  }
+
+  removeLabel = (id) => {
+    console.log(id);
+    NotesCalls.removeLabelNote(
+      this.props.note.id,
+      id,
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  }
+
   handleClickReminderEdit = (e) => {
     if (this.state.reminderAnchorElEdit === null) {
       this.setState({
@@ -280,7 +312,23 @@ export default class Note extends React.Component {
     );
   };
 
+  closePoppers = () => {
+    this.setState({
+      reminderAnchorElEdit: null,
+      reminderOpenEdit: false,
+      reminderIdEdit: undefined,
+      reminderAnchorEl: null,
+      reminderOpen: false,
+      reminderId: undefined,
+      labelAnchorElEdit: null,
+      labelOpenEdit: false,
+      labelIdEdit: undefined,
+    });
+    this.handleClickLabelEdit();
+  }
+
   handleClose = () => {
+    this.closePoppers();
     NotesCalls.updateNotes(
       {
         noteId: this.props.note.id,
@@ -512,7 +560,7 @@ export default class Note extends React.Component {
                             anchorEl={this.state.labelAnchorElEdit}
                             placement="right-end"
                           >
-                              <LabelPopper note={this.props.note} close={this.handleClickLabelEdit}/>
+                              <LabelPopper labels={this.props.note.noteLabels} close={this.handleClickLabelEdit} addLabel={this.addLabel} removeLabel={this.removeLabel} />
                           </Popper>
                         </div>
                       </Grid>
