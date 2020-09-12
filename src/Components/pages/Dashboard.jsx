@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
         this.getNotes();
         break;
       default:
-          this.getNotesByLabel();
+          this.getNotesByLabel(this.props.match.params.page);
     }
   }
 
@@ -210,6 +210,20 @@ class Dashboard extends React.Component {
 
   getReminderNotes = () => {
     NotesCalls.getReminderNotes((response) => {
+      if (response.data.data.data === undefined) {
+        console.log(response.data.data.data);
+      } else {
+        console.log(response.data.data.data);
+        this.setState({
+          notes: [...response.data.data.data],
+          isPinned: this.checkIsPinned([...response.data.data.data]),
+        });
+      }
+    });
+  };
+
+  getNotesByLabel = (label) => {
+    NotesCalls.getNotesByLabel(label,(response) => {
       if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
       } else {

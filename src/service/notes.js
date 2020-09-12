@@ -46,6 +46,10 @@ class NotesCalls {
     this.callGet(baseUrl+"/getReminderNotesList?access_token=" + token,callback);
   }
 
+  getNotesByLabel(label,callback) {
+    this.callPost(baseUrl+"/getNotesListByLabel/"+label+"?access_token=" + token,{},callback);
+  }
+
   pinUnpinNote(data,callback){
     this.callPost(baseUrl+"/pinUnpinNotes?access_token=" + token, data, callback)
   }
