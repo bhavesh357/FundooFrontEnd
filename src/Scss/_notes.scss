@@ -103,8 +103,9 @@
     }
 }
 
-
-
+.date-before{
+    text-decoration: line-through !important;
+}
 
 .note-actions{
     padding: 21px 0px !important;
@@ -133,6 +134,13 @@
     align-items: center !important;
     div{
         width: 100%;
+    }
+}
+
+.reminder-chips{
+    padding: 0.5em 0.5em 0em 0.5em;
+    .MuiChip-label{
+        font-size: 0.8em !important;
     }
 }
 

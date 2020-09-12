@@ -18,6 +18,7 @@ import {
   TextField,
   Divider,
   Popover,
+  Chip,
 } from "@material-ui/core";
 
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -37,11 +38,13 @@ import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined"
 import RestoreFromTrashOutlinedIcon from "@material-ui/icons/RestoreFromTrashOutlined";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 import DateFnsUtils from "@date-io/date-fns";
 
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import notesCalls from "./../Service/notes";
+import { isBefore, isToday, isTomorrow, isYesterday } from "date-fns";
 
 const NotesCalls = new notesCalls();
 
@@ -56,8 +59,54 @@ export default class Note extends React.Component {
       editDeleted: this.props.note.isDeleted,
       editArchived: this.props.note.isArchived,
       reminderDate: new Date(),
+      reminder: this.updateReminderlabel(),
     };
   }
+
+  componentDidUpdate(){
+    const reminderLabel = this.updateReminderlabel();
+    if(reminderLabel !== this.state.reminder){
+      this.setState({
+        reminder: reminderLabel,
+      });
+    }
+  }
+
+  updateReminderlabel(){
+    if (this.props.note.reminder.length > 0) {
+      if (isToday(new Date(this.props.note.reminder[0]))) {
+        return "Today, " + new Date(this.props.note.reminder[0]).toLocaleTimeString();
+      } else if (isTomorrow(new Date(this.props.note.reminder[0]))) {
+        return  "Tomorrow, " +
+          new Date(this.props.note.reminder[0]).toLocaleTimeString();
+      } else if (isYesterday(new Date(this.props.note.reminder[0]))) {
+        return  "Yesterday, " +
+          new Date(this.props.note.reminder[0]).toLocaleTimeString();
+      } else {
+        return new Date(this.props.note.reminder[0]).toLocaleString();
+      }
+    }
+  }
+
+  componentDidMount() {
+    console.log(this.state.reminder);
+  }
+
+  handleReminderDelete = () => {
+    NotesCalls.removeReminderNotes(
+      {
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
+  };
 
   handleReminder = () => {
     NotesCalls.addUpdateReminderNotes(
@@ -288,6 +337,23 @@ export default class Note extends React.Component {
                 multiline
                 placeholder="Note Title"
               />
+              {this.props.note.reminder.length > 0 ? (
+                <div
+                  className={
+                    isBefore(new Date(this.props.note.reminder[0]), new Date())
+                      ? "date-before reminder-chips"
+                      : "date-after reminder-chips"
+                  }
+                >
+                  <Chip
+                    avatar={<ScheduleIcon className="menu-icon" />}
+                    label={this.state.reminder}
+                    onDelete={this.handleReminderDelete}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
               <Grid container>
                 <Grid md={9} item>
                   <CardActions className="note-actions-edit">
@@ -450,6 +516,23 @@ export default class Note extends React.Component {
           >
             {this.props.note.description}
           </Typography>
+          {this.props.note.reminder.length > 0 ? (
+            <div
+              className={
+                isBefore(new Date(this.props.note.reminder[0]), new Date())
+                  ? "date-before reminder-chips"
+                  : "date-after reminder-chips"
+              }
+            >
+              <Chip
+                avatar={<ScheduleIcon className="menu-icon" />}
+                label={this.state.reminder}
+                onDelete={this.handleReminderDelete}
+              />
+            </div>
+          ) : (
+            ""
+          )}
           <CardActions className="note-actions">
             {this.props.note.isDeleted ? (
               <Grid container className="note-action-buttons">
