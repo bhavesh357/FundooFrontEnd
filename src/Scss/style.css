@@ -684,6 +684,14 @@
   font-size: 0.8em !important;
 }
 
+.label-chips {
+  padding: 0.5em 0.5em 0em 0.5em;
+}
+
+.label-chips .chip {
+  margin-right: 0.25em;
+}
+
 .pin-button-new {
   position: absolute !important;
   right: 4%;

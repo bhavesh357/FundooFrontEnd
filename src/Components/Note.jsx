@@ -84,35 +84,27 @@ export default class Note extends React.Component {
 
   addLabel = (id) => {
     console.log(id);
-    NotesCalls.addLabelNote(
-      this.props.note.id,
-      id,
-      (response) => {
-        let message = "";
-        if (response.data.data !== undefined) {
-          this.props.reloadNotes();
-        } else {
-          console.log(response);
-        }
+    NotesCalls.addLabelNote(this.props.note.id, id, (response) => {
+      let message = "";
+      if (response.data.data !== undefined) {
+        this.props.reloadNotes();
+      } else {
+        console.log(response);
       }
-    );
-  }
+    });
+  };
 
   removeLabel = (id) => {
     console.log(id);
-    NotesCalls.removeLabelNote(
-      this.props.note.id,
-      id,
-      (response) => {
-        let message = "";
-        if (response.data.data !== undefined) {
-          this.props.reloadNotes();
-        } else {
-          console.log(response);
-        }
+    NotesCalls.removeLabelNote(this.props.note.id, id, (response) => {
+      let message = "";
+      if (response.data.data !== undefined) {
+        this.props.reloadNotes();
+      } else {
+        console.log(response);
       }
-    );
-  }
+    });
+  };
 
   handleClickReminderEdit = (e) => {
     if (this.state.reminderAnchorElEdit === null) {
@@ -142,6 +134,22 @@ export default class Note extends React.Component {
         labelAnchorElEdit: null,
         labelOpenEdit: !this.state.labelOpenEdit,
         labelIdEdit: undefined,
+      });
+    }
+  };
+
+  handleClickLabel = (e) => {
+    if (this.state.labelAnchorEl === null) {
+      this.setState({
+        labelAnchorEl: e.currentTarget,
+        labelOpen: !this.state.labelOpen,
+        labelId: "label-popper-edit",
+      });
+    } else {
+      this.setState({
+        labelAnchorEl: null,
+        labelOpen: !this.state.labelOpen,
+        labelId: undefined,
       });
     }
   };
@@ -324,8 +332,7 @@ export default class Note extends React.Component {
       labelOpenEdit: false,
       labelIdEdit: undefined,
     });
-    this.handleClickLabelEdit();
-  }
+  };
 
   handleClose = () => {
     this.closePoppers();
@@ -415,6 +422,20 @@ export default class Note extends React.Component {
   };
 
   render() {
+    let labelChips = "";
+
+    if (this.props.note.noteLabels.length > 0) {
+      labelChips = this.props.note.noteLabels.map((item) => {
+        return (
+          <Chip
+            className="chip"
+            label={item.label}
+            onDelete={() => this.removeLabel(item.id)}
+          />
+        );
+      });
+    }
+
     return (
       <Grid item md={3}>
         <Modal
@@ -560,7 +581,12 @@ export default class Note extends React.Component {
                             anchorEl={this.state.labelAnchorElEdit}
                             placement="right-end"
                           >
-                              <LabelPopper labels={this.props.note.noteLabels} close={this.handleClickLabelEdit} addLabel={this.addLabel} removeLabel={this.removeLabel} />
+                            <LabelPopper
+                              labels={this.props.note.noteLabels}
+                              close={this.handleClickLabelEdit}
+                              addLabel={this.addLabel}
+                              removeLabel={this.removeLabel}
+                            />
                           </Popper>
                         </div>
                       </Grid>
@@ -659,6 +685,7 @@ export default class Note extends React.Component {
           ) : (
             ""
           )}
+          <div className="label-chips">{labelChips}</div>
           <CardActions className="note-actions">
             {this.props.note.isDeleted ? (
               <Grid container className="note-action-buttons">
@@ -754,12 +781,24 @@ export default class Note extends React.Component {
                       color="inherit"
                       aria-label="open drawer"
                       edge="start"
-                      aria-describedby={this.state.labelIdEdit}
-                      onClick={this.handleClickLabelEdit}
+                      aria-describedby={this.state.labelId}
+                      onClick={this.handleClickLabel}
                     >
                       <LabelOutlinedIcon className="menu-icon" />
                     </IconButton>
-                    
+                    <Popper
+                      id={this.state.labelId}
+                      open={this.state.labelOpen}
+                      anchorEl={this.state.labelAnchorEl}
+                      placement="right-end"
+                    >
+                      <LabelPopper
+                        labels={this.props.note.noteLabels}
+                        close={this.handleClickLabel}
+                        addLabel={this.addLabel}
+                        removeLabel={this.removeLabel}
+                      />
+                    </Popper>
                   </div>
                 </Grid>
                 <Grid item md={2}>
