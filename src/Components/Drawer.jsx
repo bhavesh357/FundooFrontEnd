@@ -156,10 +156,11 @@ export default function MiniDrawer(props) {
     return <LableModalTab item={item} key={item.name} disableEdit={disableEdit} isEditing={editingLabel === item.name} handleDelete={handleDeleteLabel} handleEditLabel={handleEditLabel} />;
   });
 
-  let listItems = props.labels.map((item) => {
+  let listItems = props.labels.map( function(item){
     return (
       <div
         onClick={() => {
+          console.log(item.name.toLowerCase(),this.title)
           if (item.name !== "Edit Labels") {
             handleClick("" + item.name);
           } else {
@@ -167,7 +168,7 @@ export default function MiniDrawer(props) {
           }
         }}
         className={
-          item.name !== "Notes"
+          item.name.toLowerCase() !== this.title
             ? isActive + "list-item"
             : isActive + "list-item active"
         }
@@ -177,7 +178,7 @@ export default function MiniDrawer(props) {
         <Typography className="list-item-text">{item.name}</Typography>
       </div>
     );
-  });
+  },props);
 
   return (
     <Drawer

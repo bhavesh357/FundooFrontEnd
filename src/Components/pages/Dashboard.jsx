@@ -274,6 +274,7 @@ class Dashboard extends React.Component {
           deleteLabel={this.deleteLabel}
           editLabel={this.editLabel}
           labels={this.state.labels}
+          title={this.props.match.params.page}
         />
         <main className="content">
           <Notes
