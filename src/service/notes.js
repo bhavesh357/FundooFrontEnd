@@ -62,6 +62,10 @@ class NotesCalls {
     this.callPost(baseUrl+"/archiveNotes?access_token=" + token, data, callback)
   }
 
+  changeColorNotes(data,callback){
+    this.callPost(baseUrl+"/changesColorNotes?access_token=" + token, data, callback)
+  }
+
   deleteNotes(data,callback){
     this.callPost(baseUrl+"/trashNotes?access_token=" + token, data, callback)
   }

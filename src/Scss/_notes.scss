@@ -28,18 +28,34 @@
     background: $background-color;
     border: solid 1px $border-color;
     border-radius: 10px;
-}
-
-.label-popover{
     padding: 0.5em;
 }
+
 
 .label-popover-list{
     display: flex;
     flex-direction: column;
 }
 
+.color-popover-list{
+    display: flex;
+    justify-content: center;
+    .color{
+        height: 20px;
+        max-width: 20px;
+        margin: 5px 5px;
+        border: solid 1px $border-color;
+        border-radius: 50%;
+    }
+}
+
 .label-popover-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25em;
+}
+
+.color-popover-header{
     display: flex;
     justify-content: space-between;
     padding: 0.25em;
@@ -179,6 +195,10 @@
 }
 
 #label-popper-edit{
+    z-index: 1301;
+}
+
+#color-popper-edit{
     z-index: 1301;
 }
 

@@ -52,6 +52,7 @@ import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import notesCalls from "./../Service/notes";
 import { isBefore, isToday, isTomorrow, isYesterday } from "date-fns";
 import LabelPopper from "./LabelPopper";
+import ColorPopper from "./ColorPopper";
 
 const NotesCalls = new notesCalls();
 
@@ -79,6 +80,12 @@ export default class Note extends React.Component {
       labelIdEdit: undefined,
       labelOpenEdit: false,
       labelAnchorElEdit: null,
+      colorId: undefined,
+      colorOpen: false,
+      colorAnchorEl: null,
+      colorIdEdit: undefined,
+      colorOpenEdit: false,
+      colorAnchorElEdit: null,
     };
   }
 
@@ -92,6 +99,24 @@ export default class Note extends React.Component {
         console.log(response);
       }
     });
+  };
+
+  addColor = (color) => {
+    console.log(color);
+    NotesCalls.changeColorNotes(
+      {
+        color: color,
+        noteIdList: [this.props.note.id],
+      },
+      (response) => {
+        let message = "";
+        if (response.data.data !== undefined) {
+          this.props.reloadNotes();
+        } else {
+          console.log(response);
+        }
+      }
+    );
   };
 
   removeLabel = (id) => {
@@ -138,12 +163,44 @@ export default class Note extends React.Component {
     }
   };
 
+  handleClickColor = (e) => {
+    if (this.state.colorAnchorEl === null) {
+      this.setState({
+        colorAnchorEl: e.currentTarget,
+        colorOpen: !this.state.colorOpen,
+        colorId: "color-popper",
+      });
+    } else {
+      this.setState({
+        colorAnchorEl: null,
+        colorOpen: !this.state.colorOpen,
+        colorId: undefined,
+      });
+    }
+  };
+
+  handleClickColorEdit = (e) => {
+    if (this.state.colorAnchorElEdit === null) {
+      this.setState({
+        colorAnchorElEdit: e.currentTarget,
+        colorOpenEdit: !this.state.colorOpenEdit,
+        colorIdEdit: "color-popper-edit",
+      });
+    } else {
+      this.setState({
+        colorAnchorElEdit: null,
+        colorOpenEdit: !this.state.colorOpenEdit,
+        colorIdEdit: undefined,
+      });
+    }
+  };
+
   handleClickLabel = (e) => {
     if (this.state.labelAnchorEl === null) {
       this.setState({
         labelAnchorEl: e.currentTarget,
         labelOpen: !this.state.labelOpen,
-        labelId: "label-popper-edit",
+        labelId: "label-popper",
       });
     } else {
       this.setState({
@@ -331,6 +388,12 @@ export default class Note extends React.Component {
       labelAnchorElEdit: null,
       labelOpenEdit: false,
       labelIdEdit: undefined,
+      colorId: undefined,
+      colorOpen: false,
+      colorAnchorEl: null,
+      colorIdEdit: undefined,
+      colorOpenEdit: false,
+      colorAnchorElEdit: null,
     });
   };
 
@@ -428,6 +491,7 @@ export default class Note extends React.Component {
       labelChips = this.props.note.noteLabels.map((item) => {
         return (
           <Chip
+            key={item.label}
             className="chip"
             label={item.label}
             onDelete={() => this.removeLabel(item.id)}
@@ -445,8 +509,20 @@ export default class Note extends React.Component {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
-          <div className="modal-body-note">
-            <Card elevation={3} variant="outlined" className="note-card-edit">
+          <div
+            className="modal-body-note"
+            style={{
+              background: this.props.note.color,
+            }}
+          >
+            <Card
+              elevation={3}
+              variant="outlined"
+              className="note-card-edit"
+              style={{
+                background: this.props.note.color,
+              }}
+            >
               <IconButton
                 className="pin-button-edit"
                 color="inherit"
@@ -501,6 +577,8 @@ export default class Note extends React.Component {
               ) : (
                 ""
               )}
+              <div className="label-chips">{labelChips}</div>
+
               <Grid container>
                 <Grid md={9} item>
                   <CardActions className="note-actions-edit">
@@ -554,14 +632,29 @@ export default class Note extends React.Component {
                         </IconButton>
                       </Grid>
                       <Grid item md={2}>
-                        <IconButton
-                          className="button"
-                          color="inherit"
-                          aria-label="open drawer"
-                          edge="start"
-                        >
-                          <ColorLensOutlinedIcon className="menu-icon" />
-                        </IconButton>
+                        <div>
+                          <IconButton
+                            className="button"
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            aria-describedby={this.state.colorIdEdit}
+                            onClick={this.handleClickColorEdit}
+                          >
+                            <ColorLensOutlinedIcon className="menu-icon" />
+                          </IconButton>
+                          <Popper
+                            id={this.state.colorIdEdit}
+                            open={this.state.colorOpenEdit}
+                            anchorEl={this.state.colorAnchorElEdit}
+                            placement="right-end"
+                          >
+                            <ColorPopper
+                              close={this.handleClickColorEdit}
+                              addColor={this.addColor}
+                            />
+                          </Popper>
+                        </div>
                       </Grid>
                       <Grid item md={2}>
                         <div>
@@ -632,7 +725,14 @@ export default class Note extends React.Component {
             </Card>
           </div>
         </Modal>
-        <Card elevation={3} variant="outlined" className="note-card">
+        <Card
+          elevation={3}
+          variant="outlined"
+          style={{
+            background: this.props.note.color,
+          }}
+          className="note-card"
+        >
           <IconButton
             className="select-button"
             color="inherit"
@@ -765,14 +865,29 @@ export default class Note extends React.Component {
                   </IconButton>
                 </Grid>
                 <Grid item md={2}>
-                  <IconButton
-                    className="button"
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                  >
-                    <ColorLensOutlinedIcon className="menu-icon" />
-                  </IconButton>
+                  <div>
+                    <IconButton
+                      className="button"
+                      color="inherit"
+                      aria-label="open drawer"
+                      edge="start"
+                      aria-describedby={this.state.colorId}
+                      onClick={this.handleClickColor}
+                    >
+                      <ColorLensOutlinedIcon className="menu-icon" />
+                    </IconButton>
+                    <Popper
+                      id={this.state.colorId}
+                      open={this.state.colorOpen}
+                      anchorEl={this.state.colorAnchorEl}
+                      placement="right-end"
+                    >
+                      <ColorPopper
+                        close={this.handleClickColor}
+                        addColor={this.addColor}
+                      />
+                    </Popper>
+                  </div>
                 </Grid>
                 <Grid item md={2}>
                   <div>
