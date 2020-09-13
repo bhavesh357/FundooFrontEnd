@@ -259,6 +259,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  cursor: pointer;
 }
 
 .user-photo {
@@ -416,6 +417,10 @@
 
 .modal .modal-body hr {
   margin: 0em -1em !important;
+}
+
+.profile-popper {
+  padding: 1em 0em;
 }
 
 .dashboard {

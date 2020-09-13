@@ -50,7 +50,7 @@ class Search extends React.Component {
 
   
   addNewLabel = (label) => {
-    sideMenuCalls.addNewLabel(
+    SideMenuCalls.addNewLabel(
       localStorage.getItem("token"),
       {
         label: label,
@@ -74,7 +74,7 @@ class Search extends React.Component {
   };
 
   deleteLabel = (id) => {
-    sideMenuCalls.deleteLabel(
+    SideMenuCalls.deleteLabel(
       localStorage.getItem("token"),
       id,
       (response) => {
@@ -94,7 +94,7 @@ class Search extends React.Component {
   };
 
   editLabel = (id,label) => {
-    sideMenuCalls.editLabel(
+    SideMenuCalls.editLabel(
       localStorage.getItem("token"),
       {
         label: label,
@@ -120,7 +120,7 @@ class Search extends React.Component {
   
   getData = () => {
     this.items = [...this.props.originalItems];
-    sideMenuCalls.getAllLabels(localStorage.getItem("token"), (response) => {
+    SideMenuCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;
         this.getNewlabels(newLabels);
@@ -173,13 +173,14 @@ class Search extends React.Component {
           menuOpen={this.handleDrawerToggle}
           drawerOpen={this.props.drawerOpen}
           searchFocus={false}
-          title={this.props.match.params.page}
+          title='search'
         />
         <MiniDrawer
           addNewLabel={this.addNewLabel}
           deleteLabel={this.deleteLabel}
           editLabel={this.editLabel}
           labels={this.state.labels}
+          title='search'
         />
         <main className="content">
           <Grid item container md={6} className="search-tiles">

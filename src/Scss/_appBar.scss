@@ -94,6 +94,7 @@
 .user-details{
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .user-photo{
@@ -222,4 +223,8 @@
             margin: 0em -1em !important;
         }
     }
+}
+
+.profile-popper{
+    padding: 1em 0em;
 }
