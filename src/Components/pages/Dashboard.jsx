@@ -3,6 +3,7 @@ import { CircularProgress, Snackbar } from "@material-ui/core";
 import AppBar from "../AppBar";
 import MiniDrawer from "../Drawer";
 import Notes from "../Notes";
+import { SnackbarContext } from "./../SnachBarContext";
 
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 
@@ -22,11 +23,11 @@ const mapStateToProps = (state) => ({
 class Dashboard extends React.Component {
   items = [...this.props.originalItems];
 
-  constructor(props) {
+  static contextType = SnackbarContext;
+
+  constructor(props, context) {
     super(props);
     this.state = {
-      snackbarMessage: "hello",
-      snackbarStatus: false,
       labels: this.items,
       notes: [],
       isPinned: false,
@@ -34,6 +35,8 @@ class Dashboard extends React.Component {
     };
     this.getData();
     this.reloadNotes();
+
+    console.log(context);
   }
 
   reloadNotes = () => {
@@ -66,10 +69,7 @@ class Dashboard extends React.Component {
   }
 
   handleSnackbarClose = (event, reason) => {
-    console.log(event, reason);
-    this.setState({
-      snackbarStatus: false,
-    });
+    this.context.setSnackbarStatus(false);
   };
 
   handleDrawerToggle = () => {
@@ -105,10 +105,8 @@ class Dashboard extends React.Component {
           message = "Added Successfully";
           this.getData();
         }
-        this.setState({
-          snackbarMessage: message,
-          snackbarStatus: true,
-        });
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
@@ -122,10 +120,8 @@ class Dashboard extends React.Component {
         message = "Deleted Successfully";
         this.getData();
       }
-      this.setState({
-        snackbarMessage: message,
-        snackbarStatus: true,
-      });
+      this.context.setSnackbarMessage(message);
+      this.context.setSnackbarStatus(true);
     });
   };
 
@@ -146,10 +142,8 @@ class Dashboard extends React.Component {
           message = "Updated Successfully";
           this.getData();
         }
-        this.setState({
-          snackbarMessage: message,
-          snackbarStatus: true,
-        });
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
@@ -282,10 +276,10 @@ class Dashboard extends React.Component {
             vertical: "bottom",
             horizontal: "center",
           }}
-          open={this.state.snackbarStatus}
+          open={this.context.snackbarStatus}
           onClose={this.handleSnackbarClose}
           autoHideDuration={2000}
-          message={this.state.snackbarMessage}
+          message={this.context.snackbarMessage}
         />
         <AppBar
           menuOpen={this.handleDrawerToggle}

@@ -9,9 +9,11 @@ import Dashboard from './Components/pages/Dashboard';
 import Search from './Components/pages/Search';
 import { ProtectedRoute } from './Service/protectedRoute';
 import NotFoundPage from './Components/pages/NotFoundPage';
+import {SnackbarProvider} from './Components/SnachBarContext'
 
 function App() {
   return (
+    <SnackbarProvider>
     <div className="App">
       <BrowserRouter>
         <Switch>
@@ -25,6 +27,7 @@ function App() {
         </Switch>
       </BrowserRouter>
     </div>
+    </SnackbarProvider>
   );
 }
 

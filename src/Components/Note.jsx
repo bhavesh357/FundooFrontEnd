@@ -46,6 +46,7 @@ import PopupState, {
 } from "material-ui-popup-state";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import DateFnsUtils from "@date-io/date-fns";
+import { SnackbarContext } from "./SnachBarContext";
 
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
@@ -57,10 +58,13 @@ import ColorPopper from "./ColorPopper";
 const NotesCalls = new notesCalls();
 
 export default class Note extends React.Component {
+  static contextType = SnackbarContext;
+
   constructor(props) {
     super(props);
     this.state = {
       isEditing: false,
+      isInProgress: false,
       editTitle: this.props.note.title,
       editDescription: this.props.note.description,
       editPinned: this.props.note.isPined,
@@ -94,15 +98,21 @@ export default class Note extends React.Component {
     NotesCalls.addLabelNote(this.props.note.id, id, (response) => {
       let message = "";
       if (response.data.data !== undefined) {
+        message = "Added Successfully";
         this.props.reloadNotes();
       } else {
-        console.log(response);
+        message = response.response.data.error.message;
       }
+      this.context.setSnackbarMessage(message);
+      this.context.setSnackbarStatus(true);
     });
   };
 
   addColor = (color) => {
     console.log(color);
+    this.setState({
+      isInProgress: true,
+    });
     NotesCalls.changeColorNotes(
       {
         color: color,
@@ -111,10 +121,16 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
+          message = "Added Color Successfully";
           this.props.reloadNotes();
+          this.setState({
+            isInProgress: false,
+          });
         } else {
-          console.log(response);
+          message = response.response.data.error.message;
         }
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
@@ -123,12 +139,19 @@ export default class Note extends React.Component {
     console.log(id);
     NotesCalls.removeLabelNote(this.props.note.id, id, (response) => {
       let message = "";
-      if (response.data.data !== undefined) {
-        this.props.reloadNotes();
-      } else {
-        console.log(response);
+        if (response.data.data !== undefined) {
+          message = "Removed Successfully";
+          this.props.reloadNotes();
+          this.setState({
+            isInProgress: false,
+          });
+        } else {
+          message = response.response.data.error.message;
+        }
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
-    });
+    );
   };
 
   handleClickReminderEdit = (e) => {
