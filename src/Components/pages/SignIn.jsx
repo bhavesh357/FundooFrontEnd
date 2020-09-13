@@ -52,15 +52,17 @@ class SignIn extends React.Component {
             snackbarStatus: true,
           });
         } else {
-          console.log(this.props.history);
-          console.log(response.data);
           localStorage.setItem('token',response.data.id);
           localStorage.setItem('userId',response.data.userId);
-          this.props.history.push("/dashboard/notes");
+          this.redirectToDashboard();
         }
       });
     }
   };
+
+  redirectToDashboard= () =>{
+    this.props.history.push("/dashboard/notes")
+  }
 
   handleSnackbarClose = (event, reason) => {
     console.log(event, reason);

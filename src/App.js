@@ -7,6 +7,7 @@ import ForgotPassword from './Components/pages/ForgotPassword';
 import ResetPassword from './Components/pages/ResetPassword';
 import Dashboard from './Components/pages/Dashboard';
 import Search from './Components/pages/Search';
+import { ProtectedRoute } from './Service/protectedRoute';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path='/forgotpassword' exact component={ForgotPassword}></Route>
           <Route path={'/resetpassword/:token'} component={ResetPassword}></Route>
           <Route path={'/dashboard/search'} exact component={Search}></Route>
-          <Route path={'/dashboard/:page'} component={Dashboard} ></Route>
+          <ProtectedRoute path={'/dashboard/:page'} component={Dashboard} />
         </Switch>
       </BrowserRouter>
     </div>

@@ -170,7 +170,8 @@ class Dashboard extends React.Component {
   };
 
   getNotes = () => {
-    NotesCalls.getAllNotes((response) => {
+    NotesCalls.getAllNotes(
+    (response) => {
       if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
       } else {
