@@ -1,5 +1,5 @@
 import React from "react";
-import { Snackbar } from "@material-ui/core";
+import { CircularProgress, Snackbar } from "@material-ui/core";
 import AppBar from "../AppBar";
 import MiniDrawer from "../Drawer";
 import Notes from "../Notes";
@@ -30,6 +30,7 @@ class Dashboard extends React.Component {
       labels: this.items,
       notes: [],
       isPinned: false,
+      isInProgress: false,
     };
     this.getData();
     this.reloadNotes();
@@ -40,30 +41,29 @@ class Dashboard extends React.Component {
       case "archive":
         this.getArchivedNotes();
         break;
-        case "trash":
+      case "trash":
         this.getTrashedNotes();
         break;
-        case "reminders":
+      case "reminders":
         this.getReminderNotes();
         break;
-        case "notes":
+      case "notes":
         this.getNotes();
         break;
       default:
-          this.getNotesByLabel(this.props.match.params.page);
+        this.getNotesByLabel(this.props.match.params.page);
     }
-  }
+  };
 
-  componentDidMount(){
+  componentDidMount() {
     this.reloadNotes();
   }
 
-  componentDidUpdate(prevProps){
-    if(prevProps.match.params.page !== this.props.match.params.page){
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.page !== this.props.match.params.page) {
       this.reloadNotes();
     }
   }
-
 
   handleSnackbarClose = (event, reason) => {
     console.log(event, reason);
@@ -155,6 +155,9 @@ class Dashboard extends React.Component {
   };
 
   getData = () => {
+    this.setState({
+      isInProgress: true,
+    });
     this.items = [...this.props.originalItems];
     SideMenuCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
@@ -162,6 +165,7 @@ class Dashboard extends React.Component {
         this.getNewlabels(newLabels);
         this.setState({
           labels: this.items,
+          isInProgress: false,
         });
       } else {
         console.log(response);
@@ -170,20 +174,26 @@ class Dashboard extends React.Component {
   };
 
   getNotes = () => {
-    NotesCalls.getAllNotes(
-    (response) => {
+    this.setState({
+      isInProgress: true,
+    });
+    NotesCalls.getAllNotes((response) => {
       if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
       } else {
         this.setState({
           notes: [...response.data.data.data],
           isPinned: this.checkIsPinned([...response.data.data.data]),
+          isInProgress: false,
         });
       }
     });
   };
 
   getArchivedNotes = () => {
+    this.setState({
+      isInProgress: true,
+    });
     NotesCalls.getArchivedNotes((response) => {
       if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
@@ -191,12 +201,16 @@ class Dashboard extends React.Component {
         this.setState({
           notes: [...response.data.data.data],
           isPinned: false,
+          isInProgress: false,
         });
       }
     });
   };
 
   getTrashedNotes = () => {
+    this.setState({
+      isInProgress: true,
+    });
     NotesCalls.getTrashedNotes((response) => {
       if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
@@ -204,12 +218,16 @@ class Dashboard extends React.Component {
         this.setState({
           notes: [...response.data.data.data],
           isPinned: false,
+          isInProgress: false,
         });
       }
     });
   };
 
   getReminderNotes = () => {
+    this.setState({
+      isInProgress: true,
+    });
     NotesCalls.getReminderNotes((response) => {
       if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
@@ -218,13 +236,17 @@ class Dashboard extends React.Component {
         this.setState({
           notes: [...response.data.data.data],
           isPinned: this.checkIsPinned([...response.data.data.data]),
+          isInProgress: false,
         });
       }
     });
   };
 
   getNotesByLabel = (label) => {
-    NotesCalls.getNotesByLabel(label,(response) => {
+    this.setState({
+      isInProgress: true,
+    });
+    NotesCalls.getNotesByLabel(label, (response) => {
       if (response.data.data.data === undefined) {
         console.log(response.data.data.data);
       } else {
@@ -232,6 +254,7 @@ class Dashboard extends React.Component {
         this.setState({
           notes: [...response.data.data.data],
           isPinned: this.checkIsPinned([...response.data.data.data]),
+          isInProgress: false,
         });
       }
     });
@@ -278,13 +301,17 @@ class Dashboard extends React.Component {
           title={this.props.match.params.page}
         />
         <main className="content">
-          <Notes
-            isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
-            notes={this.state.notes}
-            label={this.props.match.params.page}
-            reloadNotes={this.reloadNotes}
-            isPinned={this.state.isPinned}
-          />
+          {this.state.isInProgress ? (
+            <CircularProgress />
+          ) : (
+            <Notes
+              isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
+              notes={this.state.notes}
+              label={this.props.match.params.page}
+              reloadNotes={this.reloadNotes}
+              isPinned={this.state.isPinned}
+            />
+          )}
         </main>
       </div>
     );
