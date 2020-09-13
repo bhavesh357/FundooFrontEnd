@@ -8,6 +8,7 @@ import ResetPassword from './Components/pages/ResetPassword';
 import Dashboard from './Components/pages/Dashboard';
 import Search from './Components/pages/Search';
 import { ProtectedRoute } from './Service/protectedRoute';
+import NotFoundPage from './Components/pages/NotFoundPage';
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
           <Route path='/signup' exact component={SignUp}></Route>
           <Route path='/forgotpassword' exact component={ForgotPassword}></Route>
           <Route path={'/resetpassword/:token'} component={ResetPassword}></Route>
-          <Route path={'/dashboard/search'} exact component={Search}></Route>
+          <ProtectedRoute path={'/dashboard/search'} exact component={Search}></ProtectedRoute>
           <ProtectedRoute path={'/dashboard/:page'} component={Dashboard} />
+          <Route path="*" component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
     </div>
