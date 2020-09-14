@@ -94,7 +94,7 @@ export default class Note extends React.Component {
     };
   }
 
-  addLabel = (id) => {
+  addLabel = (id,label) => {
     console.log(id);
     NotesCalls.addLabelNote(this.props.note.id, id, (response) => {
       let message = "";
@@ -136,7 +136,7 @@ export default class Note extends React.Component {
     );
   };
 
-  removeLabel = (id) => {
+  removeLabel = (id,label) => {
     console.log(id);
     NotesCalls.removeLabelNote(this.props.note.id, id, (response) => {
       let message = "";

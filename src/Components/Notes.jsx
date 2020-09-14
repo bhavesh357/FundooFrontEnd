@@ -35,12 +35,14 @@ import DateFnsUtils from "@date-io/date-fns";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import Note from "./Note";
 import CheckNote from "./CheckNote";
-import RoomIcon from "@material-ui/icons/Room";
+import RoomIcon from "@material-ui/icons/Room"; 
 
 import notesCalls from "./../Service/notes";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { isBefore } from "date-fns";
 import ColorPopper from "./ColorPopper";
+import LabelPopper from "./LabelPopper";
+import { map, remove } from "lodash";
 
 const NotesCalls = new notesCalls();
 
@@ -61,7 +63,48 @@ class Notes extends React.Component {
       colorAnchorEl: null,
       colorOpen: false,
       colorId: undefined,
+      labels: [],
+      labelAnchorEl: null,
+        labelOpen: false,
+        labelId: undefined,
     };
+  }
+
+  handleClickLabel = (e) => {
+    if (this.state.labelAnchorEl === null) {
+      this.setState({
+        labelAnchorEl: e.currentTarget,
+        labelOpen: !this.state.labelOpen,
+        labelId: "label-popper",
+      });
+    } else {
+      this.setState({
+        labelAnchorEl: null,
+        labelOpen: !this.state.labelOpen,
+        labelId: undefined,
+      });
+    }
+  };
+
+
+  removeLabel = (id,label) => {
+    let tempLabels = [...this.state.labels];
+    console.log(tempLabels);
+    remove(tempLabels,(n)=>{
+      return n.id === id;
+    });
+    console.log(tempLabels);
+  }
+
+  addLabel = (id,label) => {
+    let temp={
+      label: label,
+      isDeleted: false,
+      id: id
+    }
+    this.setState({
+      labels : [...this.state.labels, temp]
+    })
   }
 
   addColor = (color) => {
@@ -89,6 +132,7 @@ class Notes extends React.Component {
   handleNewNote = () => {
     console.log("test");
     if (this.state.isNewNote) {
+      this.closePoppers();
       NotesCalls.addNotes(
         {
           title: this.state.newNoteTitle,
@@ -96,8 +140,8 @@ class Notes extends React.Component {
           isPined: this.state.isNewNotePinned,
           color: this.state.newNoteColor,
           isArchived: false,
-          labelIdList: [],
-          reminder: this.state.reminderDate,
+          labelIdList: map(this.state.labels,'id'),
+          reminder: this.state.reminder,
           collaberators: [],
         },
         (response) => {
@@ -117,6 +161,18 @@ class Notes extends React.Component {
       isNewNotePinned: false,
     });
   };
+
+  closePoppers = () => {
+    this.setState({
+      reminderAnchorEl: null,
+      reminderOpen: false,
+      reminderId: undefined,
+      colorId: undefined,
+      colorOpen: false,
+      colorAnchorEl: null,
+    });
+  };
+
 
   handlePinned = () => {
     this.setState({
@@ -167,6 +223,21 @@ class Notes extends React.Component {
   };
 
   render() {
+    let labelChips = "";
+
+    if (this.state.labels.length > 0) {
+      labelChips = this.state.labels.map((item) => {
+        return (
+          <Chip
+            key={item.label}
+            className="chip"
+            label={item.label}
+            onDelete={() => this.removeLabel(item.id)}
+          />
+        );
+      });
+    }
+
     let newNoteBig = (
       <Card style={{
         background: this.state.newNoteColor,
@@ -228,6 +299,8 @@ class Notes extends React.Component {
         ) : (
           ""
         )}
+        <div className="label-chips">{labelChips}</div>
+          
         <div className="new-note-buttons">
           <div className="new-note-action-button">
             <div>
@@ -284,7 +357,7 @@ class Notes extends React.Component {
                 id={this.state.colorId}
                 open={this.state.colorOpen}
                 anchorEl={this.state.colorAnchorEl}
-                placement="right-end"
+                placement="bottom-end"
               >
                 <ColorPopper
                   close={this.handleClickColor}
@@ -293,21 +366,36 @@ class Notes extends React.Component {
               </Popper>
             </div>
             <div>
-              <IconButton className="new-note-icon">
+              <IconButton className="new-note-icon"   aria-describedby={this.state.labelId}
+                      onClick={this.handleClickLabel}
+                     >
                 <Tooltip title="Add Labels">
                   <LabelOutlinedIcon className="menu-icon" />
                 </Tooltip>
               </IconButton>
+              <Popper
+                      id={this.state.labelId}
+                      open={this.state.labelOpen}
+                      anchorEl={this.state.labelAnchorEl}
+                      placement="right-end"
+                    >
+                      <LabelPopper
+                        labels={this.state.labels}
+                        close={this.handleClickLabel}
+                        addLabel={this.addLabel}
+                        removeLabel={this.removeLabel}
+                      />
+                    </Popper>
             </div>
             <div>
-              <IconButton className="new-note-icon">
+              <IconButton disabled className="new-note-icon">
                 <Tooltip title="Archive">
                   <ArchiveOutlinedIcon className="menu-icon" />
                 </Tooltip>
               </IconButton>
             </div>
             <div>
-              <IconButton className="new-note-icon">
+              <IconButton disabled className="new-note-icon">
                 <Tooltip title="Delete">
                   <DeleteOutlineOutlinedIcon className="menu-icon" />
                 </Tooltip>

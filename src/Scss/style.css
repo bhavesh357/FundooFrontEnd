@@ -568,6 +568,12 @@
   display: flex !important;
 }
 
+.new-note-big .label-chips {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
 .note-list-name {
   display: -webkit-box !important;
   display: -ms-flexbox !important;

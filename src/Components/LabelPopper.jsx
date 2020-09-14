@@ -37,7 +37,7 @@ export default class LabelPopper extends React.Component {
     }
   }
 
-  handleChange = (e,id) => {
+  handleChange = (e,id,label) => {
     let state = e.target.name;
     let value = e.target.checked;
     console.log(state, value);
@@ -45,9 +45,9 @@ export default class LabelPopper extends React.Component {
       [state]: !this.state[e.target.name],
     });
     if(this.state[e.target.name]){
-      this.props.removeLabel(id);
+      this.props.removeLabel(id,label);
     }else{
-      this.props.addLabel(id);
+      this.props.addLabel(id,label);
     }
   };
 
@@ -73,7 +73,7 @@ export default class LabelPopper extends React.Component {
           control={
             <Checkbox
               checked={this.state[item.label]}
-              onChange={(e) => this.handleChange(e,item.id)}
+              onChange={(e) => this.handleChange(e,item.id,item.label)}
               name={item.label}
               color="primary"
             />
