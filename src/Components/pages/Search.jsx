@@ -134,7 +134,6 @@ class Search extends React.Component {
   };
   
   handleSnackbarClose = (event, reason) => {
-    console.log(event, reason);
     this.setState({
       snackbarStatus: false,
     });

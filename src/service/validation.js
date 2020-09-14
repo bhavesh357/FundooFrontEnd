@@ -11,7 +11,6 @@ class Validation {
 
   validateInput = (input, pattern) => {
     if (pattern.test(input)) {
-      console.log(input);
       return false;
     }
     return true;

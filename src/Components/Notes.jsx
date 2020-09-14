@@ -56,6 +56,7 @@ class Notes extends React.Component {
       isNewNotePinned: false,
       newNoteColor: "#ffffff",
       reminder: "",
+      labels: [],
       reminderDate: new Date(),
       reminderAnchorEl: null,
       reminderOpen: false,
@@ -63,7 +64,6 @@ class Notes extends React.Component {
       colorAnchorEl: null,
       colorOpen: false,
       colorId: undefined,
-      labels: [],
       labelAnchorEl: null,
         labelOpen: false,
         labelId: undefined,
@@ -89,11 +89,9 @@ class Notes extends React.Component {
 
   removeLabel = (id,label) => {
     let tempLabels = [...this.state.labels];
-    console.log(tempLabels);
     remove(tempLabels,(n)=>{
       return n.id === id;
     });
-    console.log(tempLabels);
   }
 
   addLabel = (id,label) => {
@@ -130,7 +128,6 @@ class Notes extends React.Component {
   };
 
   handleNewNote = () => {
-    console.log("test");
     if (this.state.isNewNote) {
       this.closePoppers();
       NotesCalls.addNotes(
@@ -159,6 +156,10 @@ class Notes extends React.Component {
       newNoteTitle: "",
       newNoteDescription: "",
       isNewNotePinned: false,
+      newNoteColor: "#ffffff",
+      reminder: "",
+      labels: [],
+      reminderDate: new Date(),
     });
   };
 
@@ -197,7 +198,6 @@ class Notes extends React.Component {
   };
 
   handleReminderDateChange = (e) => {
-    console.log(e);
     this.setState({
       reminderDate: e,
     });

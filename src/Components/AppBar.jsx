@@ -102,14 +102,12 @@ export default function MiniAppBar(props) {
     Calls.signOut(localStorage.getItem("token"), (response) => {
       let message;
       if (response.data === undefined) {
-        console.log(response);
         message = response.response.data.error.message;
         this.setState({
           snackbarMessage: message,
           snackbarStatus: true,
         });
       } else {
-        console.log(response);
         localStorage.removeItem("id");
         localStorage.removeItem("token");
         history.push("/");

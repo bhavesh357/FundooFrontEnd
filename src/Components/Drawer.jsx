@@ -168,7 +168,6 @@ export default function MiniDrawer(props) {
     return (
       <div
         onClick={() => {
-          console.log(item.name.toLowerCase(), this.title);
           if (item.name !== "Edit Labels") {
             handleClick("" + item.name);
           } else {

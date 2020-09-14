@@ -35,8 +35,6 @@ class Dashboard extends React.Component {
     };
     this.getData();
     this.reloadNotes();
-
-    console.log(context);
   }
 
   reloadNotes = () => {

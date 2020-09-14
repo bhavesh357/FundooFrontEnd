@@ -20,7 +20,6 @@ export default class LabelPopper extends React.Component {
     this.state = {
       labels: [],
     };
-    console.log(this.props.labels);
     if(this.props.labels.length > 0){
       this.loadStates();
     }
@@ -29,7 +28,6 @@ export default class LabelPopper extends React.Component {
 
   loadStates = () =>{
     for(let i=0;i<this.props.labels.length;i++){
-      console.log(this.props.labels[i]);
       this.state={
         ...this.state,
         [this.props.labels[i].label]: true,
@@ -40,7 +38,6 @@ export default class LabelPopper extends React.Component {
   handleChange = (e,id,label) => {
     let state = e.target.name;
     let value = e.target.checked;
-    console.log(state, value);
     this.setState({
       [state]: !this.state[e.target.name],
     });
@@ -55,12 +52,10 @@ export default class LabelPopper extends React.Component {
     SideMenuCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;
-        console.log(newLabels);
         this.setState({
           labels: newLabels,
         });
       } else {
-        console.log(response);
       }
     });
   };

@@ -8,7 +8,6 @@ export const SnackbarProvider = (props) => {
   const [snackbarMessage, setSnackbarMessage] = React.useState("hello");
 
   const handleSnackbarClose = (event, reason) => {
-    console.log(event, reason);
     this.setState({
       snackbarStatus: false,
     });
