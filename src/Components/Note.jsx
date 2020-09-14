@@ -20,8 +20,10 @@ import {
   Popover,
   Chip,
   Popper,
+  Tooltip,
 } from "@material-ui/core";
 
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
@@ -36,7 +38,6 @@ import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import UnarchiveOutlinedIcon from "@material-ui/icons/UnarchiveOutlined";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import RestoreFromTrashOutlinedIcon from "@material-ui/icons/RestoreFromTrashOutlined";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import PopupState, {
@@ -139,19 +140,18 @@ export default class Note extends React.Component {
     console.log(id);
     NotesCalls.removeLabelNote(this.props.note.id, id, (response) => {
       let message = "";
-        if (response.data.data !== undefined) {
-          message = "Removed Successfully";
-          this.props.reloadNotes();
-          this.setState({
-            isInProgress: false,
-          });
-        } else {
-          message = response.response.data.error.message;
-        }
-        this.context.setSnackbarMessage(message);
-        this.context.setSnackbarStatus(true);
+      if (response.data.data !== undefined) {
+        message = "Removed Successfully";
+        this.props.reloadNotes();
+        this.setState({
+          isInProgress: false,
+        });
+      } else {
+        message = response.response.data.error.message;
       }
-    );
+      this.context.setSnackbarMessage(message);
+      this.context.setSnackbarStatus(true);
+    });
   };
 
   handleClickReminderEdit = (e) => {
@@ -293,7 +293,7 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
-          message="Removed reminder"
+          message = "Removed reminder";
           this.props.reloadNotes();
         } else {
           console.log(response);
@@ -318,7 +318,7 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
-          message="Saccessfully added reminder"
+          message = "Saccessfully added reminder";
           this.props.reloadNotes();
         } else {
           console.log(response);
@@ -348,10 +348,10 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
-          if(!this.props.note.isPined){
-            message="Successfully pinned note"
-          }else{
-            message="Successfully unpinned note"
+          if (!this.props.note.isPined) {
+            message = "Successfully pinned note";
+          } else {
+            message = "Successfully unpinned note";
           }
           this.props.reloadNotes();
         } else {
@@ -372,10 +372,10 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
-          if(!this.props.note.isArchived){
-            message="Successfully archived note"
-          }else{
-            message="Successfully unarchived note"
+          if (!this.props.note.isArchived) {
+            message = "Successfully archived note";
+          } else {
+            message = "Successfully unarchived note";
           }
           this.props.reloadNotes();
         } else {
@@ -396,10 +396,10 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
-          if(!this.props.note.isDeleted){
-            message="Successfully deleted note"
-          }else{
-            message="Successfully restored note"
+          if (!this.props.note.isDeleted) {
+            message = "Successfully deleted note";
+          } else {
+            message = "Successfully restored note";
           }
           this.props.reloadNotes();
         } else {
@@ -419,7 +419,7 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
-          message="Successfully deleted note forever"
+          message = "Successfully deleted note forever";
           this.props.reloadNotes();
         } else {
           console.log(response);
@@ -584,9 +584,13 @@ export default class Note extends React.Component {
                 onClick={this.handleEditPinned}
               >
                 {this.state.editPinned ? (
-                  <RoomIcon className="menu-icon" />
+                  <Tooltip title="Pin">
+                    <RoomIcon className="menu-icon" />
+                  </Tooltip>
                 ) : (
-                  <RoomOutlinedIcon className="menu-icon" />
+                  <Tooltip title="Unpin">
+                    <RoomOutlinedIcon className="menu-icon" />
+                  </Tooltip>
                 )}
               </IconButton>
               <InputBase
@@ -646,7 +650,9 @@ export default class Note extends React.Component {
                             aria-describedby={this.state.reminderId}
                             onClick={this.handleClickReminderEdit}
                           >
-                            <AddAlertOutlinedIcon className="menu-icon" />
+                            <Tooltip title="Add Reminder">
+                              <AddAlertOutlinedIcon className="menu-icon" />
+                            </Tooltip>
                           </IconButton>
                           <Popper
                             id={this.state.reminderIdEdit}
@@ -681,7 +687,9 @@ export default class Note extends React.Component {
                           aria-label="open drawer"
                           edge="start"
                         >
-                          <PersonAddOutlinedIcon className="menu-icon" />
+                          <Tooltip title="Add Collaborator">
+                            <PersonAddOutlinedIcon className="menu-icon" />
+                          </Tooltip>
                         </IconButton>
                       </Grid>
                       <Grid item md={2}>
@@ -694,7 +702,9 @@ export default class Note extends React.Component {
                             aria-describedby={this.state.colorIdEdit}
                             onClick={this.handleClickColorEdit}
                           >
-                            <ColorLensOutlinedIcon className="menu-icon" />
+                            <Tooltip title="Change Color">
+                              <ColorLensOutlinedIcon className="menu-icon" />
+                            </Tooltip>
                           </IconButton>
                           <Popper
                             id={this.state.colorIdEdit}
@@ -719,7 +729,9 @@ export default class Note extends React.Component {
                             aria-describedby={this.state.labelIdEdit}
                             onClick={this.handleClickLabelEdit}
                           >
-                            <LabelOutlinedIcon className="menu-icon" />
+                            <Tooltip title="Add Labels">
+                              <LabelOutlinedIcon className="menu-icon" />
+                            </Tooltip>
                           </IconButton>
                           <Popper
                             id={this.state.labelIdEdit}
@@ -745,9 +757,13 @@ export default class Note extends React.Component {
                           onClick={this.handleArchiveEdit}
                         >
                           {this.state.editArchived ? (
-                            <UnarchiveOutlinedIcon className="menu-icon" />
+                            <Tooltip title="Unarchive">
+                              <UnarchiveOutlinedIcon className="menu-icon" />
+                            </Tooltip>
                           ) : (
-                            <ArchiveOutlinedIcon className="menu-icon" />
+                            <Tooltip title="Archive">
+                              <ArchiveOutlinedIcon className="menu-icon" />
+                            </Tooltip>
                           )}
                         </IconButton>
                       </Grid>
@@ -760,9 +776,13 @@ export default class Note extends React.Component {
                           onClick={this.handleDeleteEdit}
                         >
                           {this.state.editDeleted ? (
-                            <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                            <Tooltip title="Restore">
+                              <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                            </Tooltip>
                           ) : (
-                            <DeleteOutlineOutlinedIcon className="menu-icon" />
+                            <Tooltip title="Delete">
+                              <DeleteOutlineOutlinedIcon className="menu-icon" />
+                            </Tooltip>
                           )}
                         </IconButton>
                       </Grid>
@@ -802,9 +822,13 @@ export default class Note extends React.Component {
             onClick={this.handlePinned}
           >
             {this.props.note.isPined ? (
-              <RoomIcon className="menu-icon" />
+              <Tooltip title="Pin">
+                <RoomIcon className="menu-icon" />
+              </Tooltip>
             ) : (
-              <RoomOutlinedIcon className="menu-icon" />
+              <Tooltip title="Unpin">
+                <RoomOutlinedIcon className="menu-icon" />
+              </Tooltip>
             )}
           </IconButton>
           <CardHeader
@@ -850,7 +874,9 @@ export default class Note extends React.Component {
                     edge="start"
                     onClick={this.handleDeleteForever}
                   >
-                    <HighlightOffOutlinedIcon className="menu-icon" />
+                    <Tooltip title="Delete Forever">
+                      <HighlightOffOutlinedIcon className="menu-icon" />
+                    </Tooltip>
                   </IconButton>
                 </Grid>
                 <Grid item md={2}>
@@ -862,9 +888,13 @@ export default class Note extends React.Component {
                     onClick={this.handleDelete}
                   >
                     {this.props.note.isDeleted ? (
-                      <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Restore">
+                        <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     ) : (
-                      <DeleteOutlineOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Delete">
+                        <DeleteOutlineOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     )}
                   </IconButton>
                 </Grid>
@@ -881,7 +911,9 @@ export default class Note extends React.Component {
                       aria-describedby={this.state.reminderId}
                       onClick={this.handleClickReminder}
                     >
-                      <AddAlertOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Add Reminder">
+                        <AddAlertOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     </IconButton>
                     <Popper
                       id={this.state.reminderId}
@@ -914,7 +946,9 @@ export default class Note extends React.Component {
                     aria-label="open drawer"
                     edge="start"
                   >
-                    <PersonAddOutlinedIcon className="menu-icon" />
+                    <Tooltip title="Add Collaborator">
+                      <PersonAddOutlinedIcon className="menu-icon" />
+                    </Tooltip>
                   </IconButton>
                 </Grid>
                 <Grid item md={2}>
@@ -927,7 +961,9 @@ export default class Note extends React.Component {
                       aria-describedby={this.state.colorId}
                       onClick={this.handleClickColor}
                     >
-                      <ColorLensOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Change Color">
+                        <ColorLensOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     </IconButton>
                     <Popper
                       id={this.state.colorId}
@@ -952,7 +988,9 @@ export default class Note extends React.Component {
                       aria-describedby={this.state.labelId}
                       onClick={this.handleClickLabel}
                     >
-                      <LabelOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Add Labels">
+                        <LabelOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     </IconButton>
                     <Popper
                       id={this.state.labelId}
@@ -978,9 +1016,13 @@ export default class Note extends React.Component {
                     onClick={this.handleArchive}
                   >
                     {this.props.note.isArchived ? (
-                      <UnarchiveOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Unarchive">
+                        <UnarchiveOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     ) : (
-                      <ArchiveOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Archive">
+                        <ArchiveOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     )}
                   </IconButton>
                 </Grid>
@@ -993,9 +1035,13 @@ export default class Note extends React.Component {
                     onClick={this.handleDelete}
                   >
                     {this.props.note.isDeleted ? (
-                      <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Restore">
+                        <RestoreFromTrashOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     ) : (
-                      <DeleteOutlineOutlinedIcon className="menu-icon" />
+                      <Tooltip title="Delete">
+                        <DeleteOutlineOutlinedIcon className="menu-icon" />
+                      </Tooltip>
                     )}
                   </IconButton>
                 </Grid>

@@ -16,7 +16,8 @@ import {
   Typography,
   InputBase,
   Popper,
-  Button
+  Button,
+  Tooltip,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
@@ -91,15 +92,14 @@ export default function MiniAppBar(props) {
   const classes = useStyles();
   const history = useHistory();
 
-  const [profileAnchorEl,setProfileAnchorEl] = React.useState(undefined);
-
+  const [profileAnchorEl, setProfileAnchorEl] = React.useState(undefined);
 
   const handleClickProfile = (event) => {
     setProfileAnchorEl(profileAnchorEl ? null : event.currentTarget);
   };
 
-  const handleSignOut=()=>{
-    Calls.signOut(localStorage.getItem('token'),(response) => {
+  const handleSignOut = () => {
+    Calls.signOut(localStorage.getItem("token"), (response) => {
       let message;
       if (response.data === undefined) {
         console.log(response);
@@ -112,34 +112,39 @@ export default function MiniAppBar(props) {
         console.log(response);
         localStorage.removeItem("id");
         localStorage.removeItem("token");
-        history.push('/');
+        history.push("/");
       }
     });
-  }
+  };
 
   const open = Boolean(profileAnchorEl);
-  const profileId = open ? 'simple-popper' : undefined;
+  const profileId = open ? "simple-popper" : undefined;
 
   const handleSearchFocus = () => {
     history.push("/dashboard/search");
   };
 
   return (
-    <AppBar 
-    aria-describedby={profileId} position="fixed" className={clsx(classes.appBar, "app-bar")}>
+    <AppBar
+      aria-describedby={profileId}
+      position="fixed"
+      className={clsx(classes.appBar, "app-bar")}
+    >
       <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={props.menuOpen}
-          edge="start"
-          className={clsx(
-            classes.menuButton,
-            props.drawerOpen ? "menu-icon-button" : ""
-          )}
-        >
-          <MenuIcon className="menu-icon" />
-        </IconButton>
+        <Tooltip title="Menu">
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={props.menuOpen}
+            edge="start"
+            className={clsx(
+              classes.menuButton,
+              props.drawerOpen ? "menu-icon-button" : ""
+            )}
+          >
+            <MenuIcon className="menu-icon" />
+          </IconButton>
+        </Tooltip>
         <div className="header-logo">
           <img src={keepIcon} alt="logo" className="keep-icon" />
           <Typography className="header-title">
@@ -173,24 +178,22 @@ export default function MiniAppBar(props) {
           </IconButton>
         </div>
         <div className="top-menu">
-          <IconButton>
-            <RefreshIcon className="header-icon refresh" />
-          </IconButton>
-          <IconButton>
-            <ViewStreamIcon className="header-icon list" />
-          </IconButton>
-          <IconButton>
-            <SettingsOutlinedIcon className="header-icon setting" />
-          </IconButton>
+          <Tooltip title="Change View">
+            <IconButton>
+              <ViewStreamIcon className="header-icon list" />
+            </IconButton>
+          </Tooltip>
         </div>
         <div className="user-details">
           <div>
+          <Tooltip title="Profile" placement="left">
             <img
               src={userImage}
               onClick={handleClickProfile}
               className="user-photo"
               alt="Your-Dp"
             />
+            </Tooltip>
             <Popper
               id={profileId}
               open={open}
@@ -198,7 +201,11 @@ export default function MiniAppBar(props) {
               placement="bottom"
             >
               <div className="profile-popper">
-                <Button onClick={handleSignOut} color="primary" variant="outlined">
+                <Button
+                  onClick={handleSignOut}
+                  color="primary"
+                  variant="outlined"
+                >
                   Sign Out
                 </Button>
               </div>

@@ -13,7 +13,11 @@ import {
   CardActions,
   InputBase,
   Button,
+  Tooltip
 } from "@material-ui/core";
+
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
@@ -110,10 +114,14 @@ class Notes extends React.Component {
           onClick={this.handlePinned}
         >
           {this.state.isNewNotePinned ? (
-            <RoomIcon className="menu-icon" />
-          ) : (
-            <RoomOutlinedIcon className="menu-icon" />
-          )}
+            <Tooltip title="Pin">
+                <RoomIcon className="menu-icon" />
+              </Tooltip>
+            ) : (
+              <Tooltip title="Unpin">
+                <RoomOutlinedIcon className="menu-icon" />
+              </Tooltip>
+            )}
         </IconButton>
 
         <InputBase
@@ -141,28 +149,34 @@ class Notes extends React.Component {
         <div className="new-note-buttons">
           <div className="new-note-action-button">
             <IconButton className="new-note-icon">
-              <AddAlertOutlinedIcon />
+            <Tooltip title="Add Reminder">
+                        <AddAlertOutlinedIcon className="menu-icon" />
+                      </Tooltip>
             </IconButton>
             <IconButton className="new-note-icon">
-              <PersonAddOutlinedIcon />
+            <Tooltip title="Add Collaborator">
+                      <PersonAddOutlinedIcon className="menu-icon" />
+                    </Tooltip>
             </IconButton>
             <IconButton className="new-note-icon">
-              <ColorLensOutlinedIcon />
+            <Tooltip title="Change Color">
+                        <ColorLensOutlinedIcon className="menu-icon" />
+                      </Tooltip>
             </IconButton>
             <IconButton className="new-note-icon">
-              <CropOriginalIcon />
+            <Tooltip title="Add Labels">
+                        <LabelOutlinedIcon className="menu-icon" />
+                      </Tooltip>
             </IconButton>
             <IconButton className="new-note-icon">
-              <ArchiveOutlinedIcon />
+            <Tooltip title="Archive">
+                        <ArchiveOutlinedIcon className="menu-icon" />
+                      </Tooltip>
             </IconButton>
             <IconButton className="new-note-icon">
-              <MoreVertIcon />
-            </IconButton>
-            <IconButton disabled className="new-note-icon">
-              <UndoIcon />
-            </IconButton>
-            <IconButton disabled className="new-note-icon">
-              <RedoIcon />
+            <Tooltip title="Delete">
+                        <DeleteOutlineOutlinedIcon className="menu-icon" />
+                      </Tooltip>
             </IconButton>
           </div>
           <div className="new-note-close-button">

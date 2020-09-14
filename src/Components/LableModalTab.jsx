@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, Typography, TextField } from "@material-ui/core";
+import { IconButton, Typography, TextField, Tooltip } from "@material-ui/core";
 
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import DoneIcon from "@material-ui/icons/Done";
@@ -60,7 +60,7 @@ class LableModalTab extends React.Component {
           onClick={this.state.isHovered ? this.handleDelete : undefined}
         >
           {this.state.isHovered || this.props.isEditing ? (
-            <DeleteOutlineIcon />
+            <Tooltip title="Delete"><DeleteOutlineIcon /></Tooltip>
           ) : (
             this.state.item.icon
           )}
@@ -78,7 +78,7 @@ class LableModalTab extends React.Component {
           </div>
         )}
         <IconButton className="modal-icon" onClick={this.handleEdit}>
-          {this.props.isEditing ? <DoneIcon /> : <CreateOutlinedIcon />}
+          {this.props.isEditing ? <Tooltip title="Done"><DoneIcon /></Tooltip> : <Tooltip title="Edit"><CreateOutlinedIcon /></Tooltip>}
         </IconButton>
       </div>
     );

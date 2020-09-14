@@ -7,13 +7,13 @@ import Divider from "@material-ui/core/Divider";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 
-
 import {
   IconButton,
   Typography,
   Modal,
   TextField,
   Button,
+  Tooltip,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import LableModalTab from "./LableModalTab";
@@ -97,8 +97,8 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer(props) {
   const classes = useStyles();
 
-  const drawerOpen = useSelector(state => state.drawer.drawerOpen);
-  const tempDrawerOpen = useSelector(state => state.drawer.tempDrawerOpen);
+  const drawerOpen = useSelector((state) => state.drawer.drawerOpen);
+  const tempDrawerOpen = useSelector((state) => state.drawer.tempDrawerOpen);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -111,9 +111,8 @@ export default function MiniDrawer(props) {
     setOpen(true);
   };
 
-  
   const handleDrawerClose = () => {
-      dispatch(tempClose());
+    dispatch(tempClose());
   };
 
   const handleDrawerOpen = () => {
@@ -125,7 +124,7 @@ export default function MiniDrawer(props) {
   };
 
   const handleClick = (name) => {
-    history.push("/dashboard/" + name.toLowerCase() );
+    history.push("/dashboard/" + name.toLowerCase());
   };
 
   const handleEditLabels = () => {
@@ -133,34 +132,43 @@ export default function MiniDrawer(props) {
   };
 
   const handleNewLabel = () => {
-    if(modalInput!==""){
+    if (modalInput !== "") {
       setModalInput("");
       props.addNewLabel(modalInput);
     }
-  }
+  };
 
   const handleDeleteLabel = (id) => {
     props.deleteLabel(id);
-  }
+  };
 
   const handleEditLabel = (item) => {
-    props.editLabel(item.id,item.name);
-  }
+    props.editLabel(item.id, item.name);
+  };
 
   const disableEdit = (name) => {
     setEditingLabel(name);
-  }
+  };
 
   let labelsComponent = props.labels.slice(2, props.labels.length - 3);
   let labels = labelsComponent.map((item) => {
-    return <LableModalTab item={item} key={item.name} disableEdit={disableEdit} isEditing={editingLabel === item.name} handleDelete={handleDeleteLabel} handleEditLabel={handleEditLabel} />;
+    return (
+      <LableModalTab
+        item={item}
+        key={item.name}
+        disableEdit={disableEdit}
+        isEditing={editingLabel === item.name}
+        handleDelete={handleDeleteLabel}
+        handleEditLabel={handleEditLabel}
+      />
+    );
   });
 
-  let listItems = props.labels.map( function(item){
+  let listItems = props.labels.map(function (item) {
     return (
       <div
         onClick={() => {
-          console.log(item.name.toLowerCase(),this.title)
+          console.log(item.name.toLowerCase(), this.title);
           if (item.name !== "Edit Labels") {
             handleClick("" + item.name);
           } else {
@@ -178,7 +186,7 @@ export default function MiniDrawer(props) {
         <Typography className="list-item-text">{item.name}</Typography>
       </div>
     );
-  },props);
+  }, props);
 
   return (
     <Drawer
@@ -208,11 +216,20 @@ export default function MiniDrawer(props) {
           <Typography className="simple-modal-title">Edit Labels</Typography>
           <div className="modal-inputs">
             <IconButton className="modal-icon">
-              <CloseIcon />
+              <Tooltip title="Close">
+                <CloseIcon />
+              </Tooltip>
             </IconButton>
-            <TextField onChange={(e) => setModalInput(e.target.value)} value={modalInput} label="Create new label" className="modal-input" />
+            <TextField
+              onChange={(e) => setModalInput(e.target.value)}
+              value={modalInput}
+              label="Create new label"
+              className="modal-input"
+            />
             <IconButton onClick={handleNewLabel} className="modal-icon">
-              <DoneIcon />
+              <Tooltip title="Done">
+                <DoneIcon />
+              </Tooltip>
             </IconButton>
           </div>
           {labels}
