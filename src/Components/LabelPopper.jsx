@@ -1,14 +1,10 @@
 import {
   Checkbox,
   FormControlLabel,
-  IconButton,
-  InputBase,
-  TextField,
   Typography,
 } from "@material-ui/core";
 
 import ClearIcon from "@material-ui/icons/Clear";
-import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 
 import sideMenuCalls from "../Service/sideMenu";
@@ -28,16 +24,15 @@ export default class LabelPopper extends React.Component {
 
   loadStates = () =>{
     for(let i=0;i<this.props.labels.length;i++){
-      this.state={
+      this.setState({
         ...this.state,
         [this.props.labels[i].label]: true,
-      };
+      });
     }
   }
 
   handleChange = (e,id,label) => {
     let state = e.target.name;
-    let value = e.target.checked;
     this.setState({
       [state]: !this.state[e.target.name],
     });
@@ -48,7 +43,7 @@ export default class LabelPopper extends React.Component {
     }
   };
 
-  getData = (e) => {
+  getData = () => {
     SideMenuCalls.getAllLabels(localStorage.getItem("token"), (response) => {
       if (response.data.data.details !== undefined) {
         const newLabels = response.data.data.details;

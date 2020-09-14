@@ -1,4 +1,4 @@
-import { Snackbar } from "@material-ui/core";
+
 import React from "react";
 
 export const SnackbarContext = React.createContext();
@@ -6,12 +6,6 @@ export const SnackbarContext = React.createContext();
 export const SnackbarProvider = (props) => {
   const [snackbarStatus, setSnackbarStatus] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState("hello");
-
-  const handleSnackbarClose = (event, reason) => {
-    this.setState({
-      snackbarStatus: false,
-    });
-  };
 
   return (
       <SnackbarContext.Provider value={{

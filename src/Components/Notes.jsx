@@ -3,14 +3,7 @@ import {
   Grid,
   Typography,
   Card,
-  ListItem,
-  ListItemIcon,
-  Checkbox,
-  ListItemText,
   IconButton,
-  List,
-  CardHeader,
-  CardActions,
   InputBase,
   Button,
   Tooltip,
@@ -26,11 +19,7 @@ import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import ColorLensOutlinedIcon from "@material-ui/icons/ColorLensOutlined";
 import CropOriginalIcon from "@material-ui/icons/CropOriginal";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
-import UndoIcon from "@material-ui/icons/Undo";
-import RedoIcon from "@material-ui/icons/Redo";
 import DateFnsUtils from "@date-io/date-fns";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import Note from "./Note";
@@ -87,7 +76,7 @@ class Notes extends React.Component {
   };
 
 
-  removeLabel = (id,label) => {
+  removeLabel = (id) => {
     let tempLabels = [...this.state.labels];
     remove(tempLabels,(n)=>{
       return n.id === id;
@@ -142,7 +131,6 @@ class Notes extends React.Component {
           collaberators: [],
         },
         (response) => {
-          let message = "";
           if (response.status !== undefined) {
             this.props.reloadNotes();
           } else {

@@ -1,7 +1,5 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import validation from "../../Service/validation";
-import calls from "../../Service/calls";
 import { Button, Typography } from "@material-ui/core";
 
 class NotFoundPage extends React.Component {

@@ -6,10 +6,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import keepIcon from "./../Assets/keep.png";
 import userImage from "./../Assets/user.jpg";
 import SearchIcon from "@material-ui/icons/Search";
-import RefreshIcon from "@material-ui/icons/Refresh";
 import ClearIcon from "@material-ui/icons/Clear";
 import ViewStreamIcon from "@material-ui/icons/ViewStream";
-import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import {
   IconButton,
   Toolbar,

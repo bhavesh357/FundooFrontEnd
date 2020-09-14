@@ -4,20 +4,13 @@ import {
   Grid,
   Typography,
   Card,
-  ListItem,
-  ListItemIcon,
-  Checkbox,
-  ListItemText,
   IconButton,
-  List,
   CardHeader,
   CardActions,
   InputBase,
   Button,
   Modal,
-  TextField,
   Divider,
-  Popover,
   Chip,
   Popper,
   Tooltip,
@@ -27,24 +20,14 @@ import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined"
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
-import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import ColorLensOutlinedIcon from "@material-ui/icons/ColorLensOutlined";
 import RoomIcon from "@material-ui/icons/Room";
-import CropOriginalIcon from "@material-ui/icons/CropOriginal";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
-import UndoIcon from "@material-ui/icons/Undo";
-import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import UnarchiveOutlinedIcon from "@material-ui/icons/UnarchiveOutlined";
 import RestoreFromTrashOutlinedIcon from "@material-ui/icons/RestoreFromTrashOutlined";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
-import PopupState, {
-  bindTrigger,
-  bindPopover,
-  bindToggle,
-} from "material-ui-popup-state";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import DateFnsUtils from "@date-io/date-fns";
 import { SnackbarContext } from "./SnachBarContext";
@@ -94,7 +77,7 @@ export default class Note extends React.Component {
     };
   }
 
-  addLabel = (id,label) => {
+  addLabel = (id) => {
     NotesCalls.addLabelNote(this.props.note.id, id, (response) => {
       let message = "";
       if (response.data.data !== undefined) {
@@ -134,7 +117,7 @@ export default class Note extends React.Component {
     );
   };
 
-  removeLabel = (id,label) => {
+  removeLabel = (id) => {
     NotesCalls.removeLabelNote(this.props.note.id, id, (response) => {
       let message = "";
       if (response.data.data !== undefined) {
@@ -452,7 +435,6 @@ export default class Note extends React.Component {
         description: this.state.editDescription,
       },
       (response) => {
-        let message = "";
         if (response.data !== undefined) {
           this.props.reloadNotes();
         } else {
@@ -480,7 +462,6 @@ export default class Note extends React.Component {
         noteIdList: [this.props.note.id],
       },
       (response) => {
-        let message = "";
         if (response.data.data !== undefined) {
           this.setState({
             editPinned: !this.state.editPinned,
@@ -499,7 +480,6 @@ export default class Note extends React.Component {
         noteIdList: [this.props.note.id],
       },
       (response) => {
-        let message = "";
         if (response.data.data !== undefined) {
           this.setState({
             editArchived: !this.state.editArchived,
@@ -518,7 +498,6 @@ export default class Note extends React.Component {
         noteIdList: [this.props.note.id],
       },
       (response) => {
-        let message = "";
         if (response.data.data !== undefined) {
           this.setState({
             editDeleted: !this.state.editDeleted,

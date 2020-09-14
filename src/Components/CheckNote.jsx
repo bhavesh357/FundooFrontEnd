@@ -12,21 +12,16 @@ import {
   List,
   CardHeader,
   CardActions,
-  InputBase,
-  Button,
 } from "@material-ui/core";
 
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
-import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import ColorLensOutlinedIcon from "@material-ui/icons/ColorLensOutlined";
 import CropOriginalIcon from "@material-ui/icons/CropOriginal";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import RoomIcon from "@material-ui/icons/Room";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
-import UndoIcon from "@material-ui/icons/Undo";
-import RedoIcon from "@material-ui/icons/Redo";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 
 
@@ -43,7 +38,6 @@ export default class CheckNote extends React.Component {
         noteIdList: [this.props.note.id],
       },
       (response) => {
-        let message = "";
         if (response.data.data !== undefined) {
           this.props.reloadNotes();
         } else {

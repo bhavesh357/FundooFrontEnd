@@ -33,8 +33,6 @@ class Dashboard extends React.Component {
       isPinned: false,
       isInProgress: false,
     };
-    this.getData();
-    this.reloadNotes();
   }
 
   reloadNotes = () => {
@@ -57,6 +55,7 @@ class Dashboard extends React.Component {
   };
 
   componentDidMount() {
+    this.getData();
     this.reloadNotes();
   }
 
