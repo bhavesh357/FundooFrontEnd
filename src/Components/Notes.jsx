@@ -15,7 +15,7 @@ import {
   Button,
   Tooltip,
   Popper,
-  Chip
+  Chip,
 } from "@material-ui/core";
 
 import ScheduleIcon from "@material-ui/icons/Schedule";
@@ -40,6 +40,7 @@ import RoomIcon from "@material-ui/icons/Room";
 import notesCalls from "./../Service/notes";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { isBefore } from "date-fns";
+import ColorPopper from "./ColorPopper";
 
 const NotesCalls = new notesCalls();
 
@@ -57,8 +58,33 @@ class Notes extends React.Component {
       reminderAnchorEl: null,
       reminderOpen: false,
       reminderId: undefined,
+      colorAnchorEl: null,
+      colorOpen: false,
+      colorId: undefined,
     };
   }
+
+  addColor = (color) => {
+    this.setState({
+      newNoteColor: color,
+    });
+  };
+
+  handleClickColor = (e) => {
+    if (this.state.colorAnchorEl === null) {
+      this.setState({
+        colorAnchorEl: e.currentTarget,
+        colorOpen: !this.state.colorOpen,
+        colorId: "color-popper",
+      });
+    } else {
+      this.setState({
+        colorAnchorEl: null,
+        colorOpen: !this.state.colorOpen,
+        colorId: undefined,
+      });
+    }
+  };
 
   handleNewNote = () => {
     console.log("test");
@@ -142,7 +168,9 @@ class Notes extends React.Component {
 
   render() {
     let newNoteBig = (
-      <Card className="new-note-big">
+      <Card style={{
+        background: this.state.newNoteColor,
+      }} className="new-note-big">
         <IconButton
           className="pin-button-new"
           color="inherit"
@@ -184,22 +212,22 @@ class Notes extends React.Component {
           }}
         />
         {this.state.reminder.length > 0 ? (
-            <div
-              className={
-                isBefore(new Date(this.state.reminder), new Date())
-                  ? "date-before reminder-chips"
-                  : "date-after reminder-chips"
-              }
-            >
-              <Chip
-                avatar={<ScheduleIcon className="menu-icon" />}
-                label={this.state.reminder}
-                onDelete={this.handleReminderDelete}
-              />
-            </div>
-          ) : (
-            ""
-          )}
+          <div
+            className={
+              isBefore(new Date(this.state.reminder), new Date())
+                ? "date-before reminder-chips"
+                : "date-after reminder-chips"
+            }
+          >
+            <Chip
+              avatar={<ScheduleIcon className="menu-icon" />}
+              label={this.state.reminder}
+              onDelete={this.handleReminderDelete}
+            />
+          </div>
+        ) : (
+          ""
+        )}
         <div className="new-note-buttons">
           <div className="new-note-action-button">
             <div>
@@ -243,11 +271,26 @@ class Notes extends React.Component {
               </IconButton>
             </div>
             <div>
-              <IconButton className="new-note-icon">
+              <IconButton
+                className="new-note-icon"
+                aria-describedby={this.state.colorId}
+                onClick={this.handleClickColor}
+              >
                 <Tooltip title="Change Color">
                   <ColorLensOutlinedIcon className="menu-icon" />
                 </Tooltip>
               </IconButton>
+              <Popper
+                id={this.state.colorId}
+                open={this.state.colorOpen}
+                anchorEl={this.state.colorAnchorEl}
+                placement="right-end"
+              >
+                <ColorPopper
+                  close={this.handleClickColor}
+                  addColor={this.addColor}
+                />
+              </Popper>
             </div>
             <div>
               <IconButton className="new-note-icon">
