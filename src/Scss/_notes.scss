@@ -24,6 +24,7 @@
         }
     }
 }
+
 .popover{
     background: $background-color;
     border: solid 1px $border-color;
@@ -84,6 +85,10 @@
 .note-list{
     margin-top: 1em !important;
     margin-bottom: 1em !important;
+}
+
+.new-note-big .reminder-chips{
+    display: flex !important;
 }
 
 .note-list-name{
@@ -236,6 +241,10 @@
         width: 18px;
     }
     padding: 4px;
+}
+
+.new-note-action-button{
+    display: flex !important;
 }
 
 .new-note-small{

@@ -13,9 +13,12 @@ import {
   CardActions,
   InputBase,
   Button,
-  Tooltip
+  Tooltip,
+  Popper,
+  Chip
 } from "@material-ui/core";
 
+import ScheduleIcon from "@material-ui/icons/Schedule";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import AddAlertOutlinedIcon from "@material-ui/icons/AddAlertOutlined";
@@ -28,12 +31,15 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
+import DateFnsUtils from "@date-io/date-fns";
 import ArchiveOutlinedIcon from "@material-ui/icons/ArchiveOutlined";
 import Note from "./Note";
 import CheckNote from "./CheckNote";
 import RoomIcon from "@material-ui/icons/Room";
 
 import notesCalls from "./../Service/notes";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { isBefore } from "date-fns";
 
 const NotesCalls = new notesCalls();
 
@@ -46,6 +52,11 @@ class Notes extends React.Component {
       newNoteDescription: "",
       isNewNotePinned: false,
       newNoteColor: "#ffffff",
+      reminder: "",
+      reminderDate: new Date(),
+      reminderAnchorEl: null,
+      reminderOpen: false,
+      reminderId: undefined,
     };
   }
 
@@ -60,7 +71,7 @@ class Notes extends React.Component {
           color: this.state.newNoteColor,
           isArchived: false,
           labelIdList: [],
-          reminder: "",
+          reminder: this.state.reminderDate,
           collaberators: [],
         },
         (response) => {
@@ -87,13 +98,39 @@ class Notes extends React.Component {
     });
   };
 
+  handleClickReminder = (e) => {
+    if (this.state.reminderAnchorEl === null) {
+      this.setState({
+        reminderAnchorEl: e.currentTarget,
+        reminderOpen: !this.state.reminderOpen,
+        reminderId: "reminder-popper",
+      });
+    } else {
+      this.setState({
+        reminderAnchorEl: null,
+        reminderOpen: !this.state.reminderOpen,
+        reminderId: undefined,
+      });
+    }
+  };
+
+  handleReminderDateChange = (e) => {
+    console.log(e);
+    this.setState({
+      reminderDate: e,
+    });
+  };
+
+  handleReminder = () => {
+    this.handleClickReminder();
+    this.setState({
+      reminder: this.state.reminderDate.toLocaleDateString(),
+    });
+  };
+
   rendorNote = (note) => {
     return note.noteCheckLists.length === 0 ? (
-      <Note
-        note={note}
-        key={note.id}
-        reloadNotes={this.props.reloadNotes}
-      />
+      <Note note={note} key={note.id} reloadNotes={this.props.reloadNotes} />
     ) : (
       <CheckNote
         note={note}
@@ -101,7 +138,7 @@ class Notes extends React.Component {
         reloadNotes={this.props.reloadNotes}
       />
     );
-  }
+  };
 
   render() {
     let newNoteBig = (
@@ -115,13 +152,13 @@ class Notes extends React.Component {
         >
           {this.state.isNewNotePinned ? (
             <Tooltip title="Pin">
-                <RoomIcon className="menu-icon" />
-              </Tooltip>
-            ) : (
-              <Tooltip title="Unpin">
-                <RoomOutlinedIcon className="menu-icon" />
-              </Tooltip>
-            )}
+              <RoomIcon className="menu-icon" />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Unpin">
+              <RoomOutlinedIcon className="menu-icon" />
+            </Tooltip>
+          )}
         </IconButton>
 
         <InputBase
@@ -146,38 +183,93 @@ class Notes extends React.Component {
             });
           }}
         />
+        {this.state.reminder.length > 0 ? (
+            <div
+              className={
+                isBefore(new Date(this.state.reminder), new Date())
+                  ? "date-before reminder-chips"
+                  : "date-after reminder-chips"
+              }
+            >
+              <Chip
+                avatar={<ScheduleIcon className="menu-icon" />}
+                label={this.state.reminder}
+                onDelete={this.handleReminderDelete}
+              />
+            </div>
+          ) : (
+            ""
+          )}
         <div className="new-note-buttons">
           <div className="new-note-action-button">
-            <IconButton className="new-note-icon">
-            <Tooltip title="Add Reminder">
-                        <AddAlertOutlinedIcon className="menu-icon" />
-                      </Tooltip>
-            </IconButton>
-            <IconButton className="new-note-icon">
-            <Tooltip title="Add Collaborator">
-                      <PersonAddOutlinedIcon className="menu-icon" />
-                    </Tooltip>
-            </IconButton>
-            <IconButton className="new-note-icon">
-            <Tooltip title="Change Color">
-                        <ColorLensOutlinedIcon className="menu-icon" />
-                      </Tooltip>
-            </IconButton>
-            <IconButton className="new-note-icon">
-            <Tooltip title="Add Labels">
-                        <LabelOutlinedIcon className="menu-icon" />
-                      </Tooltip>
-            </IconButton>
-            <IconButton className="new-note-icon">
-            <Tooltip title="Archive">
-                        <ArchiveOutlinedIcon className="menu-icon" />
-                      </Tooltip>
-            </IconButton>
-            <IconButton className="new-note-icon">
-            <Tooltip title="Delete">
-                        <DeleteOutlineOutlinedIcon className="menu-icon" />
-                      </Tooltip>
-            </IconButton>
+            <div>
+              <IconButton
+                className="new-note-icon"
+                aria-describedby={this.state.reminderId}
+                onClick={this.handleClickReminder}
+              >
+                <Tooltip title="Add Reminder">
+                  <AddAlertOutlinedIcon className="menu-icon" />
+                </Tooltip>
+              </IconButton>
+              <Popper
+                id={this.state.reminderId}
+                open={this.state.reminderOpen}
+                anchorEl={this.state.reminderAnchorEl}
+              >
+                <div className="popover reminder-popover">
+                  <div className="reminder-input">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <DateTimePicker
+                        className="reminder-datepicker"
+                        value={this.state.reminderDate}
+                        onChange={this.handleReminderDateChange}
+                      />
+                    </MuiPickersUtilsProvider>
+                  </div>
+                  <div className="reminder-input reminder-button">
+                    <Button onClick={() => this.handleReminder()}>
+                      Remind Me
+                    </Button>
+                  </div>
+                </div>
+              </Popper>
+            </div>
+            <div>
+              <IconButton className="new-note-icon">
+                <Tooltip title="Add Collaborator">
+                  <PersonAddOutlinedIcon className="menu-icon" />
+                </Tooltip>
+              </IconButton>
+            </div>
+            <div>
+              <IconButton className="new-note-icon">
+                <Tooltip title="Change Color">
+                  <ColorLensOutlinedIcon className="menu-icon" />
+                </Tooltip>
+              </IconButton>
+            </div>
+            <div>
+              <IconButton className="new-note-icon">
+                <Tooltip title="Add Labels">
+                  <LabelOutlinedIcon className="menu-icon" />
+                </Tooltip>
+              </IconButton>
+            </div>
+            <div>
+              <IconButton className="new-note-icon">
+                <Tooltip title="Archive">
+                  <ArchiveOutlinedIcon className="menu-icon" />
+                </Tooltip>
+              </IconButton>
+            </div>
+            <div>
+              <IconButton className="new-note-icon">
+                <Tooltip title="Delete">
+                  <DeleteOutlineOutlinedIcon className="menu-icon" />
+                </Tooltip>
+              </IconButton>
+            </div>
           </div>
           <div className="new-note-close-button">
             <Button onClick={this.handleNewNote}>Close</Button>
@@ -211,23 +303,27 @@ class Notes extends React.Component {
     );
 
     let noteList = this.props.notes.map((note) => {
-      if(this.props.label === "archive"){
-        if(note.isArchived && !note.isDeleted){
+      if (this.props.label === "archive") {
+        if (note.isArchived && !note.isDeleted) {
           return this.rendorNote(note);
-        }else{
+        } else {
           return null;
         }
-      } 
-      if(this.props.label === "trash"){
-        if(note.isDeleted ){
+      }
+      if (this.props.label === "trash") {
+        if (note.isDeleted) {
           return this.rendorNote(note);
-        }else{
+        } else {
           return null;
         }
       }
       if (note.isPined) {
         return null;
-      } if((note.isArchived && this.props.label !== "archive") || (note.isDeleted && this.props.label !=="trash")){
+      }
+      if (
+        (note.isArchived && this.props.label !== "archive") ||
+        (note.isDeleted && this.props.label !== "trash")
+      ) {
         return null;
       } else {
         return this.rendorNote(note);
@@ -249,7 +345,7 @@ class Notes extends React.Component {
             ? this.state.isNewNote
               ? newNoteBig
               : newNoteSmall
-            : "" }
+            : ""}
         </Grid>
         {!this.props.isPinned ? (
           ""

@@ -562,6 +562,12 @@
   margin-bottom: 1em !important;
 }
 
+.new-note-big .reminder-chips {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
 .note-list-name {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
@@ -742,6 +748,12 @@
 .note-action-buttons .button svg {
   height: 18px;
   width: 18px;
+}
+
+.new-note-action-button {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
 }
 
 .new-note-small {
