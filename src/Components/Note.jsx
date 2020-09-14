@@ -293,10 +293,13 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
+          message="Removed reminder"
           this.props.reloadNotes();
         } else {
           console.log(response);
         }
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
@@ -315,10 +318,13 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
+          message="Saccessfully added reminder"
           this.props.reloadNotes();
         } else {
           console.log(response);
         }
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
@@ -342,10 +348,17 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
+          if(!this.props.note.isPined){
+            message="Successfully pinned note"
+          }else{
+            message="Successfully unpinned note"
+          }
           this.props.reloadNotes();
         } else {
           console.log(response);
         }
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
@@ -359,10 +372,17 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
+          if(!this.props.note.isArchived){
+            message="Successfully archived note"
+          }else{
+            message="Successfully unarchived note"
+          }
           this.props.reloadNotes();
         } else {
           console.log(response);
         }
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
@@ -376,10 +396,17 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
+          if(!this.props.note.isDeleted){
+            message="Successfully deleted note"
+          }else{
+            message="Successfully restored note"
+          }
           this.props.reloadNotes();
         } else {
           console.log(response);
         }
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
@@ -392,10 +419,13 @@ export default class Note extends React.Component {
       (response) => {
         let message = "";
         if (response.data.data !== undefined) {
+          message="Successfully deleted note forever"
           this.props.reloadNotes();
         } else {
           console.log(response);
         }
+        this.context.setSnackbarMessage(message);
+        this.context.setSnackbarStatus(true);
       }
     );
   };
