@@ -20,6 +20,9 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
+import calls from "../Service/calls";
+let Calls = new calls();
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -96,9 +99,22 @@ export default function MiniAppBar(props) {
   };
 
   const handleSignOut=()=>{
-    localStorage.removeItem("id");
-    localStorage.removeItem("token");
-    history.push('/');
+    Calls.signOut(localStorage.getItem('token'),(response) => {
+      let message;
+      if (response.data === undefined) {
+        console.log(response);
+        message = response.response.data.error.message;
+        this.setState({
+          snackbarMessage: message,
+          snackbarStatus: true,
+        });
+      } else {
+        console.log(response);
+        localStorage.removeItem("id");
+        localStorage.removeItem("token");
+        history.push('/');
+      }
+    });
   }
 
   const open = Boolean(profileAnchorEl);

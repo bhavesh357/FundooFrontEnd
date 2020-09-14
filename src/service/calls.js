@@ -29,6 +29,10 @@ class ServiceCalls {
     this.callPost(baseUrl+"/login",user,callback);
   }
 
+  signOut(token,callback){
+    this.callPost(baseUrl+"/logout?access_token=" + token,{},callback);
+  }
+
   resetWithData(user, token, callback) {
     this.callPost(baseUrl+"/reset-password?access_token=" + token,user,callback);
   }

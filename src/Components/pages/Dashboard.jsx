@@ -297,7 +297,7 @@ class Dashboard extends React.Component {
         <main className="content">
           {this.state.isInProgress ? (
             <CircularProgress />
-          ) : (
+          ) : ("")}
             <Notes
               isDrawerOpen={this.props.drawerOpen || this.props.tempDrawerOpen}
               notes={this.state.notes}
@@ -305,7 +305,6 @@ class Dashboard extends React.Component {
               reloadNotes={this.reloadNotes}
               isPinned={this.state.isPinned}
             />
-          )}
         </main>
       </div>
     );
