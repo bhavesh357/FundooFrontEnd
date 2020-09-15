@@ -1,8 +1,8 @@
 import React from 'react';
-import Enzyme, { render, shallow } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import SignIn from './../Components/pages/SignIn';
-import { Button, Snackbar } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 Enzyme.configure({
     adapter: new Adapter()
@@ -28,7 +28,6 @@ describe('Sign In', () => {
     });
 
     it('when improper email and password should be invalid', () => {
-        const button = wrapper.find(Button);
         wrapper.setState({
             email:'bhavesh357357gmail',
             password: 'testing@357'

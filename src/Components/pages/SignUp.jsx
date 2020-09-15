@@ -29,7 +29,7 @@ class SignUp extends React.Component {
     isFirstNameInvalid: false,
     isLastNameInvalid: false,
     isFirstPasswordInvalid: false,
-    isSecondPasswordinvalid: false,
+    isSecondPasswordInvalid: false,
     doPasswordsMatch: true,
     firstName: "",
     lastName: "",
@@ -261,7 +261,7 @@ class SignUp extends React.Component {
                     ),
                   }}
                   error={
-                    this.state.isSecondPasswordinvalid ||
+                    this.state.isSecondPasswordInvalid ||
                     !this.state.doPasswordsMatch
                   }
                   helperText={
