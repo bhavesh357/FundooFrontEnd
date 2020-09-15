@@ -23,7 +23,7 @@ describe("Sign Up", () => {
   })
   });
 
-  it("when proper email should be valid", () => {
+  it("when proper passwords should be valid", () => {
     wrapper.setState({
         firstPassword: "Resting@357",
         secondPassword: "Resting@357",
@@ -33,7 +33,7 @@ describe("Sign Up", () => {
     expect(wrapper.state("isSecondPasswordinvalid")).toBe(false);
   });
 
-  it("when improper email should be invalid", () => {
+  it("when improper passwords should be invalid", () => {
     wrapper.setState({
         firstPassword: "bhavesh!33.hea",
         secondPassword: "bhavesh!33.hea",
